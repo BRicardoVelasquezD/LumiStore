@@ -1,0 +1,253 @@
+﻿<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumi Store - @ViewBag.Title</title>
+
+
+    @Styles.Render("~/Content/css")
+
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Paleta basada en Piedras Preciosas (Sin Negros) */
+        :root {
+            --gem-diamond: #f8faff; /* Blanco Diamante */
+            --gem-sapphire: #1a3a6d; /* Azul Zafiro Profundo */
+            --gem-emerald: #2d6a4f; /* Verde Esmeralda */
+            --gem-ruby: #d00000; /* Rojo Rubí */
+            --gem-pink-fancy: #ff85a2; /* Diamante Rosa */
+            --gem-soft-sapphire: #e0e7ff; /* Zafiro claro para fondos */
+            --gem-gold-leaf: #efbf04; /* Oro de 24k */
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #fcfcfd;
+            color: var(--gem-sapphire);
+        }
+
+        /* Navbar: Efecto Zafiro Real con borde de Rubí Rosado */
+        .navbar-brand {
+            font-family: 'Playfair Display', serif;
+            font-weight: bold;
+            letter-spacing: 2px;
+            color: var(--gem-diamond) !important;
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.4);
+        }
+
+        .bg-lumi-dark {
+            background: linear-gradient(135deg, #1e4b8f 0%, #0f2a52 100%) !important;
+            border-bottom: 3px solid var(--gem-pink-fancy);
+            box-shadow: 0 4px 20px rgba(26, 58, 109, 0.2);
+        }
+
+        /* Sidebar: Elegancia Esmeralda & Zafiro */
+        .sb-sidenav-dark {
+            background: linear-gradient(180deg, #162e55 0%, #1d4d44 100%) !important;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-link {
+            font-weight: 400;
+            font-size: 0.95rem;
+            margin: 4px 12px;
+            border-radius: 8px;
+            color: rgba(248, 250, 255, 0.7) !important;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+            .nav-link:hover {
+                color: var(--gem-diamond) !important;
+                background: rgba(255, 255, 255, 0.1);
+                transform: translateX(8px);
+                box-shadow: -5px 0 0 var(--gem-emerald);
+            }
+
+            .nav-link.active {
+                color: var(--gem-diamond) !important;
+                background: rgba(45, 106, 79, 0.4); /* Fondo Esmeralda suave */
+                border-left: 4px solid var(--gem-gold-leaf);
+            }
+
+        .sb-nav-link-icon {
+            color: var(--gem-pink-fancy) !important;
+            transition: 0.3s;
+        }
+
+        .nav-link:hover .sb-nav-link-icon {
+            filter: drop-shadow(0 0 5px var(--gem-diamond));
+            color: var(--gem-diamond) !important;
+        }
+
+        /* Botón de búsqueda Rubí */
+        .btn-lumi {
+            background-color: var(--gem-ruby);
+            border: none;
+            color: white;
+            border-radius: 20px;
+            padding: 5px 20px;
+            box-shadow: 0 4px 10px rgba(208, 0, 0, 0.3);
+        }
+
+        /* Texto con gradiente de Diamante Fancy Blue & Pink */
+        .lumi-gradient-text {
+            background: linear-gradient(90deg, #1a3a6d 0%, #ff85a2 50%, #2d6a4f 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 700;
+        }
+
+        /* Footer del Nav con profundidad de Zafiro */
+        .sb-sidenav-footer {
+            background: rgba(15, 42, 82, 0.8) !important;
+            border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+            color: var(--gem-diamond);
+        }
+
+        /* Contenido Principal con brillo de diamante */
+        #layoutSidenav_content {
+            background: radial-gradient(circle at top right, #ffffff 0%, #f0f4f8 100%);
+        }
+
+        /* Iconos de usuario con brillo de Rubí */
+        .user-icon-glow {
+            transition: 0.3s;
+        }
+
+            .user-icon-glow:hover {
+                filter: drop-shadow(0 0 10px var(--gem-pink-fancy));
+            }
+
+        /* Estilo para los dropdowns */
+        .dropdown-menu {
+            border: none;
+            border-top: 3px solid var(--gem-ruby);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body class="sb-nav-fixed">
+    <nav class="sb-topnav navbar navbar-expand navbar-dark bg-lumi-dark shadow-sm">
+        <a class="navbar-brand ps-3" href="@Url.Action("Index", "Home")">
+            <i class="fas fa-gem me-2" style="font-size: 0.8em; vertical-align: middle; color: var(--gem-pink-fancy);"></i>LUMI <span style="font-weight: 300;">STORE</span>
+        </a>
+
+        <button class="btn btn-link btn-sm order-1 order-lg-0 me-4 me-lg-0 user-icon-glow" id="sidebarToggle" href="#!">
+            <i class="fas fa-bars" style="color: var(--gem-diamond); font-size: 1.2rem;"></i>
+        </button>
+
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
+            <div class="input-group" style="display: none;">
+                <input class="form-control" type="text" />
+                <button class="btn btn-primary" id="btnNavbarSearch" type="button"></button>
+            </div>
+        </form>
+
+        <form class="d-none d-md-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0"></form>
+
+        <ul class="navbar-nav ms-auto ms-md-0 me-3 me-lg-4">
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle user-icon-glow" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fas fa-user fa-fw" style="color: #f8faff;"></i>
+                </a>
+                <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+                    <li><a class="dropdown-item" href="#!">Perfil</a></li>
+                    <li><a class="dropdown-item" href="#!">Actividad</a></li>
+                    <li><hr class="dropdown-divider" /></li>
+                    <li>
+                        <a class="dropdown-item" href="@Url.Action("CerrarSesion", "Acceso")">
+                            <i class="fas fa-sign-out-alt me-2"></i>Salir
+                        </a>
+                    </li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="layoutSidenav">
+        <div id="layoutSidenav_nav">
+            <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+                <div class="sb-sidenav-menu">
+                    <div class="nav mt-4">
+                        <div class="sb-sidenav-menu-heading text-uppercase" style="color: var(--gem-gold-leaf); font-size: 0.65rem; letter-spacing: 2.5px; opacity: 0.9;">Administrador</div>
+
+                        <a class="nav-link" href="@Url.Action("Index","Home")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-chart-pie"></i></div>
+                            Dashboard
+                        </a>
+                        <a class="nav-link" href="@Url.Action("Usuarios","Home")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-users-cog"></i></div>
+                            Usuarios
+                        </a>
+
+                        <div class="sb-sidenav-menu-heading text-uppercase" style="color: var(--gem-gold-leaf); font-size: 0.65rem; letter-spacing: 2.5px; opacity: 0.9;">Mantenimiento</div>
+
+                        <a class="nav-link" href="@Url.Action("Categoria","Mantenimiento")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-magic"></i></div>
+                            Categorías
+                        </a>
+                        <a class="nav-link" href="@Url.Action("Marca","Mantenimiento")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-medal"></i></div>
+                            Marcas
+                        </a>
+                        <a class="nav-link" href="@Url.Action("Producto","Mantenimiento")">
+                            <div class="sb-nav-link-icon"><i class="fas fa-gem"></i></div>
+                            Joyas & Skin
+                        </a>
+                    </div>
+                </div>
+
+                <div class="sb-sidenav-footer">
+                    <div class="small mb-1" style="color: rgba(255,255,255,0.5);">No es un accesorio</div>
+                    <div class="d-flex align-items-center">
+                        <div class="rounded-circle me-2" style="width: 10px; height: 10px; background: #00ff88; box-shadow: 0 0 10px #00ff88;"></div>
+                        <span class="fw-bold" style="color: var(--gem-diamond); font-size: 0.9rem;">El arte de ser tú.</span>
+                    </div>
+                </div>
+            </nav>
+        </div>
+
+        <div id="layoutSidenav_content">
+            <main>
+                <div class="container-fluid px-4 pt-4">
+                    <header class="mb-5">
+                        <h1 class="display-5" style="font-family: 'Playfair Display', serif; color: var(--gem-sapphire);">
+                            <span class="lumi-gradient-text">Lumi Store</span>
+                        </h1>
+                        <p style="color: var(--gem-emerald); letter-spacing: 1px; font-weight: 400;">Tu esencia no se explica, se proyecta.</p>
+                        <hr style="width: 60px; border-top: 4px solid var(--gem-ruby); opacity: 1; border-radius: 2px;">
+                    </header>
+
+                    <div class="content-wrapper animate__animated animate__fadeIn">
+                        @RenderBody()
+                    </div>
+                </div>
+            </main>
+
+            <footer class="py-4 bg-white mt-auto border-top" style="border-color: var(--gem-soft-sapphire) !important;">
+                <div class="container-fluid px-4">
+                    <div class="d-flex align-items-center justify-content-between small">
+                        <div style="color: var(--gem-sapphire);">
+                            &copy; @DateTime.Now.Year <span class="fw-bold" style="color: var(--gem-emerald);">LUMI STORE</span> | <span style="color: var(--gem-ruby);">Edición Luxury</span>
+                        </div>
+                        <div class="text-uppercase" style="letter-spacing: 1px;">
+                            <a href="#" class="text-decoration-none me-3" style="color: var(--gem-sapphire);">Privacidad</a>
+                            <a href="#" class="text-decoration-none" style="color: var(--gem-ruby); font-weight: bold;">Soporte VIP</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    @*<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>*@
+    @Scripts.Render("~/bundles/jquery")
+
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @Scripts.Render("~/bundles/complementos")
+    @RenderSection("scripts", required: false)
+</body>
+</html>

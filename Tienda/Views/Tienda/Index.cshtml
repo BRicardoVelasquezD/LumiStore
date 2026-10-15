@@ -1,0 +1,950 @@
+﻿@{
+    ViewBag.Title = "Lumi Store · Joyería & Perfumería de Alta Gama";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+    <style>
+        /* ================= HERO PREMIUM ================= */
+        .hero-lumi {
+            background: linear-gradient(135deg, var(--bg-60), var(--bg-30));
+            padding: 180px 0 120px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-lumi::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(15, 82, 186, 0.05) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(93, 58, 140, 0.05) 0%, transparent 50%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            color: var(--text-main);
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            background: var(--gradient-lux);
+            color: white;
+            border: none;
+            padding: 1.2rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-soft);
+            color: white;
+        }
+
+        /* ================= COLECCIÓN PREMIUM ================= */
+        .seccion-coleccion {
+            padding: 100px 0;
+            background: var(--bg-30);
+            position: relative;
+        }
+
+        .seccion-titulo {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .titulo-coleccion {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+        }
+
+        .subtitulo-coleccion {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ================= FILTROS LUXE ================= */
+        .filtros-container {
+            background: var(--glass);
+            border: 1px solid var(--lux-border);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .filtros-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--lux-border);
+        }
+
+        .filtros-titulo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-limpiar {
+            background: transparent;
+            border: 1px solid var(--lux-border);
+            color: var(--text-muted);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+        }
+
+        .btn-limpiar:hover {
+            border-color: var(--rubi);
+            color: var(--rubi);
+        }
+
+        .filtro-grupo {
+            margin-bottom: 1.5rem;
+        }
+
+        .filtro-grupo-titulo {
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .filtro-opcion {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem 0;
+            cursor: pointer;
+            transition: color 0.2s;
+            color: var(--text-muted);
+        }
+
+        .filtro-opcion:hover {
+            color: var(--zafiro);
+        }
+
+        .filtro-opcion input {
+            margin-right: 0.75rem;
+            accent-color: var(--zafiro);
+        }
+
+        .filtro-opcion.activo {
+            color: var(--zafiro);
+            font-weight: 500;
+        }
+
+        /* ================= PRODUCTOS GRID ================= */
+        .productos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .card-producto {
+            background: var(--glass);
+            border: 1px solid var(--lux-border);
+            border-radius: 20px;
+            overflow: hidden;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .card-producto:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .producto-imagen {
+            height: 300px;
+            background: linear-gradient(135deg, var(--bg-60), #f0f0f0);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            position: relative;
+        }
+
+        .producto-imagen img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.3s;
+        }
+
+        .card-producto:hover .producto-imagen img {
+            transform: scale(1.05);
+        }
+
+        .producto-badges {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .badge-producto {
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .badge-exclusivo {
+            background: var(--rubi);
+            color: white;
+        }
+
+        .badge-nuevo {
+            background: var(--esmeralda);
+            color: white;
+        }
+
+        .badge-limitado {
+            background: var(--amatista);
+            color: white;
+        }
+
+        .producto-info {
+            padding: 1.5rem;
+        }
+
+        .producto-nombre {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .producto-descripcion {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .producto-precio {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--zafiro);
+            margin-bottom: 1rem;
+        }
+
+        .producto-acciones {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .btn-detalle {
+            flex: 1;
+            background: transparent;
+            border: 1px solid var(--lux-border);
+            color: var(--text-main);
+            padding: 0.75rem;
+            border-radius: 10px;
+            font-weight: 500;
+            transition: all 0.2s;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .btn-detalle:hover {
+            border-color: var(--zafiro);
+            color: var(--zafiro);
+        }
+
+        .btn-agregar {
+            flex: 1;
+            background: var(--gradient-lux);
+            border: none;
+            color: white;
+            padding: 0.75rem;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-agregar:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .btn-agregar:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* ================= CONTADOR Y FILTROS ACTIVOS ================= */
+        .contador-tesoros {
+            text-align: center;
+            padding: 1.5rem;
+            background: var(--glass);
+            border: 1px solid var(--lux-border);
+            border-radius: 20px;
+            margin-top: 2rem;
+        }
+
+        .contador-numero {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            background: var(--gradient-lux);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .filtros-activos {
+            display: none;
+            background: var(--glass);
+            border: 1px solid var(--lux-border);
+            border-radius: 20px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .filtros-activos.visible {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @@keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ================= ESTADOS VACÍOS ================= */
+        .estado-vacio {
+            text-align: center;
+            padding: 4rem 2rem;
+            grid-column: 1 / -1;
+        }
+
+        .estado-vacio-icono {
+            font-size: 3rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .estado-vacio-titulo {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2rem;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+        }
+
+        .estado-vacio-mensaje {
+            color: var(--text-muted);
+            max-width: 400px;
+            margin: 0 auto 2rem;
+        }
+
+        /* ================= RESPONSIVE ================= */
+        @@media (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .titulo-coleccion {
+                font-size: 2.5rem;
+            }
+
+            .productos-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
+        @@media (max-width: 768px) {
+            .hero-lumi {
+                padding: 140px 0 80px;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .seccion-coleccion {
+                padding: 60px 0;
+            }
+
+            .filtros-container {
+                margin-bottom: 1.5rem;
+            }
+
+            .producto-imagen {
+                height: 250px;
+            }
+        }
+
+        @@media (max-width: 576px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .productos-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .producto-acciones {
+                flex-direction: column;
+            }
+        }
+    </style>
+}
+
+<!-- HERO PREMIUM -->
+<section class="hero-lumi" id="hero">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 hero-content">
+                <h1 class="hero-title">
+                    <span class="text-neon">Donde el Lujo</span><br>
+                    Encuentra su <span class="text-neon">Esencia</span>
+                </h1>
+                <p class="hero-subtitle">
+                    Descubra joyería y perfumería de alta gama donde cada pieza es una obra de arte.
+                    Colección exclusiva curada para quienes buscan lo extraordinario.
+                </p>
+                <div class="d-flex flex-wrap gap-3">
+                    <a href="#coleccion" class="hero-cta" aria-label="Explorar colección premium">
+                        <i class="fas fa-gem"></i>
+                        Explorar Colección
+                    </a>
+                    <a href="#exclusivos" class="btn btn-outline-primary" aria-label="Ver piezas exclusivas" style="border-color: var(--zafiro); color: var(--zafiro);">
+                        <i class="fas fa-crown me-2"></i> Exclusivos
+                    </a>
+                </div>
+
+                <!-- Trust badges -->
+                <div class="mt-5 d-flex flex-wrap gap-4">
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fas fa-shield-alt text-success"></i>
+                        <small>Compra 100% segura</small>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fas fa-truck text-primary"></i>
+                        <small>Envío premium certificado</small>
+                    </div>
+                    <div class="d-flex align-items-center gap-2">
+                        <i class="fas fa-undo text-warning"></i>
+                        <small>14 días devolución</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 d-none d-lg-block">
+                <!-- Imagen hero decorativa -->
+                <div class="position-relative">
+                    <div class="rounded-circle bg-gradient-lux" style="width: 400px; height: 400px; position: absolute; top: 50px; right: 0; opacity: 0.1;"></div>
+                    <div class="position-relative" style="z-index: 2;">
+                        <div class="border-lux rounded-4 shadow-lux overflow-hidden" style="width: 350px; height: 350px;">
+                            <!-- Imagen representativa - se puede reemplazar por una real -->
+                            <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-glass">
+                                <i class="fas fa-gem fa-6x text-primary opacity-50"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- COLECCIÓN PREMIUM -->
+<section class="seccion-coleccion" id="coleccion">
+    <div class="container">
+        <div class="seccion-titulo">
+            <h2 class="titulo-coleccion">Colección Exclusiva</h2>
+            <p class="subtitulo-coleccion">
+                Piezas únicas curadas meticulosamente para quienes buscan lo extraordinario.
+            </p>
+        </div>
+
+        <div class="row">
+            <!-- FILTROS -->
+            <div class="col-lg-3">
+                <div class="filtros-container">
+                    <div class="filtros-header">
+                        <h3 class="filtros-titulo">
+                            <i class="fas fa-filter"></i>
+                            Curar Colección
+                        </h3>
+                        <button class="btn-limpiar" id="btnLimpiarFiltros" aria-label="Limpiar todos los filtros">
+                            <i class="fas fa-times me-1"></i> Limpiar
+                        </button>
+                    </div>
+
+                    <!-- Categorías -->
+                    <div class="filtro-grupo">
+                        <h4 class="filtro-grupo-titulo">
+                            <i class="fas fa-magic"></i>
+                            Categorías
+                        </h4>
+                        <div id="lista-categorias">
+                            <!-- Cargado por JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Marcas -->
+                    <div class="filtro-grupo">
+                        <h4 class="filtro-grupo-titulo">
+                            <i class="fas fa-award"></i>
+                            Casas & Diseñadores
+                        </h4>
+                        <div id="lista-marcas">
+                            <!-- Cargado por JavaScript -->
+                        </div>
+                    </div>
+
+                    <!-- Contador -->
+                    <div class="contador-tesoros mt-4">
+                        <div class="contador-numero" id="contador-tesoros">0</div>
+                        <small class="text-muted">Piezas encontradas</small>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PRODUCTOS -->
+            <div class="col-lg-9">
+                <!-- Filtros activos -->
+                <div id="filtros-activos" class="filtros-activos">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <span id="filtros-activos-texto"></span>
+                        <button id="btnLimpiarFiltroActivo" class="btn btn-sm btn-link p-0" style="color: var(--rubi);">
+                            <i class="fas fa-times me-1"></i> Limpiar
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Grid de productos -->
+                <div class="productos-grid" id="contenedor-productos">
+                    <!-- Cargado por JavaScript -->
+                    <div class="estado-vacio">
+                        <div class="estado-vacio-icono">
+                            <i class="fas fa-gem fa-spin"></i>
+                        </div>
+                        <h3 class="estado-vacio-titulo">Cargando colección...</h3>
+                        <p class="estado-vacio-mensaje">
+                            Preparando la experiencia exclusiva Lumi Store
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- JSON-LD PARA COLECCIÓN -->
+<script type="application/ld+json">
+{
+    "context": "https://schema.org",
+    "type": "ItemList",
+    "itemListElement": [],
+    "name": "Colección Premium Lumi Store",
+    "description": "Joyería y perfumería de alta gama curada para clientes exclusivos",
+    "url": "https://lumistore.com",
+    "numberOfItems": 0
+}
+</script>
+
+@section scripts {
+    <script>
+        $(function () {
+            const token = $('input[name="__RequestVerificationToken"]').val();
+            const detalleUrl = '@Url.Action("DetalleProducto","Tienda")';
+            let categoriaActual = 0;
+            let marcaActual = 0;
+            let textoCategoria = 'Todas las categorías';
+            let textoMarca = 'Todas las marcas';
+
+            // ================= INICIALIZACIÓN =================
+            function inicializar() {
+                cargarCategorias();
+                cargarProductos();
+                setupEventListeners();
+            }
+
+            // ================= CARGAR CATEGORÍAS =================
+            function cargarCategorias() {
+                $.get('@Url.Action("ListarCategorias","Tienda")')
+                    .done(function (response) {
+                        if (response && response.data) {
+                            let html = `
+                                <div class="filtro-opcion activo" data-id="0">
+                                    <input type="radio" name="categoria" id="categoria-todas" value="0" checked>
+                                    <label for="categoria-todas">Todas las categorías</label>
+                                </div>`;
+
+                            response.data.forEach(function (cat) {
+                                html += `
+                                    <div class="filtro-opcion" data-id="${cat.IdCategoria}">
+                                        <input type="radio" name="categoria" id="categoria-${cat.IdCategoria}" value="${cat.IdCategoria}">
+                                        <label for="categoria-${cat.IdCategoria}">${cat.Descripcion}</label>
+                                    </div>`;
+                            });
+
+                            $('#lista-categorias').html(html);
+                        }
+                    })
+                    .fail(function () {
+                        mostrarNotificacionLumi('Error', 'No se pudieron cargar las categorías', 'error');
+                    });
+            }
+
+            // ================= CARGAR MARCAS =================
+            function cargarMarcas(idCategoria) {
+                $('#lista-marcas').html('<div class="text-muted small">Cargando...</div>');
+
+                $.post('@Url.Action("ListarMarcasPorCategoria","Tienda")', { idcategoria: idCategoria })
+                    .done(function (response) {
+                        if (response && response.data) {
+                            let html = `
+                                <div class="filtro-opcion ${idCategoria == 0 ? 'activo' : ''}" data-id="0">
+                                    <input type="radio" name="marca" id="marca-todas" value="0" ${idCategoria == 0 ? 'checked' : ''}>
+                                    <label for="marca-todas">Todas las marcas</label>
+                                </div>`;
+
+                            response.data.forEach(function (marca) {
+                                html += `
+                                    <div class="filtro-opcion" data-id="${marca.IdMarca}">
+                                        <input type="radio" name="marca" id="marca-${marca.IdMarca}" value="${marca.IdMarca}">
+                                        <label for="marca-${marca.IdMarca}">${marca.Descripcion}</label>
+                                    </div>`;
+                            });
+
+                            $('#lista-marcas').html(html);
+                        }
+                    })
+                    .fail(function () {
+                        mostrarNotificacionLumi('Error', 'No se pudieron cargar las marcas', 'error');
+                    });
+            }
+
+            // ================= CARGAR PRODUCTOS =================
+            function cargarProductos() {
+                $('#contenedor-productos').html(`
+                    <div class="estado-vacio">
+                        <div class="estado-vacio-icono">
+                            <i class="fas fa-gem fa-spin"></i>
+                        </div>
+                        <h3 class="estado-vacio-titulo">Cargando colección...</h3>
+                    </div>
+                `);
+
+                $.LoadingOverlay && $.LoadingOverlay("show");
+
+                $.post('@Url.Action("ListarProducto","Tienda")', {
+                    idcategoria: categoriaActual,
+                    idmarca: marcaActual
+                })
+                .done(function (response) {
+                    if (response && response.data) {
+                        renderizarProductos(response.data);
+                        actualizarFiltrosActivos();
+                        trackEvent('view_item_list', {
+                            item_list_name: 'Colección Premium',
+                            items: response.data.map((p, i) => ({
+                                item_id: p.IdProducto,
+                                item_name: p.Nombre,
+                                price: p.Precio,
+                                item_category: p.oCategoria?.Descripcion,
+                                index: i + 1
+                            }))
+                        });
+                    }
+                })
+                .fail(function () {
+                    mostrarNotificacionLumi('Error', 'No se pudieron cargar los productos', 'error');
+                    $('#contenedor-productos').html(`
+                        <div class="estado-vacio">
+                            <div class="estado-vacio-icono">
+                                <i class="fas fa-exclamation-triangle"></i>
+                            </div>
+                            <h3 class="estado-vacio-titulo">Error al cargar</h3>
+                            <p class="estado-vacio-mensaje">
+                                Intenta recargar la página o contacta a nuestro servicio Concierge.
+                            </p>
+                            <button onclick="location.reload()" class="hero-cta">
+                                <i class="fas fa-redo"></i> Reintentar
+                            </button>
+                        </div>
+                    `);
+                })
+                .always(function () {
+                    $.LoadingOverlay && $.LoadingOverlay("hide");
+                });
+            }
+
+            // ================= RENDERIZAR PRODUCTOS =================
+            function renderizarProductos(productos) {
+                if (!productos || productos.length === 0) {
+                    $('#contenedor-productos').html(`
+                        <div class="estado-vacio">
+                            <div class="estado-vacio-icono">
+                                <i class="fas fa-search"></i>
+                            </div>
+                            <h3 class="estado-vacio-titulo">No se encontraron piezas</h3>
+                            <p class="estado-vacio-mensaje">
+                                No hay productos que coincidan con los filtros seleccionados.
+                            </p>
+                            <button id="btnMostrarTodos" class="hero-cta">
+                                <i class="fas fa-eye"></i> Ver toda la colección
+                            </button>
+                        </div>
+                    `);
+                    $('#contador-tesoros').text('0');
+                    return;
+                }
+
+                $('#contador-tesoros').text(productos.length);
+
+                let html = '';
+                productos.forEach(function (producto, index) {
+                    // Determinar badges
+                    let badges = '';
+                    if (producto.Stock < 10) {
+                        badges += `<span class="badge-producto badge-exclusivo">EXCLUSIVO</span>`;
+                    }
+                    if (producto.Stock > 0 && producto.Stock < 30) {
+                        badges += `<span class="badge-producto badge-limitado">LIMITADO</span>`;
+                    }
+
+                    // Imagen
+                    let imgSrc = '/Content/img/default-experience.jpg';
+                    if (producto.Base64 && producto.Extension) {
+                        imgSrc = `data:image/${producto.Extension};base64,${producto.Base64}`;
+                    }
+
+                    // Precio formateado
+                    const precioFormateado = new Intl.NumberFormat('es-CO', {
+                        style: 'currency',
+                        currency: 'COP',
+                        minimumFractionDigits: 0
+                    }).format(producto.Precio || 0);
+
+                    // Descripción truncada
+                    const descripcion = producto.Descripcion || 'Pieza exclusiva de la colección Lumi Premium.';
+                    const descripcionCorta = descripcion.length > 100 ? descripcion.substring(0, 100) + '...' : descripcion;
+
+                    html += `
+                    <div class="card-producto animate__animated animate__fadeInUp"
+                         style="animation-delay: ${index * 0.05}s">
+                        <div class="producto-imagen">
+                            ${badges ? `<div class="producto-badges">${badges}</div>` : ''}
+                            <img src="${imgSrc}"
+                                 alt="${producto.Nombre}"
+                                 loading="lazy"
+                                 onerror="this.src='/Content/img/default-experience.jpg'">
+                        </div>
+                        <div class="producto-info">
+                            <h3 class="producto-nombre">${producto.Nombre}</h3>
+                            <p class="producto-descripcion">${descripcionCorta}</p>
+                            <div class="producto-precio">${precioFormateado}</div>
+                            <div class="producto-acciones">
+                                <a href="${detalleUrl}?idproducto=${producto.IdProducto}"
+                                   class="btn-detalle"
+                                   aria-label="Ver detalles de ${producto.Nombre}">
+                                    <i class="fas fa-eye me-1"></i> Detalle
+                                </a>
+                                <button class="btn-agregar"
+                                        data-id="${producto.IdProducto}"
+                                        ${producto.Stock <= 0 ? 'disabled' : ''}
+                                        aria-label="Agregar ${producto.Nombre} a mi colección">
+                                    <i class="fas ${producto.Stock <= 0 ? 'fa-times' : 'fa-heart'} me-1"></i>
+                                    ${producto.Stock <= 0 ? 'Agotado' : 'Agregar'}
+                                </button>
+                            </div>
+                        </div>
+                    </div>`;
+                });
+
+                $('#contenedor-productos').html(html);
+            }
+
+            // ================= ACTUALIZAR FILTROS ACTIVOS =================
+            function actualizarFiltrosActivos() {
+                if (categoriaActual == 0 && marcaActual == 0) {
+                    $('#filtros-activos').removeClass('visible');
+                    return;
+                }
+
+                let texto = '';
+                if (categoriaActual != 0) {
+                    const categoriaNombre = $(`input[name="categoria"]:checked`).next('label').text();
+                    texto += `Categoría: <strong>${categoriaNombre}</strong>`;
+                }
+                if (marcaActual != 0) {
+                    const marcaNombre = $(`input[name="marca"]:checked`).next('label').text();
+                    texto += (texto ? ' · ' : '') + `Marca: <strong>${marcaNombre}</strong>`;
+                }
+
+                $('#filtros-activos-texto').html(texto);
+                $('#filtros-activos').addClass('visible');
+            }
+
+            // ================= EVENT LISTENERS =================
+            function setupEventListeners() {
+                // Cambio de categoría
+                $(document).on('change', 'input[name="categoria"]', function () {
+                    const valor = $(this).val();
+                    categoriaActual = parseInt(valor);
+                    textoCategoria = $(this).next('label').text();
+
+                    $('.filtro-opcion').removeClass('activo');
+                    $(this).closest('.filtro-opcion').addClass('activo');
+
+                    cargarMarcas(categoriaActual);
+                    cargarProductos();
+
+                    trackEvent('select_filter', {
+                        filter_type: 'category',
+                        filter_value: textoCategoria
+                    });
+                });
+
+                // Cambio de marca
+                $(document).on('change', 'input[name="marca"]', function () {
+                    const valor = $(this).val();
+                    marcaActual = parseInt(valor);
+                    textoMarca = $(this).next('label').text();
+
+                    $('.filtro-opcion').removeClass('activo');
+                    $(this).closest('.filtro-opcion').addClass('activo');
+
+                    cargarProductos();
+
+                    trackEvent('select_filter', {
+                        filter_type: 'brand',
+                        filter_value: textoMarca
+                    });
+                });
+
+                // Limpiar filtros
+                $('#btnLimpiarFiltros').click(function () {
+                    $('input[name="categoria"][value="0"]').prop('checked', true).trigger('change');
+                    $('input[name="marca"][value="0"]').prop('checked', true).trigger('change');
+
+                    categoriaActual = 0;
+                    marcaActual = 0;
+
+                    mostrarNotificacionLumi('Filtros limpiados', 'Mostrando toda la colección', 'info');
+                });
+
+                // Limpiar filtro activo
+                $('#btnLimpiarFiltroActivo').click(function () {
+                    $('#btnLimpiarFiltros').trigger('click');
+                });
+
+                // Agregar al carrito
+                $(document).on('click', '.btn-agregar:not(:disabled)', function () {
+                    const btn = $(this);
+                    const idProducto = btn.data('id');
+                    const nombreProducto = btn.closest('.card-producto').find('.producto-nombre').text();
+
+                    // Feedback visual
+                    const originalHTML = btn.html();
+                    btn.html('<i class="fas fa-spinner fa-spin me-1"></i> Agregando...');
+                    btn.prop('disabled', true);
+
+                    $.post('@Url.Action("AgregarCarrito","Tienda")', { idproducto: idProducto })
+                        .done(function (response) {
+                            if (response && response.respuesta) {
+                                // Actualizar UI
+                                actualizarCarrito();
+
+                                // Efecto de éxito
+                                btn.html('<i class="fas fa-check me-1"></i> ¡Agregado!');
+                                btn.removeClass('btn-agregar').addClass('btn-success');
+
+                                // Restaurar después de 1.5s
+                                setTimeout(function () {
+                                    btn.html(originalHTML);
+                                    btn.removeClass('btn-success').addClass('btn-agregar');
+                                    btn.prop('disabled', false);
+                                }, 1500);
+
+                                // Notificación
+                                mostrarNotificacionLumi('¡Tesoro añadido!', `${nombreProducto} se agregó a tu colección`, 'success');
+
+                                // Tracking
+                                trackEvent('add_to_cart', {
+                                    item_id: idProducto,
+                                    item_name: nombreProducto
+                                });
+                            } else {
+                                btn.html(originalHTML);
+                                btn.prop('disabled', false);
+                                mostrarNotificacionLumi('Error', response.mensaje || 'No se pudo agregar al carrito', 'error');
+                            }
+                        })
+                        .fail(function () {
+                            btn.html(originalHTML);
+                            btn.prop('disabled', false);
+                            mostrarNotificacionLumi('Error', 'Error de conexión', 'error');
+                        });
+                });
+
+                // Mostrar todos (cuando no hay resultados)
+                $(document).on('click', '#btnMostrarTodos', function () {
+                    $('#btnLimpiarFiltros').trigger('click');
+                });
+            }
+
+            // ================= INICIAR =================
+            inicializar();
+        });
+    </script>
+}

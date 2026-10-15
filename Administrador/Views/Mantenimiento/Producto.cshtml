@@ -1,0 +1,381 @@
+﻿
+@{
+    ViewBag.Title = "Producto";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<nav aria-label="breadcrumb" class="mb-4">
+    <ol class="breadcrumb bg-transparent p-0 d-flex align-items-center">
+        <li class="breadcrumb-item">
+            <a href="@Url.Action("Index","Home")" style="color: var(--gem-sapphire); text-decoration: none;">
+                <i class="fas fa-chart-pie" style="color: var(--gem-pink-fancy);"></i> Dashboard
+            </a>
+        </li>
+        <li class="breadcrumb-item active" style="color: var(--gem-emerald); font-weight: 600;">
+            <i class="fas fa-gem"></i> Joyas & Skin
+        </li>
+    </ol>
+</nav>
+
+<div class="card border-0 shadow-sm" style="border-radius: 15px; overflow: hidden;">
+    <div class="card-header py-3" style="background: linear-gradient(90deg, #162e55 0%, #1d4d44 100%); color: white;">
+        <div class="d-flex justify-content-between align-items-center">
+            <span><i class="fas fa-gem" style="color: var(--gem-pink-fancy);"></i> Gestión de Joyas & Skin</span>
+            <button type="button" class="btn btn-lumi" onclick="abrirModal(null)">
+                <i class="fas fa-plus-circle me-1"></i> Nueva Joya & Skin
+            </button>
+        </div>
+    </div>
+    <div class="card-body bg-white">
+        <div class="table-responsive">
+            <table id="tabla" class="table table-hover align-middle" style="width: 100%;">
+                <thead style="background-color: #f1f5f9;">
+                    <tr>
+                        <th class="border-0 ps-3">Imagen</th>
+                        <th class="border-0">Nombre</th>
+                        <th class="border-0">Marca\Ctga</th>
+                        <th class="border-0">Precio</th>
+                        <th class="border-0">Stock</th>
+                        <th class="border-0">Estado</th>
+                        <th class="border-0 text-center">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="FormModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-xl modal-dialog-centered">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 20px;">
+            <div class="modal-header border-0 text-white" style="background: var(--gem-sapphire); border-radius: 20px 20px 0 0;">
+                <h5 class="modal-title fw-bold" id="modalTitulo">
+                    <i class="fas fa-box-open me-2" style="color: var(--gem-gold-leaf);"></i> Detalle de Producto
+                </h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body p-4">
+                <input id="txtid" type="hidden" value="0" />
+
+                <form id="contenedor" class="row g-3">
+                    <div class="col-sm-6">
+                        <div class="row g-3">
+                            <div class="col-sm-12">
+                                <label class="form-label small fw-bold text-muted">Nombre del Producto</label>
+                                <input type="text" class="form-control form-control-modern" id="txtnombre" name="nombre">
+                            </div>
+                            <div class="col-sm-12">
+                                <label class="form-label small fw-bold text-muted">Descripción Detallada</label>
+                                <textarea class="form-control form-control-modern" id="txtdescripcion" name="descripcion" rows="3"></textarea>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label small fw-bold text-muted">Marca</label>
+                                <select id="cbomarca" class="form-select form-control-modern"></select>
+                            </div>
+                            <div class="col-sm-6">
+                                <label class="form-label small fw-bold text-muted">Categoría</label>
+                                <select id="cbocategoria" class="form-select form-control-modern"></select>
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="form-label small fw-bold text-muted">Precio (COP)</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light border-0" style="border-radius: 10px 0 0 10px;">$</span>
+                                    <input type="text" class="form-control form-control-modern" id="txtprecio" name="precio" placeholder="0.00" style="border-radius: 0 10px 10px 0;">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="form-label small fw-bold text-muted">Stock Disponible</label>
+                                <input type="number" class="form-control form-control-modern" id="txtstock" name="stock">
+                            </div>
+                            <div class="col-sm-4">
+                                <label class="form-label small fw-bold text-muted">Estado</label>
+                                <select id="cboactivo" class="form-select form-control-modern">
+                                    <option value="1">Activo</option>
+                                    <option value="0">Inactivo</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-sm-6">
+                        <div class="p-3 border rounded-3 bg-light h-100">
+                            <label class="form-label small fw-bold text-muted d-block mb-3"><i class="fas fa-image me-1"></i>Previsualización</label>
+                            <div class="text-center mb-3">
+                                <img id="img_producto" height="200" width="200" class="shadow-sm bg-white p-2" style="border-radius: 15px; object-fit: contain; border: 2px dashed #cbd5e1;" src="" />
+                            </div>
+                            <input type="file" class="form-control form-control-modern" id="fileProducto" accept="image/png, image/jpg, image/jpeg" onchange="mostrarImagen(this)">
+                            <small class="text-muted mt-2 d-block text-center">Formatos permitidos: JPG, PNG, JPEG</small>
+                        </div>
+                    </div>
+                </form>
+
+                <div id="mensajeError" class="alert alert-danger mt-3 d-none border-0 shadow-sm" style="border-radius: 10px;">
+                    <i class="fas fa-exclamation-circle me-2"></i> <span id="errorText">Hubo un error al procesar el producto.</span>
+                </div>
+            </div>
+            <div class="modal-footer border-0 bg-light p-3" style="border-radius: 0 0 20px 20px;">
+                <button type="button" class="btn btn-outline-secondary px-4 shadow-sm" data-bs-dismiss="modal" style="border-radius: 10px;">Cerrar</button>
+                <button type="button" class="btn btn-lumi px-4 shadow-sm" onclick="Guardar()">
+                    <i class="fas fa-save me-1"></i> Guardar Producto
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-control-modern {
+        border-radius: 10px;
+        border: 1px solid #e0e7ff;
+        padding: 0.6rem 1rem;
+        transition: all 0.3s;
+    }
+
+        .form-control-modern:focus {
+            border-color: var(--gem-pink-fancy);
+            box-shadow: 0 0 0 0.25rem rgba(255, 133, 162, 0.15);
+        }
+
+    .table-hover tbody tr:hover {
+        background-color: #f8faff !important;
+        transform: scale(1.005);
+        transition: all 0.2s ease;
+    }
+
+    .btn-action-edit {
+        color: var(--gem-sapphire);
+        background: var(--gem-soft-sapphire);
+        border: none;
+    }
+
+    .btn-action-delete {
+        color: var(--gem-ruby);
+        background: #fff0f0;
+        border: none;
+    }
+</style>
+
+@section scripts{
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
+
+    <script>
+        var tabladata;
+
+        $(document).ready(function () {
+            // 1. CARGAR COMBOS
+            $("<option>").attr({ "value": "0", "disabled":"true", "selected":"true" }).text("Seleccionar").appendTo("#cbomarca");
+            $.get('@Url.Action("ListarMarcas", "Mantenimiento")', function (response) {
+                $.each(response.data, function (i, item) {
+                    $("<option>").attr({ "value": item.IdMarca }).text(item.Descripcion).appendTo("#cbomarca");
+                });
+            });
+
+            $("<option>").attr({ "value": "0", "disabled":"true", "selected":"true" }).text("Seleccionar").appendTo("#cbocategoria");
+            $.get('@Url.Action("ListarCategorias", "Mantenimiento")', function (response) {
+                $.each(response.data, function (i, item) {
+                    $("<option>").attr({ "value": item.IdCategoria }).text(item.Descripcion).appendTo("#cbocategoria");
+                });
+            });
+
+            // 2. CARGAR DATATABLE
+            tabladata = $("#tabla").DataTable({
+                responsive: true,
+                ordering: false,
+                "ajax": {
+                    "url": '@Url.Action("ListarProducto", "Mantenimiento")',
+                    "type": "GET"
+                },
+                "columns": [
+                    {
+                        "data": "IdProducto",
+                        "render": function (data, type, row) {
+                            if (!row.NombreImagen) {
+                                return '<div class="d-flex align-items-center"><img src="https://placehold.co/50x50?text=Sin+Foto" class="rounded-circle border" style="width:45px; height:45px; object-fit:cover;" /></div>';
+                            }
+                            return '<div class="d-flex align-items-center"><img id="img' + data + '" class="rounded-circle shadow-sm border" style="width:45px; height:45px; object-fit:cover;" src="" /></div>';
+                        }
+                    },
+                    { "data": "Nombre" },
+                    {
+                        "data": "oMarca", "render": function(v, t, row){
+                            return '<span class="text-muted small">' + v.Descripcion + '</span><br><span class="badge bg-light text-dark fw-normal">' + row.oCategoria.Descripcion + '</span>'
+                        }
+                    },
+                    {
+                        "data": "Precio", "render": function(v) {
+                            return '<span class="fw-bold" style="color: var(--gem-emerald)">$ ' + v.toLocaleString('es-CO') + '</span>';
+                        }
+                    },
+                    { "data": "Stock", "render": function (v) { return '<span class="badge bg-soft-info text-info">' + v + ' Uds.</span>'} },
+                    {
+                        "data": "Activo", "render": function (v) {
+                            return v ?
+                                '<span class="badge px-3 py-2" style="background-color: var(--gem-emerald); border-radius: 8px;">Activo</span>' :
+                                '<span class="badge px-3 py-2" style="background-color: #6c757d; border-radius: 8px;">Inactivo</span>';
+                        }
+                    },
+                    {
+                        "defaultContent": '<div class="text-center">' +
+                            '<button type="button" class="btn btn-action-edit btn-sm btn-editar shadow-sm"><i class="fas fa-pen"></i></button>' +
+                            '<button type="button" class="btn btn-action-delete btn-sm ms-2 btn-eliminar shadow-sm"><i class="fas fa-trash"></i></button>' +
+                            '</div>',
+                        "orderable": false, "searchable": false, "width": "110px"
+                    }
+                ],
+                "language": { "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json" },
+                "drawCallback": function (settings) {
+                    var api = this.api();
+                    var rows = api.rows({ page: 'current' }).data();
+                    rows.each(function (row) {
+                        if (row.NombreImagen) {
+                            $.post('@Url.Action("MostrarImagen", "Mantenimiento")', { id: row.IdProducto }, function (data) {
+                                if (data.conversion) {
+                                    $("#img" + row.IdProducto).attr("src", "data:image/" + data.extension + ";base64," + data.textoBase64);
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        });
+
+        function mostrarImagen(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function (e) {
+                    $("#img_producto").attr("src", e.target.result);
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function abrirModal(json) {
+            $("#txtid").val(0);
+            $("#img_producto").attr("src", "");
+            $("#fileProducto").val("");
+            $("#txtnombre").val("");
+            $("#txtdescripcion").val("");
+            $("#cbomarca").val($("#cbomarca option:first").val());
+            $("#cbocategoria").val($("#cbocategoria option:first").val());
+            $("#txtprecio").val("");
+            $("#txtstock").val("");
+            $("#cboactivo").val(1);
+            $("#mensajeError").addClass("d-none");
+
+            if (json != null) {
+                $("#modalTitulo").html('<i class="fas fa-edit me-2" style="color: var(--gem-gold-leaf);"></i> Editar Joya & Skin');
+                $("#txtid").val(json.IdProducto);
+                $("#txtnombre").val(json.Nombre);
+                $("#txtdescripcion").val(json.Descripcion);
+                $("#cbomarca").val(json.oMarca.IdMarca);
+                $("#cbocategoria").val(json.oCategoria.IdCategoria);
+                $("#txtprecio").val(json.Precio);
+                $("#txtstock").val(json.Stock);
+                $("#cboactivo").val(json.Activo ? 1 : 0);
+
+                // Cargar imagen en el modal si existe
+                if (json.NombreImagen) {
+                     $.post('@Url.Action("MostrarImagen", "Mantenimiento")', { id: json.IdProducto }, function (data) {
+                        if (data.conversion) {
+                            $("#img_producto").attr("src", "data:image/" + data.extension + ";base64," + data.textoBase64);
+                        }
+                    });
+                }
+            } else {
+                $("#modalTitulo").html('<i class="fas fa-plus-circle me-2" style="color: var(--gem-gold-leaf);"></i> Joya & Skin');
+            }
+            $("#FormModal").modal("show");
+        }
+
+        $("#tabla tbody").on("click", '.btn-editar', function () {
+            var data = tabladata.row($(this).closest("tr")).data();
+            abrirModal(data);
+        });
+
+        $("#tabla tbody").on("click", '.btn-eliminar', function () {
+            var data = tabladata.row($(this).closest("tr")).data();
+            Swal.fire({
+                title: "¿Eliminar Producto?",
+                text: "Desea eliminar de la colección: " + data.Nombre,
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: '#d00000',
+                cancelButtonColor: '#1a3a6d',
+                confirmButtonText: "Sí, eliminar",
+                cancelButtonText: "Cancelar"
+            }).then((res) => {
+                if (res.isConfirmed) {
+                    $.post('@Url.Action("EliminarProducto", "Mantenimiento")', { id: data.IdProducto }, function (d) {
+                        if (d.resultado) {
+                            tabladata.ajax.reload();
+                            Swal.fire("Éxito", "El producto ha sido retirado.", "success");
+                        } else {
+                            Swal.fire("Error", d.mensaje, "error");
+                        }
+                    });
+                }
+            });
+        });
+
+        function Guardar() {
+    var ImagenSeleccionada = $("#fileProducto")[0].files[0];
+            var precioLimpio = $("#txtprecio").val().replace(/[^0-9.]/g, '');
+
+    var obj = {
+        IdProducto: $("#txtid").val(),
+        Nombre: $("#txtnombre").val(),
+        Descripcion: $("#txtdescripcion").val(),
+        oMarca: {
+            IdMarca: $("#cbomarca option:selected").val(),
+            Descripcion: $("#cbomarca option:selected").text()
+        },
+        oCategoria: {
+            IdCategoria: $("#cbocategoria option:selected").val(),
+            Descripcion: $("#cbocategoria option:selected").text()
+        },
+        PrecioTexto: precioLimpio,
+        Precio: precioLimpio,
+        Stock: $("#txtstock").val(),
+        Activo: $("#cboactivo").val() == 1 ? true : false
+    };
+
+    var request = new FormData();
+    request.append("objeto", JSON.stringify(obj));
+    request.append("archivo", ImagenSeleccionada);
+
+    jQuery.ajax({
+        url: '@Url.Action("GuardarProducto", "Mantenimiento")',
+        type: "POST",
+        data: request,
+        processData: false,
+        contentType: false,
+        success: function (data) {
+            $(".modal-body").LoadingOverlay("hide");
+
+            if (data.operacion_exitosa) {
+                tabladata.ajax.reload();
+                $("#FormModal").modal("hide");
+                Swal.fire("Éxito", "Producto guardado correctamente", "success");
+            } else {
+                $("#errorText").text(data.mensaje);
+                $("#mensajeError").removeClass("d-none");
+            }
+        },
+        error: function (error) {
+            $(".modal-body").LoadingOverlay("hide");
+            $("#mensajeError").text("Error Ajax");
+            $("#mensajeError").removeClass("d-none");
+        },
+        beforeSend: function () {
+            $(".modal-body").LoadingOverlay("show", {
+                imageResizeFactor: 2,
+                text: "Guardando...",
+                size: 14
+                    });
+                }
+            });
+        }
+    </script>
+}

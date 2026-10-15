@@ -1,0 +1,218 @@
+﻿@{ Layout = null; }
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lumi Store - Recuperar Acceso</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --gem-sapphire: #162e55; /* Zafiro */
+            --gem-emerald: #1d4d44; /* Esmeralda Dark */
+            --gem-ruby: #dc3545; /* Rubí */
+            --gem-diamond: #ffffff; /* Diamante */
+            --gem-sapphire-soft: #eef2ff; /* Zafiro Soft */
+            --gem-emerald-vivid: #10b981; /* Esmeralda Vivo */
+            --gem-pink-fancy: #ff85a2; /* Fancy Pink */
+        }
+
+        body {
+            background: linear-gradient(135deg, var(--gem-sapphire) 0%, var(--gem-emerald) 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            font-family: 'Segoe UI', sans-serif;
+            margin: 0;
+        }
+
+            /* Brillo ambiental suave */
+            body::after {
+                content: "";
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background: radial-gradient(circle at 50% 50%, rgba(255, 133, 162, 0.05) 0%, transparent 70%);
+                z-index: 0;
+            }
+
+        .login-card {
+            background: var(--gem-diamond);
+            border-radius: 30px;
+            border: none;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+
+        .login-header {
+            background: var(--gem-sapphire);
+            padding: 45px 30px;
+            text-align: center;
+            position: relative;
+            border-bottom: 4px solid var(--gem-ruby); /* Detalle en Rubí para recuperación */
+        }
+
+        .brand-icon {
+            width: 65px;
+            height: 65px;
+            background: var(--gem-diamond);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: var(--gem-ruby);
+            font-size: 1.6rem;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.2);
+        }
+
+        .login-header h2 {
+            color: var(--gem-diamond);
+            letter-spacing: 3px;
+            font-weight: 800;
+            font-size: 1.4rem;
+            margin: 0;
+        }
+
+        .alert-text {
+            color: var(--gem-pink-fancy);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 10px;
+            font-weight: 700;
+        }
+
+        .card-body {
+            padding: 45px !important;
+        }
+
+        /* Inputs con Zafiro Soft */
+        .form-floating > .form-control {
+            border: 2px solid var(--gem-sapphire-soft);
+            border-radius: 15px;
+            background-color: var(--gem-sapphire-soft);
+            transition: all 0.3s ease;
+        }
+
+            .form-floating > .form-control:focus {
+                background-color: var(--gem-diamond);
+                border-color: var(--gem-pink-fancy);
+                box-shadow: 0 0 0 4px rgba(255, 133, 162, 0.1);
+            }
+
+        /* Botón Enviar - Gradiente Zafiro/Rubí */
+        .btn-recover {
+            background: linear-gradient(45deg, var(--gem-sapphire) 0%, var(--gem-ruby) 100%);
+            border: none;
+            border-radius: 15px;
+            padding: 14px 25px;
+            font-weight: 700;
+            color: var(--gem-diamond);
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+            .btn-recover:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 10px 20px rgba(22, 46, 85, 0.3);
+                filter: brightness(1.1);
+                color: var(--gem-diamond);
+            }
+
+        .back-link {
+            color: var(--gem-sapphire);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+            .back-link:hover {
+                color: var(--gem-emerald-vivid);
+                transform: translateX(-5px);
+            }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-5 col-xl-4">
+                <div class="login-card">
+                    <div class="login-header">
+                        <div class="brand-icon">
+                            <i class="fas fa-paper-plane"></i>
+                        </div>
+                        <h2>RECUPERACIÓN</h2>
+                        <p class="alert-text">Acceso de Seguridad</p>
+                    </div>
+
+                    <div class="card-body">
+                        <p class="text-muted text-center small mb-4">
+                            Introduzca su correo institucional para recibir una nueva clave de acceso temporal.
+                        </p>
+
+                        <form id="recoverForm" action="@Url.Action("Reestablecer", "Acceso")" method="post">
+                            <div class="form-floating mb-4">
+                                <input class="form-control" id="correo" type="email" name="correo" placeholder="name@example.com" required />
+                                <label for="correo"><i class="fas fa-envelope me-2"></i>Correo Registrado</label>
+                            </div>
+
+                            <div class="d-flex align-items-center justify-content-between gap-3">
+                                <a class="back-link" href="@Url.Action("Index", "Acceso")">
+                                    <i class="fas fa-arrow-left me-2"></i> Inicio
+                                </a>
+                                <button class="btn btn-recover shadow-sm" type="submit">
+                                    Enviar Clave <i class="fas fa-magic ms-2"></i>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Loading Overlay - Estilo Rubí/Zafiro
+            $("#recoverForm").submit(function () {
+                $.LoadingOverlay("show", {
+                    image: "",
+                    fontawesome: "fas fa-paper-plane fa-spin",
+                    background: "rgba(22, 46, 85, 0.8)",
+                    fontawesomeColor: "#ff85a2"
+                });
+            });
+
+            // Errores con SweetAlert2 (Color Rubí)
+            @if (ViewBag.Error != null)
+            {
+                <text>
+                Swal.fire({
+                    icon: 'error',
+                    title: '<span style="color:var(--gem-ruby)">Error de Envío</span>',
+                    text: '@ViewBag.Error',
+                    confirmButtonColor: '#162e55'
+                });
+                </text>
+            }
+        });
+    </script>
+</body>
+</html>

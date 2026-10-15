@@ -1,0 +1,1222 @@
+﻿@model Entidad.Producto
+
+@{
+    ViewBag.Title = Model.Nombre + " · Lumi Store | Colección Premium";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var img = !string.IsNullOrEmpty(Model.Base64)
+        ? $"data:image/{Model.Extension};base64,{Model.Base64}"
+        : Url.Content("~/Content/img/default-experience.jpg");
+
+    var categoriaNombre = string.IsNullOrWhiteSpace(Model.oCategoria?.Descripcion)
+        ? "Colección Exclusiva"
+        : Model.oCategoria.Descripcion;
+
+    var marcaNombre = string.IsNullOrWhiteSpace(Model.oMarca?.Descripcion)
+        ? "Casa de Autor"
+        : Model.oMarca.Descripcion;
+
+    var esExclusivo = Model.Stock < 10;
+    var esLimitado = Model.Stock > 0 && Model.Stock < 50;
+    var esDisponible = Model.Stock > 0 && Model.Activo;
+    var esUltimaUnidad = Model.Stock == 1;
+
+    var marcasIconicas = new[] { "cartier", "bvlgari", "van cleef", "nishane", "initio", "montale", "hermes", "dior", "chanel", "gucci", "hublot", "rolex" };
+    var iconico = marcasIconicas.Any(m => (Model.oMarca?.Descripcion ?? "").ToLower().Contains(m));
+
+    var precioFormateado = Model.Precio.ToString("C0", System.Globalization.CultureInfo.CreateSpecificCulture("es-CO"));
+
+    // Determinar el mensaje de stock - CORREGIDO CON LLAVES
+    var stockMensaje = "";
+
+    if (!esDisponible)
+    {
+        stockMensaje = "EDICIÓN AGOTADA";
+    }
+    else if (esUltimaUnidad)
+    {
+        stockMensaje = "ÚLTIMA UNIDAD";
+    }
+    else if (esExclusivo)
+    {
+        stockMensaje = "STOCK LIMITADO";
+    }
+    else if (Model.Stock <= 20)
+    {
+        stockMensaje = $"SOLO {Model.Stock} DISPONIBLES";
+    }
+    else
+    {
+        stockMensaje = "DISPONIBLE";
+    }
+
+    // Calcular envío estimado
+    var hoy = DateTime.Now;
+    var fechaEntrega = hoy.AddDays(3).ToString("dddd dd 'de' MMMM", new System.Globalization.CultureInfo("es-ES"));
+    fechaEntrega = char.ToUpper(fechaEntrega[0]) + fechaEntrega.Substring(1);
+}
+
+@section styles {
+    <style>
+        /* ================= VARIABLES ESPECÍFICAS DETALLE ================= */
+        :root {
+            --product-hero-height: 600px;
+            --product-gallery-width: 60%;
+            --product-info-width: 40%;
+            --product-sticky-offset: 120px;
+        }
+
+        /* ================= HERO DETALLE ================= */
+        .producto-hero-section {
+            padding: var(--product-sticky-offset) 0 0;
+            background: linear-gradient(135deg, var(--bg-60), var(--bg-30));
+            min-height: 100vh;
+            position: relative;
+        }
+
+            .producto-hero-section::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                height: 400px;
+                background: linear-gradient(135deg, rgba(15, 82, 186, 0.03) 0%, rgba(93, 58, 140, 0.02) 50%, transparent 100%);
+                z-index: 1;
+            }
+
+        .producto-container {
+            position: relative;
+            z-index: 2;
+            background: var(--glass);
+            border-radius: 32px;
+            border: 1px solid var(--lux-border);
+            overflow: hidden;
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.08);
+            margin-bottom: 4rem;
+        }
+
+        /* ================= GALERÍA ================= */
+        .producto-gallery {
+            padding: 3rem;
+            background: linear-gradient(135deg, #FFFFFF, #F8F9FA);
+            position: relative;
+            min-height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gallery-container {
+            position: relative;
+            width: 100%;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .main-image-container {
+            border-radius: 24px;
+            border: 1px solid var(--lux-border);
+            background: #FFFFFF;
+            overflow: hidden;
+            cursor: zoom-in;
+            transition: transform 0.3s;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            position: relative;
+        }
+
+            .main-image-container:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+            }
+
+        .main-image {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+            padding: 2rem;
+            background: #FFFFFF;
+        }
+
+        /* ================= BADGES ================= */
+        .product-badges {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            right: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+            z-index: 10;
+        }
+
+        .product-badge {
+            padding: 0.5rem 1.25rem;
+            border-radius: 25px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            text-transform: uppercase;
+        }
+
+        .badge-exclusive {
+            background: linear-gradient(135deg, var(--rubi), #C2185B);
+        }
+
+        .badge-iconic {
+            background: linear-gradient(135deg, var(--oro), #B8860B);
+        }
+
+        .badge-limited {
+            background: linear-gradient(135deg, var(--amatista), #4527A0);
+        }
+
+        .badge-stock {
+            background: linear-gradient(135deg, var(--esmeralda), #00695C);
+        }
+
+        .badge-new {
+            background: linear-gradient(135deg, var(--zafiro), #1565C0);
+        }
+
+        /* ================= ZOOM OVERLAY ================= */
+        .zoom-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.98);
+            z-index: 9999;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.3s;
+            backdrop-filter: blur(20px);
+        }
+
+            .zoom-overlay.active {
+                display: flex;
+                opacity: 1;
+            }
+
+        .zoom-content {
+            position: relative;
+            max-width: 90vw;
+            max-height: 90vh;
+        }
+
+        .zoom-image {
+            max-width: 100%;
+            max-height: 90vh;
+            border-radius: 20px;
+            border: 1px solid var(--lux-border);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-close-zoom {
+            position: absolute;
+            top: -50px;
+            right: 0;
+            background: var(--glass);
+            border: 1px solid var(--lux-border);
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-main);
+            font-size: 1.25rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+            .btn-close-zoom:hover {
+                background: var(--rubi);
+                color: white;
+                transform: rotate(90deg);
+            }
+
+        /* ================= INFORMACIÓN DEL PRODUCTO ================= */
+        .producto-info {
+            padding: 3rem;
+            background: var(--glass);
+        }
+
+        .product-breadcrumb {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+            .product-breadcrumb a {
+                color: var(--text-muted);
+                text-decoration: none;
+                transition: color 0.2s;
+            }
+
+                .product-breadcrumb a:hover {
+                    color: var(--zafiro);
+                }
+
+            .product-breadcrumb .separator {
+                color: var(--oro);
+            }
+
+        .product-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            line-height: 1.1;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+        }
+
+        .product-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--lux-border);
+        }
+
+        .meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-muted);
+        }
+
+            .meta-item i {
+                color: var(--zafiro);
+            }
+
+        /* ================= PRECIO ================= */
+        .product-price-section {
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: linear-gradient(135deg, rgba(15, 82, 186, 0.05), rgba(93, 58, 140, 0.05));
+            border-radius: 20px;
+            border: 1px solid var(--lux-border);
+        }
+
+        .product-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .price-installments {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+            .price-installments strong {
+                color: var(--esmeralda);
+            }
+
+        .stock-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            margin-top: 1rem;
+        }
+
+        .stock-available {
+            background: rgba(0, 122, 94, 0.1);
+            color: var(--esmeralda);
+            border: 1px solid rgba(0, 122, 94, 0.2);
+        }
+
+        .stock-low {
+            background: rgba(155, 28, 49, 0.1);
+            color: var(--rubi);
+            border: 1px solid rgba(155, 28, 49, 0.2);
+        }
+
+        .stock-out {
+            background: rgba(114, 103, 90, 0.1);
+            color: var(--text-muted);
+            border: 1px solid rgba(114, 103, 90, 0.2);
+        }
+
+        /* ================= DESCRIPCIÓN ================= */
+        .product-description {
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin: 2rem 0;
+            padding: 1.5rem 0;
+            border-bottom: 1px solid var(--lux-border);
+        }
+
+            .product-description h4 {
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 1.5rem;
+                color: var(--text-main);
+                margin-bottom: 1rem;
+            }
+
+        /* ================= ESPECIFICACIONES ================= */
+        .product-specs {
+            margin: 2rem 0;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .spec-item {
+            background: var(--bg-60);
+            border: 1px solid var(--lux-border);
+            border-radius: 12px;
+            padding: 1rem;
+        }
+
+        .spec-label {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.25rem;
+        }
+
+        .spec-value {
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        /* ================= ACCIONES ================= */
+        .product-actions {
+            margin-top: 3rem;
+            position: sticky;
+            top: var(--product-sticky-offset);
+            background: var(--glass);
+            border: 1px solid var(--lux-border);
+            border-radius: 24px;
+            padding: 2rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            backdrop-filter: blur(10px);
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .btn-add-to-history {
+            background: var(--gradient-gold);
+            border: none;
+            color: var(--text-main);
+            padding: 1.2rem;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+            .btn-add-to-history::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 100%;
+                background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+                transition: left 0.5s;
+            }
+
+            .btn-add-to-history:hover::before {
+                left: 100%;
+            }
+
+            .btn-add-to-history:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 20px 40px rgba(209, 178, 128, 0.3);
+            }
+
+            .btn-add-to-history:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+                transform: none !important;
+                box-shadow: none !important;
+            }
+
+        .btn-buy-now {
+            background: var(--gradient-lux);
+            border: none;
+            color: white;
+            padding: 1.2rem;
+            border-radius: 16px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            transition: all 0.3s;
+        }
+
+            .btn-buy-now:hover:not(:disabled) {
+                transform: translateY(-3px);
+                box-shadow: 0 20px 40px rgba(15, 82, 186, 0.3);
+            }
+
+            .btn-buy-now:disabled {
+                opacity: 0.5;
+                cursor: not-allowed;
+            }
+
+        /* ================= GARANTÍAS ================= */
+        .product-guarantees {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--lux-border);
+        }
+
+        .guarantee-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            color: var(--text-muted);
+        }
+
+            .guarantee-item i {
+                color: var(--esmeralda);
+                font-size: 1.25rem;
+            }
+
+        /* ================= ENVÍO ESTIMADO ================= */
+        .shipping-estimate {
+            background: linear-gradient(135deg, rgba(15, 82, 186, 0.05), rgba(93, 58, 140, 0.05));
+            border-radius: 16px;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border: 1px solid var(--lux-border);
+        }
+
+            .shipping-estimate h5 {
+                font-family: 'Cormorant Garamond', serif;
+                font-size: 1.25rem;
+                color: var(--text-main);
+                margin-bottom: 0.75rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+            }
+
+        .shipping-date {
+            font-weight: 600;
+            color: var(--zafiro);
+        }
+
+        /* ================= PRODUCTOS RELACIONADOS ================= */
+        .related-products {
+            padding: 4rem 0;
+            background: var(--bg-30);
+        }
+
+        .related-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        /* ================= RESPONSIVE ================= */
+        @@media (max-width: 1200px) {
+            .product-name {
+                font-size: 2.5rem;
+            }
+
+            .product-price {
+                font-size: 2.5rem;
+            }
+        }
+
+        @@media (max-width: 992px) {
+            .producto-container {
+                flex-direction: column;
+            }
+
+            .producto-gallery {
+                padding: 2rem;
+            }
+
+            .producto-info {
+                padding: 2rem;
+            }
+
+            .product-actions {
+                position: static;
+                margin-top: 2rem;
+            }
+
+            .product-name {
+                font-size: 2.25rem;
+            }
+        }
+
+        @@media (max-width: 768px) {
+            .producto-hero-section {
+                padding: 100px 0 0;
+            }
+
+            .product-badges {
+                top: 1rem;
+                left: 1rem;
+                right: 1rem;
+            }
+
+            .product-badge {
+                padding: 0.4rem 1rem;
+                font-size: 0.75rem;
+            }
+
+            .product-name {
+                font-size: 2rem;
+            }
+
+            .product-price {
+                font-size: 2rem;
+            }
+
+            .specs-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @@media (max-width: 576px) {
+            .producto-gallery {
+                padding: 1.5rem;
+                min-height: 400px;
+            }
+
+            .producto-info {
+                padding: 1.5rem;
+            }
+
+            .product-name {
+                font-size: 1.75rem;
+            }
+
+            .action-buttons {
+                flex-direction: column;
+            }
+
+            .btn-add-to-history,
+            .btn-buy-now {
+                padding: 1rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+}
+
+<!-- JSON-LD PARA PRODUCTO (SEO) -->
+<script type="application/ld+json">
+{
+    "context": "https://schema.org",
+    "type": "Product",
+    "name": "@Model.Nombre",
+    "image": "@img",
+    "description": "@Model.Descripcion",
+    "sku": "@Model.IdProducto",
+    "gtin": "LUMI-@Model.IdProducto",
+    "brand": {
+        "type": "Brand",
+        "name": "@marcaNombre"
+    },
+    "category": "@categoriaNombre",
+    "offers": {
+        "type": "Offer",
+        "priceCurrency": "COP",
+        "price": "@Model.Precio",
+        "priceValidUntil": "@DateTime.Now.AddYears(1).ToString("yyyy-MM-dd")",
+        "availability": "@(esDisponible ? "https://schema.org/InStock" : "https://schema.org/OutOfStock")",
+        "itemCondition": "https://schema.org/NewCondition",
+        "seller": {
+            "type": "Organization",
+            "name": "Lumi Store"
+        }
+    },
+    "review": {
+        "type": "Review",
+        "reviewRating": {
+            "type": "Rating",
+            "ratingValue": "4.9",
+            "bestRating": "5"
+        },
+        "author": {
+            "type": "Person",
+            "name": "Coleccionista Lumi"
+        }
+    }
+}
+</script>
+
+<section class="producto-hero-section">
+    <div class="container">
+        <div class="row g-0">
+            <div class="col-lg-7">
+                <!-- GALERÍA -->
+                <div class="producto-gallery">
+                    <div class="gallery-container">
+                        <!-- BADGES -->
+                        <div class="product-badges">
+                            @if (esExclusivo)
+                            {
+                                <span class="product-badge badge-exclusive">EXCLUSIVO</span>
+                            }
+                            @if (iconico)
+                            {
+                                <span class="product-badge badge-iconic">ICÓNICO</span>
+                            }
+                            @if (esLimitado)
+                            {
+                                <span class="product-badge badge-limited">EDICIÓN LIMITADA</span>
+                            }
+                            @if (Model.Activo)
+                            {
+                                <span class="product-badge badge-new">NUEVO</span>
+                            }
+                        </div>
+
+                        <!-- IMAGEN PRINCIPAL -->
+                        <div class="main-image-container" id="zoomTrigger" aria-label="Ampliar imagen" role="button" tabindex="0">
+                            <img src="@img" alt="@Model.Nombre - Colección Lumi Premium" class="main-image" loading="eager" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <!-- INFORMACIÓN -->
+                <div class="producto-info">
+                    <!-- MIGA DE PAN -->
+                    <div class="product-breadcrumb" aria-label="Ruta de navegación">
+                        <a href="@Url.Action("Index","Tienda")">Colección</a>
+                        <span class="separator">›</span>
+                        <a href="@Url.Action("Index","Tienda")#coleccion">@categoriaNombre</a>
+                        <span class="separator">›</span>
+                        <strong>@Model.Nombre</strong>
+                    </div>
+
+                    <!-- NOMBRE -->
+                    <h1 class="product-name" itemprop="name">@Model.Nombre</h1>
+
+                    <!-- META INFORMACIÓN -->
+                    <div class="product-meta" aria-label="Información del producto">
+                        <div class="meta-item">
+                            <i class="fas fa-building" aria-hidden="true"></i>
+                            <span>@marcaNombre</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-tag" aria-hidden="true"></i>
+                            <span>@categoriaNombre</span>
+                        </div>
+                        <div class="meta-item">
+                            <i class="fas fa-gem" aria-hidden="true"></i>
+                            <span>@(esExclusivo ? "Pieza Única" : "Colección Premium")</span>
+                        </div>
+                    </div>
+
+                    <!-- PRECIO Y STOCK -->
+                    <div class="product-price-section">
+                        <div class="product-price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
+                            <meta itemprop="priceCurrency" content="COP" />
+                            <meta itemprop="price" content="@Model.Precio" />
+                            <span>@precioFormateado</span>
+                        </div>
+
+                        <p class="price-installments">
+                            <i class="fas fa-credit-card" aria-hidden="true"></i>
+                            Hasta <strong>12 cuotas sin interés</strong>
+                        </p>
+
+                        <div class="stock-indicator @(esDisponible ? "stock-available" : "stock-out") @(esUltimaUnidad ? "stock-low" : "")"
+                             aria-live="polite">
+                            <i class="fas @(esDisponible ? "fa-check-circle" : "fa-times-circle")" aria-hidden="true"></i>
+                            <span>@stockMensaje</span>
+                            @if (esDisponible && Model.Stock > 0)
+                            {
+                                <span class="visually-hidden">Stock disponible: @Model.Stock unidades</span>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- DESCRIPCIÓN -->
+                    <div class="product-description" itemprop="description">
+                        <h4><i class="fas fa-align-left me-2" aria-hidden="true"></i>Descripción</h4>
+                        <p>
+                            @Html.Raw(string.IsNullOrWhiteSpace(Model.Descripcion)
+                         ? "Pieza exclusiva de la colección Lumi Premium. Cada detalle ha sido cuidadosamente diseñado para ofrecer una experiencia sensorial única que trasciende el tiempo."
+                         : Model.Descripcion.Replace("\n", "<br>"))
+                        </p>
+                    </div>
+
+                    <!-- ESPECIFICACIONES -->
+                    <div class="product-specs">
+                        <h4><i class="fas fa-clipboard-list me-2" aria-hidden="true"></i>Especificaciones</h4>
+                        <div class="specs-grid">
+                            <div class="spec-item">
+                                <div class="spec-label">SKU</div>
+                                <div class="spec-value">LUMI-@Model.IdProducto</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-label">Colección</div>
+                                <div class="spec-value">@categoriaNombre</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-label">Marca</div>
+                                <div class="spec-value">@marcaNombre</div>
+                            </div>
+                            <div class="spec-item">
+                                <div class="spec-label">Estado</div>
+                                <div class="spec-value">@(Model.Activo ? "Disponible" : "No disponible")</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- ACCIONES (STICKY) -->
+                    <div class="product-actions" aria-label="Acciones de compra">
+                        <div class="action-buttons">
+                            <button id="btnAddToHistory"
+                                    class="btn-add-to-history"
+                                    @(!esDisponible ? "disabled" : "")
+                                    aria-label="@(esDisponible ? "Agregar a mi colección personal" : "Producto no disponible")">
+                                <i class="fas fa-heart" aria-hidden="true"></i>
+                                @(esDisponible ? "AGREGAR A MI HISTORIA" : "EDICIÓN AGOTADA")
+                            </button>
+
+                            @if (esDisponible)
+                            {
+                                <button id="btnComprarAhora"
+                                        class="btn-buy-now"
+                                        aria-label="Comprar ahora con envío inmediato">
+                                    <i class="fas fa-bolt" aria-hidden="true"></i>
+                                    COMPRAR AHORA
+                                </button>
+                            }
+                        </div>
+
+                        <!-- GARANTÍAS -->
+                        <div class="product-guarantees">
+                            <div class="guarantee-item">
+                                <i class="fas fa-shield-alt" aria-hidden="true"></i>
+                                <span>Compra 100% segura · Pago protegido</span>
+                            </div>
+                            <div class="guarantee-item">
+                                <i class="fas fa-truck" aria-hidden="true"></i>
+                                <span>Envío premium certificado · Rastreo en tiempo real</span>
+                            </div>
+                            <div class="guarantee-item">
+                                <i class="fas fa-undo" aria-hidden="true"></i>
+                                <span>14 días devolución garantizada</span>
+                            </div>
+                            <div class="guarantee-item">
+                                <i class="fas fa-headset" aria-hidden="true"></i>
+                                <span>Servicio Concierge 24/7</span>
+                            </div>
+                        </div>
+
+                        <!-- ENVÍO ESTIMADO -->
+                        <div class="shipping-estimate">
+                            <h5><i class="fas fa-clock" aria-hidden="true"></i>Envío estimado</h5>
+                            <p>
+                                Recibe antes del <span class="shipping-date">@fechaEntrega</span><br>
+                                <small class="text-muted">Envío express para pedidos antes de las 2 PM</small>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ZOOM OVERLAY -->
+<div class="zoom-overlay" id="zoomOverlay" role="dialog" aria-label="Vista ampliada" aria-modal="true">
+    <div class="zoom-content">
+        <button class="btn-close-zoom" id="btnCloseZoom" aria-label="Cerrar vista ampliada">
+            <i class="fas fa-times" aria-hidden="true"></i>
+        </button>
+        <img src="@img" alt="@Model.Nombre - Vista ampliada" class="zoom-image" />
+    </div>
+</div>
+
+<!-- PRODUCTOS RELACIONADOS (SIMULADO - SE IMPLEMENTARÍA CON BACKEND) -->
+@if (Model.oCategoria != null)
+{
+    <section class="related-products">
+        <div class="container">
+            <h2 class="related-title">Piezas Relacionadas</h2>
+            <div class="row" id="relatedProductsContainer">
+                <div class="col-12 text-center">
+                    <p class="text-muted">Cargando selección relacionada...</p>
+                </div>
+            </div>
+        </div>
+    </section>
+}
+
+@section scripts {
+    <script>
+        $(function () {
+            const productoId = @Model.IdProducto;
+            const esDisponible = @esDisponible.ToString().ToLower();
+            const esUltimaUnidad = @esUltimaUnidad.ToString().ToLower();
+            const stockDisponible = @Model.Stock;
+
+            // ================= ZOOM DE IMAGEN =================
+            const $zoomTrigger = $('#zoomTrigger');
+            const $zoomOverlay = $('#zoomOverlay');
+            const $btnCloseZoom = $('#btnCloseZoom');
+
+            // Abrir zoom
+            $zoomTrigger.on('click keypress', function(e) {
+                if (e.type === 'click' || (e.type === 'keypress' && (e.key === 'Enter' || e.key === ' '))) {
+                    e.preventDefault();
+                    $zoomOverlay.addClass('active');
+                    $('body').css('overflow', 'hidden');
+
+                    // Enfocar botón de cerrar para accesibilidad
+                    setTimeout(() => {
+                        $btnCloseZoom.focus();
+                    }, 100);
+
+                    // Track event
+                    trackEvent('product_image_zoom', {
+                        product_id: productoId,
+                        product_name: '@Model.Nombre'
+                    });
+                }
+            });
+
+            // Cerrar zoom
+            $btnCloseZoom.on('click', function() {
+                $zoomOverlay.removeClass('active');
+                $('body').css('overflow', '');
+                $zoomTrigger.focus(); // Regresar foco al trigger
+            });
+
+            // Cerrar con ESC
+            $(document).on('keydown', function(e) {
+                if (e.key === 'Escape' && $zoomOverlay.hasClass('active')) {
+                    $zoomOverlay.removeClass('active');
+                    $('body').css('overflow', '');
+                    $zoomTrigger.focus();
+                }
+            });
+
+            // Cerrar al hacer clic fuera de la imagen
+            $zoomOverlay.on('click', function(e) {
+                if (e.target === this) {
+                    $zoomOverlay.removeClass('active');
+                    $('body').css('overflow', '');
+                    $zoomTrigger.focus();
+                }
+            });
+
+            // ================= AGREGAR AL CARRITO =================
+            $('#btnAddToHistory').on('click', function() {
+                if (!esDisponible) return;
+
+                const $btn = $(this);
+                const originalHTML = $btn.html();
+                const originalState = $btn.prop('disabled');
+
+                // Feedback visual
+                $btn.html('<i class="fas fa-spinner fa-spin"></i> AGREGANDO...');
+                $btn.prop('disabled', true);
+
+                // Animación de pulso
+                $btn.css({
+                    'animation': 'pulse 0.5s',
+                    'transform': 'scale(0.98)'
+                });
+
+                $.ajax({
+                    url: '@Url.Action("AgregarCarrito","Tienda")',
+                    type: 'POST',
+                    data: { idproducto: productoId },
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    }
+                })
+                .done(function(response) {
+                    if (response && response.respuesta) {
+                        // Éxito
+                        $btn.html('<i class="fas fa-check"></i> ¡AGREGADO!');
+                        $btn.removeClass('btn-add-to-history').addClass('btn-success');
+
+                        // Actualizar contador global
+                        if (typeof actualizarCarrito === 'function') {
+                            actualizarCarrito();
+                        }
+
+                        // Actualizar UI de stock si es última unidad
+                        if (esUltimaUnidad) {
+                            $('.stock-indicator').removeClass('stock-available').addClass('stock-out')
+                                .html('<i class="fas fa-times-circle"></i> AGOTADO');
+                            $('#btnComprarAhora').prop('disabled', true).html('<i class="fas fa-times"></i> AGOTADO');
+                        }
+
+                        // Notificación
+                        mostrarNotificacionLumi('¡Tesoro añadido!',
+                            '@Model.Nombre ha sido agregado a tu colección personal',
+                            'success');
+
+                        // Track event
+                        trackEvent('add_to_cart', {
+                            item_id: productoId,
+                            item_name: '@Model.Nombre',
+                            price: @Model.Precio,
+                            currency: 'COP',
+                            quantity: 1
+                        });
+
+                        // Restaurar botón después de 2 segundos
+                        setTimeout(function() {
+                            $btn.html(originalHTML);
+                            $btn.removeClass('btn-success').addClass('btn-add-to-history');
+                            $btn.prop('disabled', originalState);
+                            $btn.css({
+                                'animation': '',
+                                'transform': ''
+                            });
+                        }, 2000);
+                    } else {
+                        // Error
+                        $btn.html(originalHTML);
+                        $btn.prop('disabled', originalState);
+                        $btn.css({
+                            'animation': '',
+                            'transform': ''
+                        });
+
+                        mostrarNotificacionLumi('Error',
+                            response.mensaje || 'No se pudo agregar al carrito',
+                            'error');
+                    }
+                })
+                .fail(function() {
+                    // Error de conexión
+                    $btn.html(originalHTML);
+                    $btn.prop('disabled', originalState);
+                    $btn.css({
+                        'animation': '',
+                        'transform': ''
+                    });
+
+                    mostrarNotificacionLumi('Error de conexión',
+                        'Por favor intenta nuevamente',
+                        'error');
+                });
+            });
+
+            // ================= COMPRAR AHORA =================
+            $('#btnComprarAhora').on('click', function() {
+                if (!esDisponible) return;
+
+                const $btn = $(this);
+                const originalHTML = $btn.html();
+
+                // Feedback visual
+                $btn.html('<i class="fas fa-spinner fa-spin"></i> PROCESANDO...');
+                $btn.prop('disabled', true);
+
+                // Primero agregar al carrito
+                $.ajax({
+                    url: '@Url.Action("AgregarCarrito","Tienda")',
+                    type: 'POST',
+                    data: { idproducto: productoId },
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    }
+                })
+                .done(function(response) {
+                    if (response && response.respuesta) {
+                        // Actualizar contador
+                        if (typeof actualizarCarrito === 'function') {
+                            actualizarCarrito();
+                        }
+
+                        // Redirigir al carrito después de breve delay
+                        setTimeout(function() {
+                            window.location.href = '@Url.Action("Carrito","Tienda")';
+                        }, 500);
+
+                        // Track event
+                        trackEvent('begin_checkout', {
+                            value: @Model.Precio,
+                            currency: 'COP',
+                            items: [{
+                                item_id: productoId,
+                                item_name: '@Model.Nombre',
+                                price: @Model.Precio,
+                                quantity: 1
+                            }]
+                        });
+                    } else {
+                        $btn.html(originalHTML);
+                        $btn.prop('disabled', false);
+                        mostrarNotificacionLumi('Error',
+                            'No se pudo agregar al carrito',
+                            'error');
+                    }
+                })
+                .fail(function() {
+                    $btn.html(originalHTML);
+                    $btn.prop('disabled', false);
+                    mostrarNotificacionLumi('Error de conexión',
+                        'Por favor intenta nuevamente',
+                        'error');
+                });
+            });
+
+            // ================= CARGAR PRODUCTOS RELACIONADOS =================
+            function cargarProductosRelacionados() {
+                const categoriaId = @(Model.oCategoria?.IdCategoria ?? 0);
+                if (categoriaId === 0) return;
+
+                $.ajax({
+                    url: '@Url.Action("ListarProducto","Tienda")',
+                    type: 'POST',
+                    data: {
+                        idcategoria: categoriaId,
+                        idmarca: 0
+                    },
+                    headers: {
+                        'RequestVerificationToken': $('input[name="__RequestVerificationToken"]').val()
+                    }
+                })
+                .done(function(response) {
+                    if (response && response.data && response.data.length > 0) {
+                        // Filtrar producto actual y tomar máximo 4 productos
+                        const relacionados = response.data
+                            .filter(p => p.IdProducto !== productoId)
+                            .slice(0, 4);
+
+                        if (relacionados.length > 0) {
+                            let html = '';
+                            relacionados.forEach(function(producto) {
+                                const imgSrc = producto.Base64
+                                    ? `data:image/${producto.Extension};base64,${producto.Base64}`
+                                    : '/Content/img/default-experience.jpg';
+
+                                const precioFormateado = new Intl.NumberFormat('es-CO', {
+                                    style: 'currency',
+                                    currency: 'COP',
+                                    minimumFractionDigits: 0
+                                }).format(producto.Precio || 0);
+
+                                html += `
+                                <div class="col-md-3 col-sm-6 mb-4">
+                                    <div class="card border-lux shadow-lux h-100">
+                                        <div class="card-img-top" style="height: 200px; overflow: hidden;">
+                                            <img src="${imgSrc}"
+                                                 class="w-100 h-100 object-fit-cover"
+                                                 alt="${producto.Nombre}"
+                                                 loading="lazy">
+                                        </div>
+                                        <div class="card-body">
+                                            <h6 class="card-title">${producto.Nombre}</h6>
+                                            <p class="card-text text-muted small">${producto.oMarca?.Descripcion || ''}</p>
+                                            <div class="d-flex justify-content-between align-items-center">
+                                                <span class="text-primary fw-bold">${precioFormateado}</span>
+                                                <a href="@Url.Action("DetalleProducto","Tienda")?idproducto=${producto.IdProducto}"
+                                                   class="btn btn-sm btn-outline-primary">
+                                                    Ver
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`;
+                            });
+
+                            $('#relatedProductsContainer').html(html);
+                        }
+                    }
+                })
+                .fail(function() {
+                    // Ocultar sección si hay error
+                    $('.related-products').hide();
+                });
+            }
+
+            // Cargar productos relacionados después de un delay
+            setTimeout(cargarProductosRelacionados, 1000);
+
+            // ================= INICIALIZACIÓN =================
+
+            // Añadir clase de animación al cargar
+            setTimeout(function() {
+                $('.producto-container').addClass('animate__animated animate__fadeInUp');
+            }, 100);
+
+            // Configurar accesibilidad para zoom
+            $zoomTrigger.attr({
+                'role': 'button',
+                'tabindex': '0',
+                'aria-label': 'Ampliar imagen para ver detalles'
+            });
+
+            // Track view del producto
+            trackEvent('view_item', {
+                item_id: productoId,
+                item_name: '@Model.Nombre',
+                price: @Model.Precio,
+                item_category: '@categoriaNombre',
+                item_brand: '@marcaNombre'
+            });
+        });
+    </script>
+
+    <!-- ANIMACIÓN PULSO PARA BOTONES -->
+    <style>
+        @@keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(0.95);
+            }
+
+            100% {
+                transform: scale(1);
+            }
+        }
+
+        .btn-add-to-history:disabled,
+        .btn-buy-now:disabled {
+            cursor: not-allowed;
+            opacity: 0.6;
+        }
+    </style>
+}

@@ -1,0 +1,1101 @@
+﻿@{ Layout = null; int id = (int)TempData["IdCliente"]; }
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Actualizar Credenciales - Lumi Store</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Fuentes premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Paleta Lumi Store Premium */
+            --zafiro-deep: #0d1c36;
+            --zafiro-light: #2a4a7e;
+            --coral-soft: #FF6B6B;
+            --fancy-pink: #ff85a2;
+            --pink-glow: rgba(255, 133, 162, 0.3);
+            --oro-champan: #F5E9C8;
+            --oro-light: #FFF9E6;
+            --blanco-seda: #F8F5F0;
+            --blanco-pure: #FFFFFF;
+            --esmeralda-lumi: #10b981;
+            --esmeralda-glow: rgba(16, 185, 129, 0.2);
+            --texto-suave: #6b7280;
+            /* Gradientes exclusivos */
+            --gradient-gold: linear-gradient(135deg, #F5E9C8 0%, #FFF9E6 100%);
+            --gradient-zafiro: linear-gradient(135deg, #0d1c36 0%, #2a4a7e 100%);
+            --gradient-pink: linear-gradient(135deg, #ff85a2 0%, #FF6B6B 100%);
+            --gradient-gem: linear-gradient(135deg, #ff85a2 0%, #FF6B6B 50%, #0d1c36 100%);
+            --gradient-emerald: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+            /* Sombras premium */
+            --shadow-premium: 0 30px 80px rgba(13, 28, 54, 0.15);
+            --shadow-glow: 0 0 50px rgba(255, 133, 162, 0.25);
+            --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--blanco-seda);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0;
+            padding: 2rem 1rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Partículas de fondo */
+        .security-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .security-particle {
+            position: absolute;
+            background: rgba(16, 185, 129, 0.1);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @@keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+            }
+
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+            }
+        }
+
+        /* Contenedor principal */
+        .security-container {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            max-width: 480px;
+        }
+
+        /* Tarjeta de seguridad premium */
+        .security-card-premium {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 30px;
+            box-shadow: var(--shadow-premium);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            position: relative;
+            animation: cardEntrance 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @@keyframes cardEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .security-card-premium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-emerald);
+            z-index: 10;
+        }
+
+        /* Header premium */
+        .security-header-premium {
+            padding: 3rem 3rem 2rem;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(248, 245, 240, 0.9) 0%, rgba(255, 255, 255, 0.9) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+            .security-header-premium::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                right: 0;
+                bottom: 0;
+                background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><defs><pattern id="pattern" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse"><circle cx="20" cy="20" r="1" fill="%2310b981" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23pattern)"/></svg>');
+                opacity: 0.3;
+            }
+
+        .lock-icon-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 2rem;
+        }
+
+        .lock-icon-premium {
+            font-size: 3.5rem;
+            color: var(--esmeralda-lumi);
+            filter: drop-shadow(0 10px 20px rgba(16, 185, 129, 0.3));
+            position: relative;
+            z-index: 2;
+            animation: lock-float 3s infinite ease-in-out;
+        }
+
+        @@keyframes lock-float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                filter: drop-shadow(0 5px 15px rgba(16, 185, 129, 0.3));
+            }
+
+            50% {
+                transform: translateY(-8px) rotate(5deg) scale(1.1);
+                filter: drop-shadow(0 15px 30px rgba(16, 185, 129, 0.5));
+            }
+        }
+
+        .lock-icon-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--esmeralda-glow) 0%, transparent 70%);
+            z-index: 1;
+            animation: pulse 3s infinite ease-in-out;
+        }
+
+        @@keyframes pulse {
+            0%, 100% {
+                opacity: 0.3;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+
+            50% {
+                opacity: 0.6;
+                transform: translate(-50%, -50%) scale(1.2);
+            }
+        }
+
+        .security-title-premium {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            font-size: 2.5rem;
+            background: var(--gradient-zafiro);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            position: relative;
+            display: inline-block;
+        }
+
+            .security-title-premium::after {
+                content: '';
+                position: absolute;
+                bottom: -8px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 80px;
+                height: 3px;
+                background: var(--gradient-emerald);
+                border-radius: 3px;
+            }
+
+        .security-subtitle-premium {
+            font-size: 1.1rem;
+            color: var(--texto-suave);
+            font-weight: 300;
+            line-height: 1.6;
+            max-width: 320px;
+            margin: 1.5rem auto 0;
+            opacity: 0.9;
+        }
+
+        /* Formulario premium */
+        .security-body-premium {
+            padding: 0 3rem 3rem;
+        }
+
+        /* Campos del formulario */
+        .form-group-security {
+            margin-bottom: 1.5rem;
+            position: relative;
+        }
+
+        .form-control-security {
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            border-radius: 15px;
+            border: 2px solid rgba(245, 233, 200, 0.5);
+            background: rgba(248, 245, 240, 0.3);
+            color: var(--zafiro-deep);
+            font-size: 1rem;
+            font-weight: 300;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-align: center;
+        }
+
+            .form-control-security:focus {
+                border-color: var(--esmeralda-lumi);
+                background: white;
+                box-shadow: 0 0 0 0.25rem rgba(16, 185, 129, 0.1);
+                outline: none;
+            }
+
+            .form-control-security::placeholder {
+                color: var(--texto-suave);
+                opacity: 0.7;
+                font-weight: 300;
+            }
+
+        /* Iconos en campos */
+        .input-icon-security {
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--esmeralda-lumi);
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-group-security.focused .input-icon-security {
+            color: var(--zafiro-deep);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        /* Indicador de fortaleza */
+        .strength-indicator {
+            margin-top: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+            .strength-indicator.show {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        .strength-dots {
+            display: flex;
+            gap: 6px;
+        }
+
+        .strength-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(245, 233, 200, 0.5);
+            transition: all 0.3s ease;
+        }
+
+            .strength-dot.active {
+                transform: scale(1.2);
+            }
+
+        .strength-text {
+            font-size: 0.85rem;
+            color: var(--texto-suave);
+            font-weight: 300;
+            min-width: 100px;
+            text-align: right;
+        }
+
+        /* Mensaje de error */
+        .alert-security-premium {
+            background: rgba(255, 107, 107, 0.1);
+            color: var(--coral-soft);
+            border: 1px solid rgba(255, 107, 107, 0.2);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            padding: 1rem 1.2rem;
+            text-align: center;
+            margin-bottom: 1.8rem;
+            backdrop-filter: blur(10px);
+            font-weight: 300;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @@keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .alert-security-premium i {
+            margin-right: 8px;
+        }
+
+        /* Botón de actualización */
+        .btn-update-premium {
+            background: var(--gradient-emerald);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            padding: 1.2rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 10px 30px rgba(16, 185, 129, 0.25);
+            margin-top: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+            .btn-update-premium::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: 0;
+                width: 0;
+                height: 100%;
+                background: var(--gradient-zafiro);
+                transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+                z-index: -1;
+            }
+
+            .btn-update-premium:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 20px 40px rgba(13, 28, 54, 0.3);
+                letter-spacing: 3px;
+            }
+
+                .btn-update-premium:hover::before {
+                    width: 100%;
+                }
+
+            .btn-update-premium i {
+                transition: transform 0.4s ease;
+            }
+
+            .btn-update-premium:hover i {
+                transform: scale(1.2);
+            }
+
+        /* Decoraciones */
+        .security-decoration {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: rgba(16, 185, 129, 0.1);
+            font-size: 2rem;
+            transform: rotate(15deg);
+        }
+
+        /* Responsividad */
+        @@media (max-width: 576px) {
+            body {
+                padding: 1rem;
+            }
+
+            .security-card-premium {
+                border-radius: 25px;
+            }
+
+            .security-header-premium {
+                padding: 2.5rem 1.5rem 1.5rem;
+            }
+
+            .security-body-premium {
+                padding: 0 1.5rem 2.5rem;
+            }
+
+            .security-title-premium {
+                font-size: 2rem;
+            }
+
+            .lock-icon-premium {
+                font-size: 3rem;
+            }
+
+            .form-control-security {
+                padding: 1rem 1.2rem;
+            }
+
+            .btn-update-premium {
+                padding: 1.1rem;
+                font-size: 1rem;
+            }
+        }
+
+        @@media (max-width: 400px) {
+            .security-title-premium {
+                font-size: 1.8rem;
+            }
+
+            .security-subtitle-premium {
+                font-size: 1rem;
+            }
+
+            .lock-icon-premium {
+                font-size: 2.5rem;
+            }
+        }
+
+        /* Efectos de entrada para campos */
+        .form-group-security {
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fieldEntrance 0.6s ease forwards;
+        }
+
+        @@keyframes fieldEntrance {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .form-group-security:nth-child(1) {
+            animation-delay: 0.1s;
+        }
+
+        .form-group-security:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        /* Validación visual */
+        .form-control-security.valid {
+            border-color: var(--esmeralda-lumi);
+            background: rgba(16, 185, 129, 0.05);
+        }
+
+        .form-control-security.invalid {
+            border-color: var(--coral-soft);
+            background: rgba(255, 107, 107, 0.05);
+        }
+
+        /* Confirmación visual */
+        .confirmation-message {
+            margin-top: 0.5rem;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+
+            .confirmation-message.show {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .confirmation-message i {
+                font-size: 0.9rem;
+            }
+
+        /* Indicador de seguridad */
+        .security-levels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 0.5rem;
+            padding: 0 5px;
+        }
+
+        .security-level {
+            font-size: 0.7rem;
+            color: var(--texto-suave);
+            text-align: center;
+            flex: 1;
+            opacity: 0.5;
+            transition: all 0.3s ease;
+        }
+
+            .security-level.active {
+                color: var(--zafiro-deep);
+                font-weight: 500;
+                opacity: 1;
+            }
+
+        /* Animación shake para errores */
+        @@keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-10px);
+            }
+
+            75% {
+                transform: translateX(10px);
+            }
+        }
+
+        /* Enlace de regreso */
+        .back-link-premium {
+            display: block;
+            margin-top: 2rem;
+            color: var(--texto-suave);
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 300;
+            transition: all 0.3s ease;
+            text-align: center;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+            .back-link-premium:hover {
+                color: var(--zafiro-deep);
+                text-decoration: none;
+            }
+
+            .back-link-premium::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 0;
+                height: 1px;
+                background: var(--gradient-emerald);
+                transition: width 0.3s ease;
+            }
+
+            .back-link-premium:hover::after {
+                width: 100px;
+            }
+
+            .back-link-premium i {
+                margin-right: 8px;
+                transition: transform 0.3s ease;
+            }
+
+            .back-link-premium:hover i {
+                transform: translateX(-5px);
+            }
+
+        /* Mensaje de éxito */
+        .success-message-premium {
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--esmeralda-lumi);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 12px;
+            font-size: 0.9rem;
+            padding: 1rem 1.2rem;
+            text-align: center;
+            margin-bottom: 1.8rem;
+            backdrop-filter: blur(10px);
+            font-weight: 300;
+            animation: fadeIn 0.5s ease;
+        }
+
+            .success-message-premium i {
+                margin-right: 8px;
+            }
+    </style>
+</head>
+<body>
+    <!-- Partículas de fondo -->
+    <div class="security-particles" id="securityParticles"></div>
+
+    <div class="security-container">
+        <div class="security-card-premium">
+            <!-- Decoración -->
+            <div class="security-decoration">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+
+            <!-- Header -->
+            <div class="security-header-premium">
+                <div class="lock-icon-container">
+                    <div class="lock-icon-glow"></div>
+                    <i class="fas fa-lock lock-icon-premium"></i>
+                </div>
+
+                <h2 class="security-title-premium">CREDENCIALES NUEVAS</h2>
+                <p class="security-subtitle-premium">
+                    Crea una clave de acceso exclusiva para tu espacio personal en Lumi Store.
+                </p>
+            </div>
+
+            <!-- Formulario -->
+            <div class="security-body-premium">
+                <form action="@Url.Action("CambiarClave","Acceso")" method="post" id="passForm">
+                    <input type="hidden" name="idCliente" value="@id" />
+
+                    <!-- Nueva contraseña -->
+                    <div class="form-group-security">
+                        <input type="password" name="nuevaClave" class="form-control-security"
+                               id="nuevaClave" placeholder="Nueva clave de acceso" required />
+                        <span class="input-icon-security">
+                            <i class="fas fa-key"></i>
+                        </span>
+
+                        <!-- Indicador de fortaleza -->
+                        <div class="strength-indicator" id="strengthIndicator">
+                            <div class="strength-dots">
+                                <div class="strength-dot" data-level="1"></div>
+                                <div class="strength-dot" data-level="2"></div>
+                                <div class="strength-dot" data-level="3"></div>
+                                <div class="strength-dot" data-level="4"></div>
+                                <div class="strength-dot" data-level="5"></div>
+                            </div>
+                            <div class="strength-text" id="strengthText">Seguridad</div>
+                        </div>
+
+                        <!-- Niveles de seguridad -->
+                        <div class="security-levels">
+                            <div class="security-level" data-level="1">Muy Débil</div>
+                            <div class="security-level" data-level="2">Débil</div>
+                            <div class="security-level" data-level="3">Media</div>
+                            <div class="security-level" data-level="4">Fuerte</div>
+                            <div class="security-level" data-level="5">Muy Fuerte</div>
+                        </div>
+                    </div>
+
+                    <!-- Confirmar contraseña -->
+                    <div class="form-group-security">
+                        <input type="password" name="confirmarClave" class="form-control-security"
+                               id="confirmarClave" placeholder="Confirmar nueva clave" required />
+                        <span class="input-icon-security">
+                            <i class="fas fa-key"></i>
+                        </span>
+
+                        <!-- Mensaje de confirmación -->
+                        <div class="confirmation-message" id="confirmationMessage">
+                            <i class="fas fa-circle"></i>
+                            <span id="confirmationText">Coincidencia</span>
+                        </div>
+                    </div>
+
+                    <!-- Mensaje de error -->
+                    @if (ViewBag.Error != null)
+                    {
+                        <div class="alert-security-premium py-2 mb-3">
+                            <i class="fas fa-exclamation-circle"></i> @ViewBag.Error
+                        </div>
+                    }
+
+                    <!-- Mensaje de éxito -->
+                    @if (ViewBag.Success != null)
+                    {
+                        <div class="success-message-premium py-2 mb-3">
+                            <i class="fas fa-check-circle"></i> @ViewBag.Success
+                        </div>
+                    }
+
+                    <!-- Botón de envío -->
+                    <button type="submit" class="btn btn-update-premium" id="btnActualizar">
+                        <i class="fas fa-shield-alt"></i> RESGUARDAR ACCESO
+                    </button>
+
+                    <!-- Enlace de regreso -->
+                    <div class="text-center">
+                        <a href="@Url.Action("Index","Acceso")" class="back-link-premium">
+                            <i class="fas fa-arrow-left"></i> VOLVER AL SALÓN PRIVADO
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Crear partículas de fondo
+            createSecurityParticles();
+
+            // Configurar overlay de carga personalizado
+            $.LoadingOverlaySetup({
+                background: "rgba(248, 245, 240, 0.95)",
+                custom: $("<div>", {
+                    style: "text-align: center;"
+                }).append(
+                    $("<div>", {
+                        style: "position: relative; margin-bottom: 20px;"
+                    }).append(
+                        $("<i>", {
+                            class: "fas fa-lock",
+                            style: "color: var(--esmeralda-lumi); font-size: 55px; display: block; animation: lock-float 2s infinite ease-in-out;"
+                        }),
+                        $("<div>", {
+                            style: "position: absolute; width: 90px; height: 90px; border-radius: 50%; background: radial-gradient(circle, var(--esmeralda-glow) 0%, transparent 70%); top: 50%; left: 50%; transform: translate(-50%, -50%); animation: pulse 2s infinite ease-in-out;"
+                        })
+                    ),
+                    $("<p>", {
+                        text: "ACTUALIZANDO SEGURIDAD...",
+                        style: "color: var(--texto-suave); font-family: 'Montserrat', sans-serif; font-weight: 300; letter-spacing: 2px; margin-top: 20px; font-size: 0.9rem;"
+                    })
+                ),
+                text: "",
+                textColor: "var(--texto-suave)"
+            });
+
+            // Variables de validación
+            let isPasswordValid = false;
+            let isPasswordMatch = false;
+
+            // Manejar envío del formulario
+            $("#passForm").submit(function (e) {
+                e.preventDefault();
+
+                // Validación final
+                if (!isPasswordValid) {
+                    showSecurityError("La clave debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas y números");
+                    return false;
+                }
+
+                if (!isPasswordMatch) {
+                    showSecurityError("Las claves no coinciden");
+                    return false;
+                }
+
+                // Mostrar overlay de carga
+                $.LoadingOverlay("show");
+
+                // Enviar formulario después de pequeña pausa para animación
+                setTimeout(() => {
+                    this.submit();
+                }, 800);
+            });
+
+            // Función para mostrar errores
+            function showSecurityError(message) {
+                // Remover mensajes existentes
+                $(".alert-security-premium, .success-message-premium").remove();
+
+                // Crear nuevo mensaje de error
+                const errorDiv = $(`
+                    <div class="alert-security-premium py-2 mb-3">
+                        <i class="fas fa-exclamation-circle"></i> ${message}
+                    </div>
+                `);
+
+                // Insertar después del segundo campo
+                $(".form-group-security").last().after(errorDiv);
+
+                // Efecto visual en los campos
+                $("#nuevaClave, #confirmarClave").addClass("invalid");
+
+                // Efecto de shake
+                $("#passForm").css('animation', 'shake 0.5s ease');
+                setTimeout(() => {
+                    $("#passForm").css('animation', '');
+                }, 500);
+            }
+
+            // Calcular fortaleza de contraseña
+            function calculatePasswordStrength(password) {
+                let strength = 0;
+
+                // Longitud mínima
+                if (password.length >= 6) strength += 1;
+                // Longitud buena
+                if (password.length >= 8) strength += 1;
+                // Longitud excelente
+                if (password.length >= 12) strength += 1;
+
+                // Complejidad
+                if (/[a-z]/.test(password)) strength += 1; // Minúsculas
+                if (/[A-Z]/.test(password)) strength += 1; // Mayúsculas
+                if (/[0-9]/.test(password)) strength += 1; // Números
+                if (/[^A-Za-z0-9]/.test(password)) strength += 1; // Caracteres especiales
+
+                return Math.min(strength, 5);
+            }
+
+            // Actualizar indicador de fortaleza
+            $("#nuevaClave").on('input', function() {
+                const password = $(this).val();
+                const strengthIndicator = $("#strengthIndicator");
+                const dots = $(".strength-dot");
+                const strengthText = $("#strengthText");
+                const levels = $(".security-level");
+
+                if (password.length > 0) {
+                    strengthIndicator.addClass('show');
+
+                    const strength = calculatePasswordStrength(password);
+
+                    // Actualizar puntos
+                    dots.removeClass('active');
+                    for (let i = 0; i < strength; i++) {
+                        $(dots[i]).addClass('active');
+                    }
+
+                    // Actualizar texto y color
+                    const texts = ['Muy Débil', 'Débil', 'Media', 'Fuerte', 'Muy Fuerte'];
+                    const colors = ['#ff6b6b', '#ffa726', '#ffd54f', '#81c784', '#4caf50'];
+
+                    strengthText.text(texts[strength - 1] || 'Muy Débil');
+                    strengthText.css('color', colors[strength - 1] || '#ff6b6b');
+
+                    // Actualizar niveles
+                    levels.removeClass('active');
+                    if (strength > 0) {
+                        $(levels[strength - 1]).addClass('active');
+                    }
+
+                    // Actualizar color de puntos
+                    dots.each(function(i) {
+                        if (i < strength) {
+                            $(this).css('background-color', colors[strength - 1]);
+                        } else {
+                            $(this).css('background-color', 'rgba(245, 233, 200, 0.5)');
+                        }
+                    });
+
+                    // Validar contraseña
+                    const isValid = password.length >= 8 && /[A-Z]/.test(password) && /[a-z]/.test(password) && /[0-9]/.test(password);
+                    isPasswordValid = isValid && strength >= 3;
+
+                    // Actualizar estado del campo
+                    if (isPasswordValid) {
+                        $(this).removeClass('invalid').addClass('valid');
+                        $(this).next('.input-icon-security').css('color', colors[strength - 1]);
+                        // Remover error si existe
+                        $(".alert-security-premium").remove();
+                    } else {
+                        $(this).removeClass('valid').addClass('invalid');
+                        $(this).next('.input-icon-security').css('color', '#ff6b6b');
+                    }
+                } else {
+                    strengthIndicator.removeClass('show');
+                    $(this).removeClass('valid invalid');
+                    $(this).next('.input-icon-security').css('color', 'var(--esmeralda-lumi)');
+                    levels.removeClass('active');
+                    dots.removeClass('active').css('background-color', 'rgba(245, 233, 200, 0.5)');
+                    isPasswordValid = false;
+                }
+
+                // Verificar coincidencia
+                checkPasswordMatch();
+            });
+
+            // Verificar coincidencia de contraseñas
+            $("#confirmarClave").on('input', checkPasswordMatch);
+
+            function checkPasswordMatch() {
+                const nueva = $("#nuevaClave").val();
+                const confirmar = $("#confirmarClave").val();
+                const confirmation = $("#confirmationMessage");
+                const text = $("#confirmationText");
+                const icon = $("#confirmationMessage i");
+
+                if (confirmar.length > 0) {
+                    confirmation.addClass('show');
+
+                    if (nueva === confirmar && nueva.length > 0) {
+                        text.text("Las claves coinciden");
+                        confirmation.css('color', 'var(--esmeralda-lumi)');
+                        icon.removeClass('fa-times-circle').addClass('fa-check-circle');
+                        $("#confirmarClave").removeClass('invalid').addClass('valid');
+                        $("#confirmarClave").next('.input-icon-security').css('color', 'var(--esmeralda-lumi)');
+                        isPasswordMatch = true;
+                        // Remover error si existe
+                        $(".alert-security-premium").remove();
+                    } else {
+                        text.text("Las claves no coinciden");
+                        confirmation.css('color', 'var(--coral-soft)');
+                        icon.removeClass('fa-check-circle').addClass('fa-times-circle');
+                        $("#confirmarClave").removeClass('valid').addClass('invalid');
+                        $("#confirmarClave").next('.input-icon-security').css('color', 'var(--coral-soft)');
+                        isPasswordMatch = false;
+                    }
+                } else {
+                    confirmation.removeClass('show');
+                    $("#confirmarClave").removeClass('valid invalid');
+                    $("#confirmarClave").next('.input-icon-security').css('color', 'var(--esmeralda-lumi)');
+                    isPasswordMatch = false;
+                }
+            }
+
+            // Función para crear partículas
+            function createSecurityParticles() {
+                const container = $('#securityParticles');
+                const particleCount = 12;
+
+                for (let i = 0; i < particleCount; i++) {
+                    const size = Math.random() * 3 + 1;
+                    const posX = Math.random() * 100;
+                    const posY = Math.random() * 100;
+                    const delay = Math.random() * 20;
+                    const duration = Math.random() * 20 + 10;
+                    const opacity = Math.random() * 0.08 + 0.05;
+
+                    const particle = $('<div class="security-particle"></div>').css({
+                        width: size + 'px',
+                        height: size + 'px',
+                        left: posX + 'vw',
+                        top: posY + 'vh',
+                        background: `rgba(16, 185, 129, ${opacity})`,
+                        animationDelay: delay + 's',
+                        animationDuration: duration + 's'
+                    });
+
+                    container.append(particle);
+                }
+            }
+
+            // Efecto de enfoque en los campos
+            $(".form-control-security").focus(function() {
+                $(this).closest(".form-group-security").addClass("focused");
+                $(this).css('background', 'white');
+            }).blur(function() {
+                $(this).closest(".form-group-security").removeClass("focused");
+                if ($(this).val() === "") {
+                    $(this).css('background', 'rgba(248, 245, 240, 0.3)');
+                }
+            });
+
+            // Inicializar icono de confirmación
+            $("#confirmationMessage i").addClass("fa-circle");
+
+            // Animación de entrada para los campos
+            setTimeout(() => {
+                $('.form-group-security').each(function(i) {
+                    $(this).css({
+                        'opacity': '0',
+                        'transform': 'translateY(20px)'
+                    });
+
+                    setTimeout(() => {
+                        $(this).css({
+                            'opacity': '1',
+                            'transform': 'translateY(0)',
+                            'transition': 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
+                        });
+                    }, i * 100);
+                });
+            }, 300);
+
+            // Si hay un mensaje de éxito, redirigir después de un tiempo
+            @if (ViewBag.Success != null)
+            {
+                <text>
+                setTimeout(() => {
+                    $.LoadingOverlay("show");
+                    setTimeout(() => {
+                        window.location.href = '@Url.Action("Index","Acceso")';
+                    }, 1500);
+                }, 3000);
+                </text>
+            }
+
+            // Si hay un mensaje de error, ocultar al hacer clic
+            $('body').on('click', '.alert-security-premium', function() {
+                $(this).fadeOut(300, function() {
+                    $(this).remove();
+                });
+            });
+
+            // Habilitar/deshabilitar botón basado en validación
+            function updateSubmitButton() {
+                const isValid = isPasswordValid && isPasswordMatch;
+                $("#btnActualizar").prop('disabled', !isValid);
+
+                if (!isValid) {
+                    $("#btnActualizar").css({
+                        'opacity': '0.6',
+                        'cursor': 'not-allowed'
+                    });
+                } else {
+                    $("#btnActualizar").css({
+                        'opacity': '1',
+                        'cursor': 'pointer'
+                    });
+                }
+            }
+
+            // Actualizar estado del botón
+            setInterval(updateSubmitButton, 500);
+
+            // Toggle para mostrar/ocultar contraseña
+            function createPasswordToggle() {
+                $('.form-control-security').each(function() {
+                    const field = $(this);
+                    const icon = field.next('.input-icon-security');
+
+                    // Crear nuevo icono de ojo
+                    const eyeIcon = $('<i class="fas fa-eye password-toggle"></i>');
+                    eyeIcon.css({
+                        'position': 'absolute',
+                        'right': '3rem',
+                        'top': '50%',
+                        'transform': 'translateY(-50%)',
+                        'cursor': 'pointer',
+                        'color': 'var(--esmeralda-lumi)',
+                        'opacity': '0.7',
+                        'font-size': '1rem',
+                        'transition': 'all 0.3s ease',
+                        'z-index': '2'
+                    });
+
+                    eyeIcon.hover(
+                        function() { $(this).css('opacity', '1'); },
+                        function() { $(this).css('opacity', '0.7'); }
+                    );
+
+                    eyeIcon.click(function() {
+                        const type = field.attr('type') === 'password' ? 'text' : 'password';
+                        field.attr('type', type);
+                        $(this).toggleClass('fa-eye fa-eye-slash');
+                    });
+
+                    field.parent().append(eyeIcon);
+                });
+            }
+
+            // Inicializar toggles de contraseña
+            setTimeout(createPasswordToggle, 500);
+        });
+    </script>
+</body>
+</html>

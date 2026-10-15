@@ -1,0 +1,816 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Salón Privado - Lumi Store</title>
+
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Fuentes premium -->
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --zafiro-deep: #0d1c36;
+            --zafiro-light: #2a4a7e;
+            --coral-soft: #FF6B6B;
+            --fancy-pink: #ff85a2;
+            --pink-glow: rgba(255, 133, 162, 0.3);
+            --oro-champan: #F5E9C8;
+            --oro-light: #FFF9E6;
+            --blanco-seda: #F8F5F0;
+            --blanco-pure: #FFFFFF;
+            --esmeralda-lumi: #10b981;
+            --esmeralda-glow: rgba(16, 185, 129, 0.2);
+            --gradient-gold: linear-gradient(135deg, #F5E9C8 0%, #FFF9E6 100%);
+            --gradient-zafiro: linear-gradient(135deg, #0d1c36 0%, #2a4a7e 100%);
+            --gradient-pink: linear-gradient(135deg, #ff85a2 0%, #FF6B6B 100%);
+            --gradient-gem: linear-gradient(135deg, #ff85a2 0%, #FF6B6B 50%, #0d1c36 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: var(--blanco-seda);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* BOTÓN VOLVER AL INICIO */
+        .btn-volver-inicio {
+            position: fixed;
+            top: 30px;
+            left: 30px;
+            z-index: 1000;
+            background: var(--gradient-zafiro);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            padding: 12px 24px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            box-shadow: 0 8px 25px rgba(13, 28, 54, 0.25);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            opacity: 0.9;
+        }
+
+        .btn-volver-inicio:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(13, 28, 54, 0.35);
+            opacity: 1;
+            color: white;
+            text-decoration: none;
+        }
+
+        .btn-volver-inicio i {
+            font-size: 1rem;
+            transition: transform 0.3s ease;
+        }
+
+        .btn-volver-inicio:hover i {
+            transform: translateX(-3px);
+        }
+
+        @@media (max-width: 768px) {
+            .btn-volver-inicio {
+                top: 20px;
+                left: 20px;
+                padding: 10px 18px;
+                font-size: 0.8rem;
+            }
+        }
+
+        /* Resto del CSS permanece igual */
+        .luxury-particle {
+            position: fixed;
+            background: var(--pink-glow);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+            z-index: 1;
+        }
+
+        @@keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 1;
+            }
+
+            90% {
+                opacity: 1;
+            }
+
+            100% {
+                transform: translateY(-1000px) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
+        .login-premium-container {
+            width: 100%;
+            max-width: 500px;
+            padding: 2rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .login-card-premium {
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(25px) saturate(180%);
+            -webkit-backdrop-filter: blur(25px) saturate(180%);
+            border-radius: 30px;
+            padding: 3.5rem 3rem;
+            box-shadow: 0 30px 80px rgba(13, 28, 54, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            position: relative;
+            overflow: hidden;
+            animation: cardEntrance 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        @@keyframes cardEntrance {
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .login-card-premium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-gem);
+            z-index: 2;
+        }
+
+        .login-card-premium::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, var(--pink-glow) 0%, transparent 70%);
+            opacity: 0.1;
+            z-index: 1;
+            animation: rotate-bg 20s linear infinite;
+        }
+
+        @@keyframes rotate-bg {
+            from {
+                transform: rotate(0deg);
+            }
+
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .login-header-premium {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            z-index: 3;
+        }
+
+        .gem-container-premium {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 1.5rem;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .gem-logo-premium {
+            color: var(--fancy-pink);
+            font-size: 48px;
+            filter: drop-shadow(0 4px 12px rgba(255, 133, 162, 0.4));
+            animation: gem-sparkle 4s infinite ease-in-out;
+            position: relative;
+        }
+
+        .gem-logo-premium::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.8) 0%, transparent 70%);
+            border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+            animation: gem-light 3s infinite alternate;
+        }
+
+        @@keyframes gem-sparkle {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg) scale(1);
+                filter: drop-shadow(0 4px 12px rgba(255, 133, 162, 0.4));
+            }
+
+            50% {
+                transform: translateY(-8px) rotate(10deg) scale(1.1);
+                filter: drop-shadow(0 8px 25px rgba(255, 133, 162, 0.6));
+            }
+        }
+
+        @@keyframes gem-light {
+            0% {
+                opacity: 0.3;
+                transform: translate(-10%, -10%);
+            }
+
+            100% {
+                opacity: 0.8;
+                transform: translate(10%, 10%);
+            }
+        }
+
+        .login-title-premium {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            font-size: 2.8rem;
+            background: var(--gradient-zafiro);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: 4px;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .login-subtitle-premium {
+            font-size: 0.9rem;
+            color: var(--texto-suave);
+            font-weight: 500;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .login-divider-premium {
+            width: 80px;
+            height: 3px;
+            background: var(--gradient-pink);
+            margin: 1.5rem auto;
+            border-radius: 3px;
+        }
+
+        .login-form-premium {
+            position: relative;
+            z-index: 3;
+        }
+
+        .form-group-premium {
+            margin-bottom: 1.8rem;
+            position: relative;
+        }
+
+        .input-group-premium {
+            position: relative;
+        }
+
+        .form-control-premium {
+            width: 100%;
+            padding: 1.2rem 1.2rem 1.2rem 3rem;
+            border-radius: 15px;
+            border: 2px solid rgba(245, 233, 200, 0.5);
+            background: rgba(255, 255, 255, 0.9);
+            color: var(--zafiro-deep);
+            font-size: 1rem;
+            font-weight: 400;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .form-control-premium:focus {
+            border-color: var(--fancy-pink);
+            box-shadow: 0 0 0 0.25rem rgba(255, 133, 162, 0.1);
+            background: white;
+            outline: none;
+        }
+
+        .input-icon-premium {
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--fancy-pink);
+            font-size: 1.2rem;
+            z-index: 2;
+            transition: all 0.3s ease;
+        }
+
+        .form-control-premium:focus + .input-icon-premium {
+            color: var(--zafiro-light);
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .alert-error-premium {
+            background: rgba(255, 107, 107, 0.1);
+            border: 1px solid rgba(255, 107, 107, 0.2);
+            border-radius: 12px;
+            padding: 1rem 1.2rem;
+            color: var(--coral-soft);
+            font-size: 0.9rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            animation: shake 0.5s ease;
+        }
+
+        @@keyframes shake {
+            0%, 100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-5px);
+            }
+
+            75% {
+                transform: translateX(5px);
+            }
+        }
+
+        .btn-login-premium {
+            width: 100%;
+            padding: 1.3rem;
+            background: var(--gradient-zafiro);
+            color: white;
+            border: none;
+            border-radius: 15px;
+            font-size: 1rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            box-shadow: 0 10px 30px rgba(13, 28, 54, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .btn-login-premium::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background: var(--gradient-pink);
+            transition: width 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            z-index: -1;
+        }
+
+        .btn-login-premium:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(255, 133, 162, 0.3);
+            letter-spacing: 3px;
+        }
+
+        .btn-login-premium:hover::before {
+            width: 100%;
+        }
+
+        .btn-login-premium i {
+            font-size: 1.2rem;
+            transition: transform 0.4s ease;
+        }
+
+        .btn-login-premium:hover i {
+            transform: translateX(5px) scale(1.1);
+        }
+
+        .links-container-premium {
+            margin: 2rem 0 1.5rem;
+            text-align: center;
+        }
+
+        .login-link-premium {
+            color: var(--texto-suave);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 400;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+        }
+
+        .login-link-premium:hover {
+            color: var(--fancy-pink);
+        }
+
+        .login-link-premium::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--gradient-pink);
+            transition: width 0.3s ease;
+        }
+
+        .login-link-premium:hover::after {
+            width: 100%;
+        }
+
+        .login-footer-premium {
+            margin-top: 2rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(245, 233, 200, 0.3);
+            text-align: center;
+            position: relative;
+            z-index: 3;
+        }
+
+        .footer-text-premium {
+            color: var(--texto-suave);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+        }
+
+        .btn-register-premium {
+            color: var(--fancy-pink);
+            text-decoration: none;
+            font-weight: 500;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-register-premium:hover {
+            color: var(--zafiro-light);
+            transform: translateY(-2px);
+        }
+
+        @@media (max-width: 768px) {
+            .login-premium-container {
+                padding: 1rem;
+            }
+
+            .login-card-premium {
+                padding: 2.5rem 2rem;
+            }
+
+            .login-title-premium {
+                font-size: 2.2rem;
+            }
+
+            .gem-container-premium {
+                width: 60px;
+                height: 60px;
+            }
+
+            .gem-logo-premium {
+                font-size: 36px;
+            }
+        }
+
+        @@media (max-width: 480px) {
+            .login-card-premium {
+                padding: 2rem 1.5rem;
+            }
+
+            .login-title-premium {
+                font-size: 1.8rem;
+                letter-spacing: 3px;
+            }
+
+            .login-subtitle-premium {
+                font-size: 0.8rem;
+            }
+
+            .form-control-premium {
+                padding: 1rem 1rem 1rem 2.5rem;
+            }
+
+            .input-icon-premium {
+                left: 0.8rem;
+                font-size: 1rem;
+            }
+        }
+
+        .loading-gem-premium {
+            animation: gem-sparkle 2s infinite ease-in-out;
+            color: var(--fancy-pink);
+            font-size: 60px;
+            position: relative;
+        }
+
+        .loading-gem-premium::after {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: -20px;
+            right: -20px;
+            bottom: -20px;
+            background: radial-gradient(circle, var(--pink-glow) 0%, transparent 70%);
+            border-radius: 50%;
+            z-index: -1;
+            animation: pulse 2s infinite;
+        }
+
+        @@keyframes pulse {
+            0%, 100% {
+                opacity: 0.3;
+                transform: scale(0.8);
+            }
+
+            50% {
+                opacity: 0.6;
+                transform: scale(1.2);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- BOTÓN VOLVER AL INICIO -->
+    <a href="@Url.Action("Index","Tienda")" class="btn-volver-inicio" aria-label="Volver a la tienda principal">
+        <i class="fas fa-arrow-left"></i>
+        <span>VOLVER A LA TIENDA</span>
+    </a>
+
+    <!-- Partículas de lujo -->
+    <div id="luxuryParticles"></div>
+
+    <div class="login-premium-container">
+        <div class="login-card-premium">
+            <!-- Encabezado -->
+            <div class="login-header-premium">
+                <div class="gem-container-premium">
+                    <i class="fas fa-gem gem-logo-premium"></i>
+                </div>
+
+                <h1 class="login-title-premium">LUMI STORE</h1>
+                <div class="login-subtitle-premium">SALÓN PRIVADO</div>
+                <div class="login-divider-premium"></div>
+                <p style="color: var(--texto-suave); font-size: 0.9rem; font-weight: 300;">
+                    Accede a tu espacio de elegancia y exclusividad
+                </p>
+            </div>
+
+            <!-- Formulario -->
+            <form action="@Url.Action("Index","Acceso")" method="post" id="loginForm" class="login-form-premium">
+                <!-- Campo Email -->
+                <div class="form-group-premium">
+                    <div class="input-group-premium">
+                        <input type="email"
+                               name="correo"
+                               class="form-control-premium"
+                               placeholder="Correo electrónico"
+                               required
+                               autocomplete="email">
+                        <i class="fas fa-envelope input-icon-premium"></i>
+                    </div>
+                </div>
+
+                <!-- Campo Contraseña -->
+                <div class="form-group-premium">
+                    <div class="input-group-premium">
+                        <input type="password"
+                               name="clave"
+                               class="form-control-premium"
+                               placeholder="Contraseña"
+                               required
+                               autocomplete="current-password">
+                        <i class="fas fa-lock input-icon-premium"></i>
+                    </div>
+                </div>
+
+                <!-- Mensaje de error -->
+                @if (ViewBag.Error != null)
+                {
+                    <div class="alert-error-premium">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>@ViewBag.Error</span>
+                    </div>
+                }
+
+                <!-- Botón de ingreso -->
+                <button class="btn-login-premium" type="submit">
+                    <i class="fas fa-arrow-right-to-bracket"></i>
+                    <span>INGRESAR AL SALÓN</span>
+                </button>
+
+                <!-- Enlaces -->
+                <div class="links-container-premium">
+                    <a href="@Url.Action("Reestablecer","Acceso")" class="login-link-premium">
+                        <i class="fas fa-key"></i>
+                        <span>¿Olvidaste tu contraseña?</span>
+                    </a>
+                </div>
+
+                <!-- Footer -->
+                <div class="login-footer-premium">
+                    <p class="footer-text-premium">
+                        ¿Aún no formas parte de nuestra comunidad selecta?
+                    </p>
+                    <a href="@Url.Action("Registrar","Acceso")" class="btn-register-premium">
+                        <i class="fas fa-crown"></i>
+                        <span>SOLICITAR INVITACIÓN</span>
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-loading-overlay/2.1.7/loadingoverlay.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Crear partículas de lujo
+            createLuxuryParticles();
+
+            // Configurar LoadingOverlay premium
+            $.LoadingOverlaySetup({
+                background: "rgba(248, 245, 240, 0.97)",
+                custom: $("<div>", {
+                    style: "display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100%;"
+                }).append(
+                    $("<div>", {
+                        style: "text-align: center;"
+                    }).append(
+                        $("<i>", { class: "fas fa-gem loading-gem-premium" }),
+                        $("<p>", {
+                            text: "ABRIENDO TU SALÓN PRIVADO...",
+                            style: "color: #0d1c36; font-size: 14px; font-weight: 600; letter-spacing: 3px; margin-top: 25px; font-family: 'Montserrat', sans-serif;"
+                        })
+                    )
+                )
+            });
+
+            // Manejar envío del formulario
+            $("#loginForm").on("submit", function (e) {
+                // Validación básica
+                const email = $("input[name='correo']").val().trim();
+                const password = $("input[name='clave']").val().trim();
+
+                if (!email || !password) {
+                    e.preventDefault();
+                    showError("Por favor, completa todos los campos");
+                    return;
+                }
+
+                if (!isValidEmail(email)) {
+                    e.preventDefault();
+                    showError("Por favor, ingresa un correo electrónico válido");
+                    return;
+                }
+
+                // Mostrar loading overlay
+                $.LoadingOverlay("show");
+            });
+
+            // Efecto en inputs al enfocar
+            $(".form-control-premium").on("focus", function () {
+                $(this).parent().css("transform", "translateY(-2px)");
+            }).on("blur", function () {
+                $(this).parent().css("transform", "translateY(0)");
+            });
+
+            // Animación de entrada para elementos
+            animateElements();
+        });
+
+        function createLuxuryParticles() {
+            const particleContainer = $('#luxuryParticles');
+            const particleCount = window.innerWidth < 768 ? 15 : 30;
+
+            for (let i = 0; i < particleCount; i++) {
+                const size = Math.random() * 6 + 1;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const delay = Math.random() * 20;
+                const duration = Math.random() * 20 + 10;
+                const opacity = Math.random() * 0.1 + 0.05;
+
+                const particle = $('<div class="luxury-particle"></div>').css({
+                    width: size + 'px',
+                    height: size + 'px',
+                    left: posX + 'vw',
+                    top: posY + 'vh',
+                    background: `rgba(${Math.random() * 50 + 180}, ${Math.random() * 50 + 100}, ${Math.random() * 50 + 200}, ${opacity})`,
+                    animationDelay: delay + 's',
+                    animationDuration: duration + 's'
+                });
+
+                particleContainer.append(particle);
+            }
+        }
+
+        function isValidEmail(email) {
+            const re = /^(([^<>()\[\]\\.,;:\s@@"]+(\.[^<>()\[\]\\.,;:\s@@"]+)*)|(".+"))@@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+            return re.test(String(email).toLowerCase());
+        }
+
+        function showError(message) {
+            // Crear o actualizar mensaje de error
+            let errorDiv = $(".alert-error-premium");
+            if (errorDiv.length === 0) {
+                errorDiv = $('<div class="alert-error-premium"></div>').insertBefore(".btn-login-premium");
+            }
+
+            errorDiv.html(`
+                    <i class="fas fa-exclamation-circle"></i>
+                    <span>${message}</span>
+                `);
+
+            // Animar
+            errorDiv.css('animation', 'none');
+            setTimeout(() => {
+                errorDiv.css('animation', 'shake 0.5s ease');
+            }, 10);
+        }
+
+        function animateElements() {
+            // Animación escalonada para los inputs
+            $(".form-group-premium").each(function (i) {
+                $(this).css({
+                    'opacity': '0',
+                    'transform': 'translateY(20px)'
+                });
+
+                setTimeout(() => {
+                    $(this).css({
+                        'opacity': '1',
+                        'transform': 'translateY(0)',
+                        'transition': 'all 0.6s cubic-bezier(0.4, 0, 0.2, 1)'
+                    });
+                }, i * 200);
+            });
+
+            // Animación para el botón
+            setTimeout(() => {
+                $(".btn-login-premium").css({
+                    'opacity': '0',
+                    'transform': 'translateY(20px)'
+                }).css({
+                    'opacity': '1',
+                    'transform': 'translateY(0)',
+                    'transition': 'all 0.8s cubic-bezier(0.4, 0, 0.2, 1)'
+                });
+            }, 600);
+        }
+
+        // Efecto de partículas al mover el mouse
+        $(document).on("mousemove", function (e) {
+            const particles = $('.luxury-particle');
+            particles.each(function () {
+                const speed = 0.02;
+                const x = (e.clientX - window.innerWidth / 2) * speed;
+                const y = (e.clientY - window.innerHeight / 2) * speed;
+                $(this).css('transform', `translate(${x}px, ${y}px)`);
+            });
+        });
+    </script>
+</body>
+</html>

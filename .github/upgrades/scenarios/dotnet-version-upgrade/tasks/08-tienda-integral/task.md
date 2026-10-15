@@ -1,0 +1,5 @@
+# 08-tienda-integral: Migrar y corregir la experiencia de compra
+
+Migrar y corregir incrementalmente las vistas, scripts, estilos, rutas y capacidades funcionales de Tienda al host nuevo. Frontend verificará español, diseño responsive, accesibilidad básica, navegación, formularios y estados de carga/error; Backend revisará validaciones, reglas de negocio, autorización y persistencia; QA realizará pruebas de regresión y flujos de extremo a extremo. Inspeccionar los defectos y el código de pago existente antes de decidir su alcance. No elegir proveedor de pago, usar credenciales reales ni activar cobros live sin autorización explícita; si falta información del proveedor, dejar esa integración como bloqueo documentado. El esquema de base es compartido: `#skill:managing-shared-database-schema`.
+
+**Hecho cuando**: las rutas migradas funcionan y las pruebas pasan; la interfaz se presenta en español y es usable en móvil y escritorio; validaciones y errores son coherentes; los cambios del flujo de pago se limitan al nivel respaldado por evidencia y autorización; no hay transacciones reales no autorizadas.

@@ -1,0 +1,240 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<div class="container-fluid px-4">
+    <div class="d-flex align-items-center justify-content-between mt-4 mb-4">
+        <div>
+            <h1 class="fw-bold" style="color: var(--gem-sapphire); letter-spacing: -1px;">Dashboard</h1>
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb bg-transparent p-0 m-0">
+                    <li class="breadcrumb-item active" style="color: var(--gem-emerald); font-weight: 600;">
+                        <i class="fas fa-chart-line me-1"></i> Análisis Luxury
+                    </li>
+                </ol>
+            </nav>
+        </div>
+        <div class="text-end d-none d-md-block">
+            <span class="badge rounded-pill p-2 px-3" style="background: var(--gem-soft-sapphire); color: var(--gem-sapphire);">
+                <i class="fas fa-clock me-1"></i> @DateTime.Now.ToString("dd MMM yyyy")
+            </span>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-5">
+        <div class="col-xl-4 col-md-6">
+            <div class="card border-0 shadow-sm overflow-hidden" style="border-radius: 20px; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);">
+                <div class="card-body p-4 position-relative">
+                    <div class="position-absolute end-0 top-0 p-4 opacity-25">
+                        <i class="fas fa-shopping-bag fa-4x text-white"></i>
+                    </div>
+                    <h6 class="text-white text-uppercase fw-bold mb-1 opacity-75 small">Ventas Realizadas</h6>
+                    <h2 class="text-white fw-bold display-6 mb-0" id="totalventa">0</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-6">
+            <div class="card border-0 shadow-sm overflow-hidden" style="border-radius: 20px; background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                <div class="card-body p-4 position-relative">
+                    <div class="position-absolute end-0 top-0 p-4 opacity-25">
+                        <i class="fas fa-user-tie fa-4x text-white"></i>
+                    </div>
+                    <h6 class="text-white text-uppercase fw-bold mb-1 opacity-75 small">Clientes Registrados</h6>
+                    <h2 class="text-white fw-bold display-6 mb-0" id="totalcliente">0</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-xl-4 col-md-12">
+            <div class="card border-0 shadow-sm overflow-hidden" style="border-radius: 20px; background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);">
+                <div class="card-body p-4 position-relative">
+                    <div class="position-absolute end-0 top-0 p-4 opacity-25">
+                        <i class="fas fa-gem fa-4x text-white"></i>
+                    </div>
+                    <h6 class="text-white text-uppercase fw-bold mb-1 opacity-75 small">Catálogo de Productos</h6>
+                    <h2 class="text-white fw-bold display-6 mb-0" id="totalproducto">0</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm mb-4" style="border-radius: 15px;">
+        <div class="card-header bg-white py-3 border-bottom border-light">
+            <h5 class="m-0 fw-bold" style="color: var(--gem-sapphire);">
+                <i class="fas fa-file-invoice-dollar me-2 text-primary"></i>Historial de Operaciones
+            </h5>
+        </div>
+        <div class="card-body p-4">
+            @using (Html.BeginForm("ExportarVenta", "Home", FormMethod.Post))
+            {
+                <div class="row g-3 align-items-end mb-4">
+                    <div class="col-sm-3 col-md-2">
+                        <label class="form-label small fw-bold text-muted">Desde:</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-white border-end-0"><i class="fas fa-calendar-alt text-muted small"></i></span>
+                            <input class="form-control form-control-modern ps-0 border-start-0" type="text" id="txtfechainicio" name="fechainicio" />
+                        </div>
+                    </div>
+                    <div class="col-sm-3 col-md-2">
+                        <label class="form-label small fw-bold text-muted">Hasta:</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-white border-end-0"><i class="fas fa-calendar-check text-muted small"></i></span>
+                            <input class="form-control form-control-modern ps-0 border-start-0" type="text" id="txtfechafin" name="fechafin" />
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-4">
+                        <label class="form-label small fw-bold text-muted">Búsqueda por Transacción:</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-white border-end-0"><i class="fas fa-hashtag text-muted small"></i></span>
+                            <input class="form-control form-control-modern ps-0 border-start-0" type="text" id="txtidtransaccion" name="idtransaccion" placeholder="ID de operación..." />
+                        </div>
+                    </div>
+                    <div class="col-sm-6 col-md-2">
+                        <button class="btn btn-lumi w-100 shadow-sm" id="btnbuscar" type="button">
+                            <i class="fas fa-search me-1"></i> Filtrar
+                        </button>
+                    </div>
+                    <div class="col-sm-6 col-md-2">
+                        <button class="btn btn-outline-success w-100 shadow-sm fw-bold" type="submit" style="border-radius: 10px; border-width: 2px;">
+                            <i class="fas fa-file-excel me-1"></i> Excel
+                        </button>
+                    </div>
+                </div>
+            }
+
+            <hr class="opacity-25" />
+
+            <div class="table-responsive mt-4">
+                <table id="tabla" class="table table-hover w-100 align-middle">
+                    <thead>
+                        <tr style="background-color: var(--gem-soft-sapphire); color: var(--gem-sapphire);">
+                            <th class="border-0">Fecha</th>
+                            <th class="border-0">Cliente</th>
+                            <th class="border-0">Producto</th>
+                            <th class="border-0">Precio</th>
+                            <th class="border-0">Unds.</th>
+                            <th class="border-0 text-center">Total</th>
+                            <th class="border-0">Transacción</th>
+                        </tr>
+                    </thead>
+                    <tbody class="border-0"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-control-modern {
+        border-radius: 10px;
+        border: 1px solid #dee2e6;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+
+        .form-control-modern:focus {
+            border-color: var(--gem-pink-fancy);
+            box-shadow: none;
+        }
+
+    #tabla thead th {
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 11px;
+        letter-spacing: 1px;
+        padding: 15px;
+    }
+
+    #tabla tbody td {
+        padding: 15px;
+        font-size: 14px;
+        color: #4b5563;
+    }
+</style>
+
+@section scripts{
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/jquery.dataTables.min.css">
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+    <script>
+        var tabladata;
+
+        $(document).ready(function () {
+            // 1. Inicializar Calendarios
+            $("#txtfechainicio").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker('setDate', new Date());
+            $("#txtfechafin").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker('setDate', new Date());
+
+            // 2. Cargar indicadores del Dashboard
+            jQuery.ajax({
+                url: '@Url.Action("VistaDashboard", "Home")',
+                type: "GET",
+                dataType: "json",
+                success: function (data) {
+                    if (data.resultado != null) {
+                        var objeto = data.resultado;
+                        $("#totalventa").text(objeto.TotalVenta);
+                        $("#totalcliente").text(objeto.TotalCliente);
+                        $("#totalproducto").text(objeto.TotalProducto);
+                    }
+                }
+            });
+
+            // 3. Configurar DataTable
+            var url_reporte = '@Url.Action("ListarReporte", "Home")' +
+                "?fechainicio=" + $("#txtfechainicio").val() +
+                "&fechafin=" + $("#txtfechafin").val() +
+                "&idtransaccion=" + $("#txtidtransaccion").val();
+
+            tabladata = $("#tabla").DataTable({
+                responsive: true,
+                ordering: false,
+                "ajax": {
+                    "url": url_reporte,
+                    "type": "GET",
+                    "dataType": "json"
+                },
+                "columns": [
+                    { "data": "FechaVenta" },
+                    { "data": "Cliente" },
+                    { "data": "Producto" },
+                    {
+                        "data": "Precio", "render": function(v){
+                            return "$ " + parseFloat(v).toFixed(2);
+                        }
+                    },
+                    {
+                        "data": "Cantidad", "render": function(v){
+                            return '<span class="badge bg-light text-dark border">' + v + '</span>';
+                        }
+                    },
+                    {
+                        "data": "Total", "render": function(v){
+                            return '<span class="fw-bold text-dark">$ ' + parseFloat(v).toFixed(2) + '</span>';
+                        }
+                    },
+                    {
+                        "data": "IdTransaccion", "render": function(v){
+                            return '<code class="small fw-bold">' + v + '</code>';
+                        }
+                    }
+                ],
+                "language": {
+                    "url": "https://cdn.datatables.net/plug-ins/1.11.3/i18n/es_es.json"
+                }
+            });
+        });
+
+        // 4. Función de búsqueda
+        $("#btnbuscar").on("click", function () {
+            var nueva_url = '@Url.Action("ListarReporte", "Home")' +
+                "?fechainicio=" + $("#txtfechainicio").val() +
+                "&fechafin=" + $("#txtfechafin").val() +
+                "&idtransaccion=" + $("#txtidtransaccion").val();
+
+            tabladata.ajax.url(nueva_url).load();
+        });
+    </script>
+}

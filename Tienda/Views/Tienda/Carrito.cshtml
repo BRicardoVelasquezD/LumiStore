@@ -1,0 +1,1440 @@
+﻿@{
+    ViewBag.Title = "Mi Colección Personal · Lumi Store";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@section styles {
+    <style>
+        /* ================= VARIABLES ESPECÍFICAS CARRITO ================= */
+        :root {
+            --cart-section-padding: 140px 0 100px;
+            --cart-header-height: 80px;
+            --cart-item-height: 150px;
+            --cart-summary-width: 400px;
+            --checkout-button-height: 60px;
+        }
+
+        /* ================= SECCIÓN PRINCIPAL ================= */
+        .cart-section {
+            padding: var(--cart-section-padding);
+            background: linear-gradient(135deg, var(--bg-60), var(--bg-30));
+            min-height: 100vh;
+        }
+
+        .cart-header {
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        .cart-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--zafiro), var(--amatista));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .cart-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* ================= LAYOUT DE DOS COLUMNAS ================= */
+        .cart-layout {
+            display: grid;
+            grid-template-columns: 1fr var(--cart-summary-width);
+            gap: 2.5rem;
+            align-items: start;
+        }
+
+        @@media (max-width: 992px) {
+            .cart-layout {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* ================= COLUMNA IZQUIERDA - PRODUCTOS ================= */
+        .cart-items-container {
+            background: var(--glass);
+            border: 1px solid var(--lux-border);
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.05);
+        }
+
+        .cart-items-header {
+            padding: 1.5rem 2rem;
+            background: linear-gradient(135deg, rgba(15, 82, 186, 0.05), rgba(93, 58, 140, 0.05));
+            border-bottom: 1px solid var(--lux-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .cart-items-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--text-main);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .cart-items-count {
+            background: var(--gradient-lux);
+            color: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 20px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        /* ================= ITEMS DEL CARRITO ================= */
+        .cart-item {
+            padding: 1.5rem 2rem;
+            border-bottom: 1px solid var(--lux-border);
+            display: grid;
+            grid-template-columns: auto 1fr auto auto;
+            gap: 1.5rem;
+            align-items: center;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .cart-item:hover {
+            background: rgba(15, 82, 186, 0.02);
+        }
+
+        .cart-item-removing {
+            animation: slideOutLeft 0.5s forwards;
+        }
+
+        @@keyframes slideOutLeft {
+            from {
+                opacity: 1;
+                transform: translateX(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateX(-100%);
+            }
+        }
+
+        .item-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 16px;
+            border: 1px solid var(--lux-border);
+            overflow: hidden;
+            background: white;
+            flex-shrink: 0;
+        }
+
+        .item-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s;
+        }
+
+        .cart-item:hover .item-image img {
+            transform: scale(1.05);
+        }
+
+        .item-info {
+            flex: 1;
+        }
+
+        .item-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+            line-height: 1.2;
+        }
+
+        .item-meta {
+            display: flex;
+            gap: 1rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .item-price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--zafiro);
+            white-space: nowrap;
+        }
+
+        /* ================= CONTROLES DE CANTIDAD ================= */
+        .item-quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .btn-quantity {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 1px solid var(--zafiro);
+            background: transparent;
+            color: var(--zafiro);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            cursor: pointer;
+        }
+
+        .btn-quantity:hover:not(:disabled) {
+            background: var(--zafiro);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .btn-quantity:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .quantity-display {
+            min-width: 40px;
+            text-align: center;
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 1.1rem;
+        }
+
+        /* ================= BOTÓN ELIMINAR ================= */
+        .btn-remove-item {
+            background: rgba(155, 28, 49, 0.1);
+            border: 1px solid var(--rubi);
+            color: var(--rubi);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            cursor: pointer;
+            margin-left: 1rem;
+        }
+
+        .btn-remove-item:hover {
+            background: var(--rubi);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        /* ================= ESTADO VACÍO ================= */
+        .cart-empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+            opacity: 0.5;
+        }
+
+        .empty-state-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+        }
+
+        .empty-state-message {
+            color: var(--text-muted);
+            max-width: 400px;
+            margin: 0 auto 2rem;
+            line-height: 1.6;
+        }
+
+        .btn-explore-collection {
+            background: var(--gradient-lux);
+            color: white;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+
+        .btn-explore-collection:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(15, 82, 186, 0.3);
+            color: white;
+        }
+
+        /* ================= SECCIÓN DE UBICACIÓN ================= */
+        .location-section {
+            background: var(--glass);
+            border: 1px solid var(--lux-border);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-top: 2rem;
+        }
+
+        .location-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .location-form {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .form-select {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            border: 1px solid var(--lux-border);
+            border-radius: 12px;
+            background: white;
+            color: var(--text-main);
+            font-size: 1rem;
+            transition: all 0.2s;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%230F52BA' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 1rem center;
+            background-size: 16px;
+        }
+
+        .form-select:focus {
+            outline: none;
+            border-color: var(--zafiro);
+            box-shadow: 0 0 0 3px rgba(15, 82, 186, 0.1);
+        }
+
+        .form-select:disabled {
+            background-color: var(--bg-30);
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        /* ================= COLUMNA DERECHA - RESUMEN ================= */
+        .cart-summary-container {
+            position: sticky;
+            top: var(--cart-section-padding);
+            background: var(--glass);
+            border: 1px solid var(--lux-border);
+            border-radius: 28px;
+            padding: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.08);
+        }
+
+        .summary-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            color: var(--text-main);
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--lux-border);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.75rem 0;
+            color: var(--text-main);
+        }
+
+        .summary-row.subtotal {
+            font-weight: 600;
+            border-bottom: 1px solid var(--lux-border);
+        }
+
+        .summary-row.shipping {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .summary-row.total {
+            margin-top: 1rem;
+            padding-top: 1.5rem;
+            border-top: 2px solid var(--lux-border);
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-main);
+        }
+
+        .summary-value {
+            font-weight: 600;
+        }
+
+        .summary-total-value {
+            background: linear-gradient(135deg, var(--zafiro), var(--amatista));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-size: 2rem;
+        }
+
+        /* ================= SECCIÓN DE PAGO ================= */
+        .payment-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--lux-border);
+        }
+
+        .payment-title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.5rem;
+            color: var(--text-main);
+            margin-bottom: 1rem;
+        }
+
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .payment-method {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid var(--lux-border);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.2s;
+            background: white;
+        }
+
+        .payment-method:hover {
+            border-color: var(--zafiro);
+            background: rgba(15, 82, 186, 0.02);
+        }
+
+        .payment-method.selected {
+            border-color: var(--zafiro);
+            background: rgba(15, 82, 186, 0.05);
+        }
+
+        .payment-method input[type="radio"] {
+            margin-right: 1rem;
+            accent-color: var(--zafiro);
+            transform: scale(1.2);
+        }
+
+        .payment-method-label {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-weight: 500;
+            color: var(--text-main);
+        }
+
+        .payment-icon {
+            font-size: 1.5rem;
+            color: var(--zafiro);
+        }
+
+        .paypal-icon {
+            color: #003087;
+        }
+
+        /* ================= BOTÓN CHECKOUT ================= */
+        .btn-checkout {
+            width: 100%;
+            margin-top: 2rem;
+            padding: 1.2rem;
+            background: var(--gradient-gold);
+            border: none;
+            border-radius: 16px;
+            color: var(--text-main);
+            font-weight: 600;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.75rem;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .btn-checkout:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px rgba(209, 178, 128, 0.3);
+        }
+
+        .btn-checkout:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .btn-checkout.processing {
+            background: var(--gradient-lux);
+            color: white;
+        }
+
+        /* ================= GARANTÍAS DEL CHECKOUT ================= */
+        .checkout-guarantees {
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--lux-border);
+        }
+
+        .guarantee-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.75rem;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .guarantee-item i {
+            color: var(--esmeralda);
+        }
+
+        /* ================= LOADING STATES ================= */
+        .loading-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-muted);
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(15, 82, 186, 0.1);
+            border-radius: 50%;
+            border-top-color: var(--zafiro);
+            animation: spin 1s ease-in-out infinite;
+            margin-bottom: 1rem;
+        }
+
+        @@keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* ================= RESPONSIVE ================= */
+        @@media (max-width: 1200px) {
+            .cart-layout {
+                gap: 2rem;
+            }
+        }
+
+        @@media (max-width: 992px) {
+            .cart-section {
+                padding: 120px 0 60px;
+            }
+
+            .cart-title {
+                font-size: 2.8rem;
+            }
+
+            .cart-layout {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .cart-summary-container {
+                position: static;
+                margin-top: 2rem;
+            }
+        }
+
+        @@media (max-width: 768px) {
+            .cart-section {
+                padding: 100px 0 40px;
+            }
+
+            .cart-title {
+                font-size: 2.4rem;
+            }
+
+            .cart-item {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .item-image {
+                margin: 0 auto;
+            }
+
+            .item-quantity-controls {
+                justify-content: center;
+            }
+
+            .location-form {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @@media (max-width: 576px) {
+            .cart-title {
+                font-size: 2rem;
+            }
+
+            .cart-items-header {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .cart-items-title {
+                font-size: 1.5rem;
+            }
+
+            .empty-state-title {
+                font-size: 2rem;
+            }
+
+            .summary-title {
+                font-size: 1.5rem;
+            }
+
+            .summary-row.total {
+                font-size: 1.5rem;
+            }
+
+            .summary-total-value {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* ================= ANIMACIONES ================= */
+        .animate-fade-in {
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        .animate-slide-up {
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @@keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @@keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+}
+
+<!-- JSON-LD PARA CARRITO (SEO) -->
+<script type="application/ld+json">
+{
+    "context": "https://schema.org",
+    "type": "WebPage",
+    "name": "Mi Colección Personal - Lumi Store",
+    "description": "Revisa y gestiona tu colección personal de joyería y perfumería de alta gama",
+    "url": "https://lumistore.com/Carrito"
+}
+</script>
+
+<section class="cart-section animate-fade-in">
+    <div class="container">
+        <!-- ENCABEZADO -->
+        <div class="cart-header animate-slide-up">
+            <h1 class="cart-title">Mi Colección Personal</h1>
+            <p class="cart-subtitle">
+                Cada pieza refleja tu historia. Cuida, modifica y completa tu selección exclusiva.
+            </p>
+        </div>
+
+        <!-- CONTENIDO PRINCIPAL -->
+        <div class="cart-layout">
+            <!-- COLUMNA IZQUIERDA - PRODUCTOS Y UBICACIÓN -->
+            <div class="cart-column-left">
+                <!-- CONTENEDOR DE ITEMS -->
+                <div class="cart-items-container">
+                    <div class="cart-items-header">
+                        <h2 class="cart-items-title">
+                            <i class="fas fa-gem"></i>
+                            Tus Piezas Seleccionadas
+                        </h2>
+                        <span id="cartItemsCount" class="cart-items-count">0 PIEZAS</span>
+                    </div>
+
+                    <div id="cartItemsList">
+                        <!-- Los items se cargan dinámicamente aquí -->
+                        <div class="loading-state">
+                            <div class="loading-spinner"></div>
+                            <p>Cargando tu colección personal...</p>
+                        </div>
+                    </div>
+
+                    <!-- ESTADO VACÍO (oculto por defecto) -->
+                    <div id="cartEmptyState" class="cart-empty-state" style="display: none;">
+                        <div class="empty-state-icon">
+                            <i class="fas fa-gem"></i>
+                        </div>
+                        <h3 class="empty-state-title">Tu colección está vacía</h3>
+                        <p class="empty-state-message">
+                            Aún no has agregado piezas a tu colección personal.
+                            Descubre obras únicas creadas para tu historia.
+                        </p>
+                        <a href="@Url.Action("Index","Tienda")" class="btn-explore-collection">
+                            <i class="fas fa-eye"></i> Explorar Colección
+                        </a>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN DE UBICACIÓN -->
+                <div class="location-section animate-slide-up" style="animation-delay: 0.2s">
+                    <h3 class="location-title">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Ubicación de Envío
+                    </h3>
+
+                    <form id="locationForm" class="location-form">
+                        @Html.AntiForgeryToken()
+
+                        <div class="form-group">
+                            <label for="departamento" class="form-label">Departamento *</label>
+                            <select id="departamento" name="departamento" class="form-select" required
+                                    aria-label="Selecciona tu departamento" aria-required="true">
+                                <option value="">Seleccionar departamento</option>
+                                <!-- Opciones se cargan dinámicamente -->
+                            </select>
+                            <div class="invalid-feedback" style="display: none; color: var(--rubi); font-size: 0.875rem; margin-top: 0.25rem;">
+                                Por favor selecciona un departamento
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="municipio" class="form-label">Municipio *</label>
+                            <select id="municipio" name="municipio" class="form-select" disabled required
+                                    aria-label="Selecciona tu municipio" aria-disabled="true" aria-required="true">
+                                <option value="">Primero selecciona un departamento</option>
+                            </select>
+                            <div class="invalid-feedback" style="display: none; color: var(--rubi); font-size: 0.875rem; margin-top: 0.25rem;">
+                                Por favor selecciona un municipio
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="ciudad" class="form-label">Ciudad *</label>
+                            <select id="ciudad" name="ciudad" class="form-select" disabled required
+                                    aria-label="Selecciona tu ciudad" aria-disabled="true" aria-required="true">
+                                <option value="">Primero selecciona un municipio</option>
+                            </select>
+                            <div class="invalid-feedback" style="display: none; color: var(--rubi); font-size: 0.875rem; margin-top: 0.25rem;">
+                                Por favor selecciona una ciudad
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="direccion" class="form-label">Dirección Detallada *</label>
+                            <textarea id="direccion" name="direccion" class="form-select" rows="3"
+                                      placeholder="Calle, número, barrio, referencia..."
+                                      required aria-label="Dirección detallada para el envío"
+                                      aria-required="true"></textarea>
+                            <div class="invalid-feedback" style="display: none; color: var(--rubi); font-size: 0.875rem; margin-top: 0.25rem;">
+                                Por favor ingresa tu dirección
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="telefono" class="form-label">Teléfono de Contacto *</label>
+                            <input type="tel" id="telefono" name="telefono" class="form-select"
+                                   placeholder="+57 300 123 4567" required
+                                   aria-label="Teléfono de contacto" aria-required="true"
+                                   pattern="[+]?[0-9\s\-]+">
+                            <div class="invalid-feedback" style="display: none; color: var(--rubi); font-size: 0.875rem; margin-top: 0.25rem;">
+                                Por favor ingresa un número de teléfono válido
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- COLUMNA DERECHA - RESUMEN Y PAGO -->
+            <div class="cart-column-right">
+                <div class="cart-summary-container animate-slide-up" style="animation-delay: 0.3s">
+                    <h3 class="summary-title">Resumen del Pedido</h3>
+
+                    <div class="summary-rows">
+                        <div class="summary-row subtotal">
+                            <span>Subtotal</span>
+                            <span id="summarySubtotal" class="summary-value">$0</span>
+                        </div>
+
+                        <div class="summary-row shipping">
+                            <span>Envío Premium</span>
+                            <span id="summaryShipping" class="summary-value">Por calcular</span>
+                        </div>
+
+                        <div class="summary-row">
+                            <span>IVA (19%)</span>
+                            <span id="summaryTax" class="summary-value">$0</span>
+                        </div>
+
+                        <div class="summary-row total">
+                            <span>Total</span>
+                            <span id="summaryTotal" class="summary-value summary-total-value">$0</span>
+                        </div>
+                    </div>
+
+                    <!-- SECCIÓN DE PAGO -->
+                    <div class="payment-section">
+                        <h4 class="payment-title">
+                            <i class="fas fa-credit-card"></i>
+                            Método de Pago
+                        </h4>
+
+                        <div class="payment-methods">
+                            <div class="payment-method selected" id="paypalMethod">
+                                <input type="radio" id="paymentPayPal" name="paymentMethod" value="paypal" checked
+                                       aria-label="Pagar con PayPal">
+                                <label for="paymentPayPal" class="payment-method-label">
+                                    <i class="fab fa-paypal payment-icon paypal-icon"></i>
+                                    <div>
+                                        <div class="payment-method-name">PayPal</div>
+                                        <small class="text-muted">Pago rápido y seguro</small>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <!-- GARANTÍAS -->
+                        <div class="checkout-guarantees">
+                            <div class="guarantee-item">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>Pago 100% seguro · SSL Certificado</span>
+                            </div>
+                            <div class="guarantee-item">
+                                <i class="fas fa-lock"></i>
+                                <span>Tus datos están protegidos</span>
+                            </div>
+                            <div class="guarantee-item">
+                                <i class="fas fa-clock"></i>
+                                <span>Procesamiento inmediato</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- BOTÓN CHECKOUT -->
+                    <button id="btnCheckout" class="btn-checkout" disabled
+                            aria-label="Proceder al pago seguro con PayPal">
+                        <i class="fas fa-lock"></i>
+                        <span>PROCEDER CON PAYPAL</span>
+                    </button>
+
+                    <p class="text-center text-muted small mt-3">
+                        <i class="fas fa-info-circle"></i>
+                        Serás redirigido al portal seguro de PayPal para completar tu compra
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+@section scripts {
+    <script>
+        $(function () {
+            const token = $('input[name="__RequestVerificationToken"]').val();
+            let cartItems = [];
+            let subtotal = 0;
+            let shipping = 0;
+            const shippingFreeThreshold = 500000; // Envío gratis a partir de este monto
+            const shippingFee = 15000; // Costo de envío estándar
+
+            // ================= INICIALIZACIÓN =================
+            function inicializar() {
+                cargarCarrito();
+                cargarDepartamentos();
+                configurarEventos();
+                configurarValidaciones();
+            }
+
+            // ================= CARGAR CARRITO =================
+            function cargarCarrito() {
+                $.LoadingOverlay && $.LoadingOverlay("show");
+
+                $.ajax({
+                    url: '@Url.Action("ListarProductosCarrito","Tienda")',
+                    type: 'POST',
+                    headers: { 'RequestVerificationToken': token },
+                    dataType: 'json'
+                })
+                .done(function(response) {
+                    if (response && response.data) {
+                        cartItems = response.data;
+                        renderizarCarrito(cartItems);
+                        calcularResumen();
+
+                        // Track event
+                        trackEvent('view_cart', {
+                            items: cartItems.map(item => ({
+                                item_id: item.oProducto?.IdProducto,
+                                item_name: item.oProducto?.Nombre,
+                                price: item.oProducto?.Precio,
+                                quantity: item.Cantidad
+                            }))
+                        });
+                    } else {
+                        mostrarCarritoVacio();
+                    }
+                })
+                .fail(function(xhr) {
+                    console.error('Error cargando carrito:', xhr);
+                    mostrarNotificacionLumi('Error', 'No se pudo cargar tu colección', 'error');
+                    mostrarCarritoVacio();
+                })
+                .always(function() {
+                    $.LoadingOverlay && $.LoadingOverlay("hide");
+                });
+            }
+
+            // ================= RENDERIZAR CARRITO =================
+            function renderizarCarrito(items) {
+                if (!items || items.length === 0) {
+                    mostrarCarritoVacio();
+                    return;
+                }
+
+                $('#cartEmptyState').hide();
+                $('#cartItemsCount').text(items.length + ' PIEZAS');
+
+                let html = '';
+                items.forEach(function(item, index) {
+                    const producto = item.oProducto || item;
+                    const cantidad = item.Cantidad || 1;
+
+                    // Obtener imagen
+                    let imgSrc = '/Content/img/default-experience.jpg';
+                    if (producto.Base64 && producto.Extension) {
+                        imgSrc = `data:image/${producto.Extension};base64,${producto.Base64}`;
+                    }
+
+                    // Formatear precio
+                    const precioUnitario = new Intl.NumberFormat('es-CO', {
+                        style: 'currency',
+                        currency: 'COP',
+                        minimumFractionDigits: 0
+                    }).format(producto.Precio || 0);
+
+                    const subtotalItem = (producto.Precio || 0) * cantidad;
+                    const subtotalFormateado = new Intl.NumberFormat('es-CO', {
+                        style: 'currency',
+                        currency: 'COP',
+                        minimumFractionDigits: 0
+                    }).format(subtotalItem);
+
+                    html += `
+                    <div class="cart-item animate__animated animate__fadeIn" data-id="${producto.IdProducto}"
+                         style="animation-delay: ${index * 0.1}s">
+                        <div class="item-image">
+                            <img src="${imgSrc}"
+                                 alt="${producto.Nombre}"
+                                 onerror="this.src='/Content/img/default-experience.jpg'"
+                                 loading="lazy">
+                        </div>
+
+                        <div class="item-info">
+                            <h4 class="item-name" title="${producto.Nombre}">${producto.Nombre}</h4>
+                            <div class="item-meta">
+                                <span><i class="fas fa-building"></i> ${producto.oMarca?.Descripcion || producto.DesMarca || ''}</span>
+                                <span><i class="fas fa-tag"></i> ${producto.oCategoria?.Descripcion || producto.DesCategoria || ''}</span>
+                            </div>
+                            <div class="item-price">${precioUnitario}</div>
+                        </div>
+
+                        <div class="item-quantity-controls">
+                            <button class="btn-quantity menos" data-id="${producto.IdProducto}"
+                                    aria-label="Disminuir cantidad" ${cantidad <= 1 ? 'disabled' : ''}>
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <span class="quantity-display" aria-live="polite">${cantidad}</span>
+                            <button class="btn-quantity mas" data-id="${producto.IdProducto}"
+                                    aria-label="Aumentar cantidad">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+
+                        <div class="item-subtotal">
+                            <div class="item-price">${subtotalFormateado}</div>
+                        </div>
+
+                        <button class="btn-remove-item" data-id="${producto.IdProducto}"
+                                aria-label="Eliminar ${producto.Nombre} de la colección">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>`;
+                });
+
+                $('#cartItemsList').html(html);
+            }
+
+            // ================= MOSTRAR CARRITO VACÍO =================
+            function mostrarCarritoVacio() {
+                $('#cartItemsList').empty();
+                $('#cartEmptyState').show();
+                $('#cartItemsCount').text('0 PIEZAS');
+                $('#btnCheckout').prop('disabled', true);
+                $('#summarySubtotal').text('$0');
+                $('#summaryShipping').text('Por calcular');
+                $('#summaryTax').text('$0');
+                $('#summaryTotal').text('$0');
+            }
+
+            // ================= CALCULAR RESUMEN =================
+            function calcularResumen() {
+                subtotal = 0;
+
+                cartItems.forEach(function(item) {
+                    const producto = item.oProducto || item;
+                    const cantidad = item.Cantidad || 1;
+                    subtotal += (producto.Precio || 0) * cantidad;
+                });
+
+                // Calcular envío
+                shipping = subtotal >= shippingFreeThreshold || subtotal === 0 ? 0 : shippingFee;
+
+                // Calcular IVA (19% solo sobre subtotal)
+                const tax = subtotal * 0.19;
+                const total = subtotal + shipping + tax;
+
+                // Actualizar UI
+                $('#summarySubtotal').text(formatearMoneda(subtotal));
+                $('#summaryShipping').text(shipping === 0 ? 'GRATIS' : formatearMoneda(shipping));
+                $('#summaryTax').text(formatearMoneda(tax));
+                $('#summaryTotal').text(formatearMoneda(total));
+
+                // Habilitar/deshabilitar checkout
+                const tieneItems = cartItems.length > 0;
+                $('#btnCheckout').prop('disabled', !tieneItems);
+
+                // Actualizar badge global
+                if (typeof actualizarCarrito === 'function') {
+                    actualizarCarrito();
+                }
+            }
+
+            // ================= FORMATO DE MONEDA =================
+            function formatearMoneda(monto) {
+                return new Intl.NumberFormat('es-CO', {
+                    style: 'currency',
+                    currency: 'COP',
+                    minimumFractionDigits: 0
+                }).format(monto);
+            }
+
+            // ================= OPERACIONES DE CANTIDAD =================
+            $(document).on('click', '.btn-quantity', function() {
+                const idProducto = $(this).data('id');
+                const esSumar = $(this).hasClass('mas');
+                const itemElement = $(this).closest('.cart-item');
+
+                // Feedback visual
+                itemElement.find('.btn-quantity').prop('disabled', true);
+                itemElement.css('opacity', '0.7');
+
+                $.ajax({
+                    url: '@Url.Action("OperacionCarrito","Tienda")',
+                    type: 'POST',
+                    data: { idproducto: idProducto, sumar: esSumar },
+                    headers: { 'RequestVerificationToken': token }
+                })
+                .done(function(response) {
+                    if (response && response.respuesta) {
+                        // Recargar carrito
+                        cargarCarrito();
+
+                        // Track event
+                        trackEvent(esSumar ? 'increase_quantity' : 'decrease_quantity', {
+                            item_id: idProducto
+                        });
+                    } else {
+                        mostrarNotificacionLumi('Error', response.mensaje || 'No se pudo actualizar', 'error');
+                        itemElement.find('.btn-quantity').prop('disabled', false);
+                        itemElement.css('opacity', '1');
+                    }
+                })
+                .fail(function() {
+                    mostrarNotificacionLumi('Error', 'Error de conexión', 'error');
+                    itemElement.find('.btn-quantity').prop('disabled', false);
+                    itemElement.css('opacity', '1');
+                });
+            });
+
+            // ================= ELIMINAR ITEM =================
+            $(document).on('click', '.btn-remove-item', function() {
+                const idProducto = $(this).data('id');
+                const itemElement = $(this).closest('.cart-item');
+                const nombreProducto = itemElement.find('.item-name').text();
+
+                // Confirmación elegante
+                Swal.fire({
+                    title: '¿Remover de tu colección?',
+                    text: `"${nombreProducto}" será eliminado de tu colección personal`,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonColor: 'var(--zafiro)',
+                    cancelButtonColor: 'var(--text-muted)',
+                    confirmButtonText: 'Sí, remover',
+                    cancelButtonText: 'Cancelar',
+                    background: 'var(--bg-60)',
+                    color: 'var(--text-main)',
+                    customClass: {
+                        confirmButton: 'btn-lumi-solid',
+                        cancelButton: 'btn-lumi-outline'
+                    }
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Animación de eliminación
+                        itemElement.addClass('cart-item-removing');
+
+                        $.ajax({
+                            url: '@Url.Action("EliminarCarrito","Tienda")',
+                            type: 'POST',
+                            data: { idproducto: idProducto },
+                            headers: { 'RequestVerificationToken': token }
+                        })
+                        .done(function(response) {
+                            if (response && response.respuesta) {
+                                // Esperar a que termine la animación
+                                setTimeout(() => {
+                                    cargarCarrito();
+                                    mostrarNotificacionLumi('Removido', 'Pieza eliminada de tu colección', 'success');
+
+                                    // Track event
+                                    trackEvent('remove_from_cart', {
+                                        item_id: idProducto,
+                                        item_name: nombreProducto
+                                    });
+                                }, 500);
+                            } else {
+                                itemElement.removeClass('cart-item-removing');
+                                mostrarNotificacionLumi('Error', 'No se pudo eliminar', 'error');
+                            }
+                        })
+                        .fail(function() {
+                            itemElement.removeClass('cart-item-removing');
+                            mostrarNotificacionLumi('Error', 'Error de conexión', 'error');
+                        });
+                    }
+                });
+            });
+
+            // ================= CARGAR DEPARTAMENTOS =================
+            function cargarDepartamentos() {
+                $.ajax({
+                    url: '@Url.Action("ObtenerDepartamento","Tienda")',
+                    type: 'POST',
+                    headers: { 'RequestVerificationToken': token }
+                })
+                .done(function(response) {
+                    const select = $('#departamento');
+                    select.empty();
+                    select.append('<option value="">Seleccionar departamento</option>');
+
+                    if (response && response.lista) {
+                        response.lista.forEach(function(depto) {
+                            select.append(`<option value="${depto.IdDepartamento}">${depto.Descripcion}</option>`);
+                        });
+                    }
+                })
+                .fail(function() {
+                    console.error('Error cargando departamentos');
+                });
+            }
+
+            // ================= CARGAR MUNICIPIOS =================
+            function cargarMunicipios(idDepartamento) {
+                $('#municipio').prop('disabled', true).html('<option value="">Cargando municipios...</option>');
+                $('#ciudad').prop('disabled', true).html('<option value="">Selecciona municipio primero</option>');
+
+                $.ajax({
+                    url: '@Url.Action("ObtenerMunicipio","Tienda")',
+                    type: 'POST',
+                    data: { iddepartamento: idDepartamento },
+                    headers: { 'RequestVerificationToken': token }
+                })
+                .done(function(response) {
+                    const select = $('#municipio');
+                    select.empty();
+                    select.append('<option value="">Seleccionar municipio</option>');
+
+                    if (response && response.lista) {
+                        response.lista.forEach(function(municipio) {
+                            select.append(`<option value="${municipio.IdMunicipio}">${municipio.Descripcion}</option>`);
+                        });
+                        select.prop('disabled', false);
+                    }
+                })
+                .fail(function() {
+                    $('#municipio').html('<option value="">Error cargando municipios</option>');
+                });
+            }
+
+            // ================= CARGAR CIUDADES =================
+            function cargarCiudades(idMunicipio, idDepartamento) {
+                $('#ciudad').prop('disabled', true).html('<option value="">Cargando ciudades...</option>');
+
+                $.ajax({
+                    url: '@Url.Action("ObtenerCiudad","Tienda")',
+                    type: 'POST',
+                    data: {
+                        idmunicipio: idMunicipio,
+                        iddepartamento: idDepartamento
+                    },
+                    headers: { 'RequestVerificationToken': token }
+                })
+                .done(function(response) {
+                    const select = $('#ciudad');
+                    select.empty();
+                    select.append('<option value="">Seleccionar ciudad</option>');
+
+                    if (response && response.lista) {
+                        response.lista.forEach(function(ciudad) {
+                            select.append(`<option value="${ciudad.IdCiudad}">${ciudad.Descripcion}</option>`);
+                        });
+                        select.prop('disabled', false);
+                    }
+                })
+                .fail(function() {
+                    $('#ciudad').html('<option value="">Error cargando ciudades</option>');
+                });
+            }
+
+            // ================= CONFIGURAR EVENTOS =================
+            function configurarEventos() {
+                // Cambio de departamento
+                $('#departamento').change(function() {
+                    const idDepartamento = $(this).val();
+                    if (idDepartamento) {
+                        cargarMunicipios(idDepartamento);
+                    } else {
+                        $('#municipio').prop('disabled', true).html('<option value="">Selecciona departamento primero</option>');
+                        $('#ciudad').prop('disabled', true).html('<option value="">Selecciona municipio primero</option>');
+                    }
+                    validarFormulario();
+                });
+
+                // Cambio de municipio
+                $('#municipio').change(function() {
+                    const idMunicipio = $(this).val();
+                    const idDepartamento = $('#departamento').val();
+
+                    if (idMunicipio && idDepartamento) {
+                        cargarCiudades(idMunicipio, idDepartamento);
+                    } else {
+                        $('#ciudad').prop('disabled', true).html('<option value="">Selecciona municipio primero</option>');
+                    }
+                    validarFormulario();
+                });
+
+                // Cambio de ciudad y otros campos
+                $('#ciudad, #direccion, #telefono').on('input change', function() {
+                    validarFormulario();
+                });
+
+                // Selección de método de pago
+                $('#paypalMethod').click(function() {
+                    $('.payment-method').removeClass('selected');
+                    $(this).addClass('selected');
+                    $('#paymentPayPal').prop('checked', true);
+                });
+
+                // Checkout
+                $('#btnCheckout').click(function() {
+                    procesarCheckout();
+                });
+            }
+
+            // ================= VALIDACIÓN DE FORMULARIO =================
+            function configurarValidaciones() {
+                // Validación de teléfono
+                $('#telefono').on('input', function() {
+                    const telefono = $(this).val().replace(/\D/g, '');
+                    $(this).val(telefono);
+                });
+
+                // Validación en tiempo real
+                $('.form-select, #direccion, #telefono').on('blur', function() {
+                    validarCampo($(this));
+                });
+            }
+
+            function validarCampo($campo) {
+                const valor = $campo.val().trim();
+                const $feedback = $campo.next('.invalid-feedback');
+
+                if ($campo.prop('required') && !valor) {
+                    $feedback.show();
+                    $campo.css('border-color', 'var(--rubi)');
+                    return false;
+                }
+
+                // Validación específica para teléfono
+                if ($campo.attr('id') === 'telefono' && valor) {
+                    const regexTelefono = /^[+]?[0-9\s\-]{10,}$/;
+                    if (!regexTelefono.test(valor)) {
+                        $feedback.text('Por favor ingresa un número de teléfono válido').show();
+                        $campo.css('border-color', 'var(--rubi)');
+                        return false;
+                    }
+                }
+
+                $feedback.hide();
+                $campo.css('border-color', 'var(--lux-border)');
+                return true;
+            }
+
+            function validarFormulario() {
+                const camposRequeridos = ['#departamento', '#municipio', '#ciudad', '#direccion', '#telefono'];
+                let valido = true;
+
+                camposRequeridos.forEach(function(selector) {
+                    const $campo = $(selector);
+                    if (!validarCampo($campo)) {
+                        valido = false;
+                    }
+                });
+
+                // Habilitar/deshabilitar checkout según validación
+                const tieneItems = cartItems.length > 0;
+                $('#btnCheckout').prop('disabled', !(valido && tieneItems));
+
+                return valido;
+            }
+
+            // ================= PROCESAR CHECKOUT =================
+            function procesarCheckout() {
+                if (!validarFormulario() || cartItems.length === 0) {
+                    mostrarNotificacionLumi('Información incompleta', 'Por favor completa todos los campos requeridos', 'warning');
+                    return;
+                }
+
+                const $btn = $('#btnCheckout');
+                const originalHTML = $btn.html();
+
+                // Feedback visual
+                $btn.html('<i class="fas fa-spinner fa-spin"></i> PROCESANDO...');
+                $btn.addClass('processing');
+                $btn.prop('disabled', true);
+
+                // Obtener datos del formulario
+                const datosEnvio = {
+                    Departamento: $('#departamento option:selected').text(),
+                    Municipio: $('#municipio option:selected').text(),
+                    Ciudad: $('#ciudad option:selected').text(),
+                    Direccion: $('#direccion').val().trim(),
+                    Telefono: $('#telefono').val().trim(),
+                    MetodoPago: 'paypal'
+                };
+
+                // Simular procesamiento (en un caso real, aquí se integraría con PayPal)
+                setTimeout(function() {
+                    // Mostrar confirmación
+                    Swal.fire({
+                        title: '¡Redirigiendo a PayPal!',
+                        html: `
+                            <div class="text-start">
+                                <p><strong>Resumen de tu compra:</strong></p>
+                                <p>• ${cartItems.length} piezas</p>
+                                <p>• Total: ${$('#summaryTotal').text()}</p>
+                                <p>• Envío a: ${datosEnvio.Ciudad}, ${datosEnvio.Departamento}</p>
+                                <hr>
+                                <p class="text-muted small">Serás redirigido al portal seguro de PayPal para completar el pago.</p>
+                            </div>
+                        `,
+                        icon: 'info',
+                        showCancelButton: true,
+                        confirmButtonColor: 'var(--zafiro)',
+                        cancelButtonColor: 'var(--text-muted)',
+                        confirmButtonText: 'Continuar con PayPal',
+                        cancelButtonText: 'Seguir editando',
+                        background: 'var(--bg-60)',
+                        color: 'var(--text-main)',
+                        customClass: {
+                            confirmButton: 'btn-lumi-solid',
+                            cancelButton: 'btn-lumi-outline'
+                        }
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            // Track begin_checkout event
+                            trackEvent('begin_checkout', {
+                                value: subtotal + shipping + (subtotal * 0.19),
+                                currency: 'COP',
+                                items: cartItems.map(item => ({
+                                    item_id: item.oProducto?.IdProducto,
+                                    item_name: item.oProducto?.Nombre,
+                                    price: item.oProducto?.Precio,
+                                    quantity: item.Cantidad
+                                }))
+                            });
+
+                            // Simular redirección a PayPal
+                            mostrarNotificacionLumi('Redirigiendo', 'Conectando con PayPal...', 'info');
+
+                            // En un caso real, aquí se haría window.location.href = 'URL_PAYPAL';
+                            // Por ahora, solo simulamos
+                            setTimeout(() => {
+                                mostrarNotificacionLumi('Compra simulada', 'Esta es una demostración. En producción se redirigiría a PayPal.', 'success');
+                                $btn.html(originalHTML);
+                                $btn.removeClass('processing');
+                                $btn.prop('disabled', false);
+                            }, 2000);
+                        } else {
+                            $btn.html(originalHTML);
+                            $btn.removeClass('processing');
+                            $btn.prop('disabled', false);
+                        }
+                    });
+                }, 1000);
+            }
+
+            // ================= INICIALIZAR =================
+            inicializar();
+        });
+    </script>
+}

@@ -1,0 +1,25 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "ignored": "true",
+      "type": "secrets"
+    },
+    "storage1": {
+      "ignored": "true",
+      "type": "storage",
+      "connectionId": "StorageConnection"
+    },
+    "appInsights1": {
+      "ignored": "true",
+      "type": "appInsights"
+    },
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "ConnectionStrings:DatabaseConnection"
+    },
+    "appConfig1": {
+      "type": "appConfig",
+      "connectionId": "StorageConnection:queueServiceUri"
+    }
+  }
+}
