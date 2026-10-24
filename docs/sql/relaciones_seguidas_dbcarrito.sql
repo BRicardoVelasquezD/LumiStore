@@ -1,23 +1,4 @@
-/*
-  LumiStore — claves y relaciones verificadas de DBCARRITO.
-
-  DDL autorizado expresamente por el usuario para la base local DBCARRITO.
-  No inserta, actualiza ni elimina filas de negocio. Valida las restricciones
-  existentes mediante WITH CHECK y realiza todo el DDL en una transacción:
-  ante cualquier error, se revierte el conjunto completo.
-
-  Preflight SELECT ejecutado antes de este script: 0 grupos duplicados y 0
-  nulos en las tres claves geográficas; 0 huérfanos en todas las relaciones
-  incluidas. Las tablas pueden haber cambiado desde el preflight; WITH CHECK
-  vuelve a validarlas y aborta/rollback si ahora hay datos incompatibles.
-
-  Se omite VENTA.IdCiudad -> CIUDAD.IdCiudad: son varchar(10) y varchar(6),
-  respectivamente. Aunque el preflight no encontró huérfanos, no se alteran
-  longitudes ni se declara esa relación sin validar el contrato de columna.
-
-  Ejecutar solo contra (localdb)\MSSQLLocalDB / DBCARRITO:
-	sqlcmd -S "(localdb)\MSSQLLocalDB" -d "DBCARRITO" -E -b -i "docs\sql\relaciones_seguidas_dbcarrito.sql"
-*/
+/* Organiza sección */
 SET NOCOUNT ON;
 SET XACT_ABORT ON;
 

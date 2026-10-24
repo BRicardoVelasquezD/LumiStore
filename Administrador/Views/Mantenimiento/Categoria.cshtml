@@ -184,8 +184,8 @@
                 text: "Desea eliminar: " + data.Descripcion,
                 icon: "warning",
                 showCancelButton: true,
-                confirmButtonColor: '#d00000', // Rubí
-                cancelButtonColor: '#1a3a6d', // Zafiro
+                confirmButtonColor: '#d00000', // Organiza sección
+                cancelButtonColor: '#1a3a6d', // Organiza sección
                 confirmButtonText: "Sí, eliminar",
                 cancelButtonText: "No, cancelar"
             }).then((result) => {
@@ -215,9 +215,9 @@
                 Activo: $("#cboactivo").val() == 1 ? true : false
             };
 
-            // LoadingOverlay en el Modal
+            // Organiza sección
             $(".modal-content").LoadingOverlay("show", {
-                imageColor: "#ff85a2" // Color diamante rosa
+                imageColor: "#ff85a2" // Organiza sección
             });
 
             $.ajax({

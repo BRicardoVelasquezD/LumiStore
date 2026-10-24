@@ -1,8 +1,4 @@
-/*
-  Preflight de integridad para posibles PK/FK de DBCARRITO.
-  SOLO LECTURA: devuelve únicamente recuentos agregados; no muestra valores
-  de filas y no cambia datos ni esquema. Ejecutar con -d DBCARRITO.
-*/
+/* Organiza sección */
 SET NOCOUNT ON;
 IF DB_NAME() <> N'DBCARRITO'
 BEGIN
@@ -10,7 +6,7 @@ BEGIN
 	RETURN;
 END;
 
--- Unicidad y nulos en posibles claves de ubicación.
+-- Organiza sección
 SELECT N'CIUDAD.IdCiudad: grupos duplicados' AS Comprobacion, COUNT_BIG(*) AS Hallazgos
 FROM (SELECT IdCiudad FROM dbo.CIUDAD GROUP BY IdCiudad HAVING COUNT_BIG(*) > 1) AS d
 UNION ALL
@@ -23,7 +19,7 @@ UNION ALL SELECT N'CIUDAD.IdCiudad: nulos', COUNT_BIG(*) FROM dbo.CIUDAD WHERE I
 UNION ALL SELECT N'DEPARTAMENTO.IdDepartamento: nulos', COUNT_BIG(*) FROM dbo.DEPARTAMENTO WHERE IdDepartamento IS NULL
 UNION ALL SELECT N'MUNICIPIO.IdMunicipio: nulos', COUNT_BIG(*) FROM dbo.MUNICIPIO WHERE IdMunicipio IS NULL;
 
--- Filas huérfanas en relaciones inferidas de las consultas y los nombres de columnas.
+-- Organiza sección
 SELECT N'CARRITO.IdCliente -> CLIENTE.IdCliente' AS Relacion, COUNT_BIG(*) AS Huerfanos
 FROM dbo.CARRITO AS c LEFT JOIN dbo.CLIENTE AS p ON p.IdCliente = c.IdCliente
 WHERE c.IdCliente IS NOT NULL AND p.IdCliente IS NULL

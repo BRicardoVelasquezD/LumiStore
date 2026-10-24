@@ -5,7 +5,7 @@
 
 @section styles {
     <style>
-        /* ================= HERO PREMIUM ================= */
+        /* Organiza sección */
         .hero-lumi {
             background: linear-gradient(135deg, var(--bg-60), var(--bg-30));
             padding: 180px 0 120px;
@@ -69,7 +69,7 @@
             color: white;
         }
 
-        /* ================= COLECCIÓN PREMIUM ================= */
+        /* Organiza sección */
         .seccion-coleccion {
             padding: 100px 0;
             background: var(--bg-30);
@@ -96,7 +96,7 @@
             margin: 0 auto;
         }
 
-        /* ================= FILTROS LUXE ================= */
+        /* Organiza sección */
         .filtros-container {
             background: var(--glass);
             border: 1px solid var(--lux-border);
@@ -175,7 +175,7 @@
             font-weight: 500;
         }
 
-        /* ================= PRODUCTOS GRID ================= */
+        /* Organiza sección */
         .productos-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
@@ -324,7 +324,7 @@
             cursor: not-allowed;
         }
 
-        /* ================= CONTADOR Y FILTROS ACTIVOS ================= */
+        /* Organiza sección */
         .contador-tesoros {
             text-align: center;
             padding: 1.5rem;
@@ -362,7 +362,7 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        /* ================= ESTADOS VACÍOS ================= */
+        /* Organiza sección */
         .estado-vacio {
             text-align: center;
             padding: 4rem 2rem;
@@ -388,7 +388,7 @@
             margin: 0 auto 2rem;
         }
 
-        /* ================= RESPONSIVE ================= */
+        /* Organiza sección */
         @@media (max-width: 992px) {
             .hero-title {
                 font-size: 3rem;
@@ -445,7 +445,7 @@
     </style>
 }
 
-<!-- HERO PREMIUM -->
+<!-- Organiza sección -->
 <section class="hero-lumi" id="hero">
     <div class="container">
         <div class="row align-items-center">
@@ -468,7 +468,7 @@
                     </a>
                 </div>
 
-                <!-- Trust badges -->
+                <!-- Organiza sección -->
                 <div class="mt-5 d-flex flex-wrap gap-4">
                     <div class="d-flex align-items-center gap-2">
                         <i class="fas fa-shield-alt text-success"></i>
@@ -486,12 +486,12 @@
             </div>
 
             <div class="col-lg-4 d-none d-lg-block">
-                <!-- Imagen hero decorativa -->
+                <!-- Organiza sección -->
                 <div class="position-relative">
                     <div class="rounded-circle bg-gradient-lux" style="width: 400px; height: 400px; position: absolute; top: 50px; right: 0; opacity: 0.1;"></div>
                     <div class="position-relative" style="z-index: 2;">
                         <div class="border-lux rounded-4 shadow-lux overflow-hidden" style="width: 350px; height: 350px;">
-                            <!-- Imagen representativa - se puede reemplazar por una real -->
+                            <!-- Organiza sección -->
                             <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-glass">
                                 <i class="fas fa-gem fa-6x text-primary opacity-50"></i>
                             </div>
@@ -503,7 +503,7 @@
     </div>
 </section>
 
-<!-- COLECCIÓN PREMIUM -->
+<!-- Organiza sección -->
 <section class="seccion-coleccion" id="coleccion">
     <div class="container">
         <div class="seccion-titulo">
@@ -514,7 +514,7 @@
         </div>
 
         <div class="row">
-            <!-- FILTROS -->
+            <!-- Organiza sección -->
             <div class="col-lg-3">
                 <div class="filtros-container">
                     <div class="filtros-header">
@@ -527,29 +527,29 @@
                         </button>
                     </div>
 
-                    <!-- Categorías -->
+                    <!-- Organiza sección -->
                     <div class="filtro-grupo">
                         <h4 class="filtro-grupo-titulo">
                             <i class="fas fa-magic"></i>
                             Categorías
                         </h4>
                         <div id="lista-categorias">
-                            <!-- Cargado por JavaScript -->
+                            <!-- Organiza sección -->
                         </div>
                     </div>
 
-                    <!-- Marcas -->
+                    <!-- Organiza sección -->
                     <div class="filtro-grupo">
                         <h4 class="filtro-grupo-titulo">
                             <i class="fas fa-award"></i>
                             Casas & Diseñadores
                         </h4>
                         <div id="lista-marcas">
-                            <!-- Cargado por JavaScript -->
+                            <!-- Organiza sección -->
                         </div>
                     </div>
 
-                    <!-- Contador -->
+                    <!-- Organiza sección -->
                     <div class="contador-tesoros mt-4">
                         <div class="contador-numero" id="contador-tesoros">0</div>
                         <small class="text-muted">Piezas encontradas</small>
@@ -557,9 +557,9 @@
                 </div>
             </div>
 
-            <!-- PRODUCTOS -->
+            <!-- Organiza sección -->
             <div class="col-lg-9">
-                <!-- Filtros activos -->
+                <!-- Organiza sección -->
                 <div id="filtros-activos" class="filtros-activos">
                     <div class="d-flex align-items-center justify-content-between">
                         <span id="filtros-activos-texto"></span>
@@ -569,9 +569,9 @@
                     </div>
                 </div>
 
-                <!-- Grid de productos -->
+                <!-- Organiza sección -->
                 <div class="productos-grid" id="contenedor-productos">
-                    <!-- Cargado por JavaScript -->
+                    <!-- Organiza sección -->
                     <div class="estado-vacio">
                         <div class="estado-vacio-icono">
                             <i class="fas fa-gem fa-spin"></i>
@@ -587,7 +587,7 @@
     </div>
 </section>
 
-<!-- JSON-LD PARA COLECCIÓN -->
+<!-- Organiza sección -->
 <script type="application/ld+json">
 {
     "context": "https://schema.org",
@@ -610,14 +610,14 @@
             let textoCategoria = 'Todas las categorías';
             let textoMarca = 'Todas las marcas';
 
-            // ================= INICIALIZACIÓN =================
+            // Organiza sección
             function inicializar() {
                 cargarCategorias();
                 cargarProductos();
                 setupEventListeners();
             }
 
-            // ================= CARGAR CATEGORÍAS =================
+            // Organiza sección
             function cargarCategorias() {
                 $.get('@Url.Action("ListarCategorias","Tienda")')
                     .done(function (response) {
@@ -644,7 +644,7 @@
                     });
             }
 
-            // ================= CARGAR MARCAS =================
+            // Organiza sección
             function cargarMarcas(idCategoria) {
                 $('#lista-marcas').html('<div class="text-muted small">Cargando...</div>');
 
@@ -673,7 +673,7 @@
                     });
             }
 
-            // ================= CARGAR PRODUCTOS =================
+            // Organiza sección
             function cargarProductos() {
                 $('#contenedor-productos').html(`
                     <div class="estado-vacio">
@@ -728,7 +728,7 @@
                 });
             }
 
-            // ================= RENDERIZAR PRODUCTOS =================
+            // Organiza sección
             function renderizarProductos(productos) {
                 if (!productos || productos.length === 0) {
                     $('#contenedor-productos').html(`
@@ -753,7 +753,7 @@
 
                 let html = '';
                 productos.forEach(function (producto, index) {
-                    // Determinar badges
+                    // Organiza sección
                     let badges = '';
                     if (producto.Stock < 10) {
                         badges += `<span class="badge-producto badge-exclusivo">EXCLUSIVO</span>`;
@@ -762,20 +762,20 @@
                         badges += `<span class="badge-producto badge-limitado">LIMITADO</span>`;
                     }
 
-                    // Imagen
+                    // Organiza sección
                     let imgSrc = '/Content/img/default-experience.jpg';
                     if (producto.Base64 && producto.Extension) {
                         imgSrc = `data:image/${producto.Extension};base64,${producto.Base64}`;
                     }
 
-                    // Precio formateado
+                    // Organiza sección
                     const precioFormateado = new Intl.NumberFormat('es-CO', {
                         style: 'currency',
                         currency: 'COP',
                         minimumFractionDigits: 0
                     }).format(producto.Precio || 0);
 
-                    // Descripción truncada
+                    // Organiza sección
                     const descripcion = producto.Descripcion || 'Pieza exclusiva de la colección Lumi Premium.';
                     const descripcionCorta = descripcion.length > 100 ? descripcion.substring(0, 100) + '...' : descripcion;
 
@@ -814,7 +814,7 @@
                 $('#contenedor-productos').html(html);
             }
 
-            // ================= ACTUALIZAR FILTROS ACTIVOS =================
+            // Organiza sección
             function actualizarFiltrosActivos() {
                 if (categoriaActual == 0 && marcaActual == 0) {
                     $('#filtros-activos').removeClass('visible');
@@ -835,9 +835,9 @@
                 $('#filtros-activos').addClass('visible');
             }
 
-            // ================= EVENT LISTENERS =================
+            // Organiza sección
             function setupEventListeners() {
-                // Cambio de categoría
+                // Organiza sección
                 $(document).on('change', 'input[name="categoria"]', function () {
                     const valor = $(this).val();
                     categoriaActual = parseInt(valor);
@@ -855,7 +855,7 @@
                     });
                 });
 
-                // Cambio de marca
+                // Organiza sección
                 $(document).on('change', 'input[name="marca"]', function () {
                     const valor = $(this).val();
                     marcaActual = parseInt(valor);
@@ -872,7 +872,7 @@
                     });
                 });
 
-                // Limpiar filtros
+                // Organiza sección
                 $('#btnLimpiarFiltros').click(function () {
                     $('input[name="categoria"][value="0"]').prop('checked', true).trigger('change');
                     $('input[name="marca"][value="0"]').prop('checked', true).trigger('change');
@@ -883,18 +883,18 @@
                     mostrarNotificacionLumi('Filtros limpiados', 'Mostrando toda la colección', 'info');
                 });
 
-                // Limpiar filtro activo
+                // Organiza sección
                 $('#btnLimpiarFiltroActivo').click(function () {
                     $('#btnLimpiarFiltros').trigger('click');
                 });
 
-                // Agregar al carrito
+                // Organiza sección
                 $(document).on('click', '.btn-agregar:not(:disabled)', function () {
                     const btn = $(this);
                     const idProducto = btn.data('id');
                     const nombreProducto = btn.closest('.card-producto').find('.producto-nombre').text();
 
-                    // Feedback visual
+                    // Organiza sección
                     const originalHTML = btn.html();
                     btn.html('<i class="fas fa-spinner fa-spin me-1"></i> Agregando...');
                     btn.prop('disabled', true);
@@ -902,24 +902,24 @@
                     $.post('@Url.Action("AgregarCarrito","Tienda")', { idproducto: idProducto })
                         .done(function (response) {
                             if (response && response.respuesta) {
-                                // Actualizar UI
+                                // Organiza sección
                                 actualizarCarrito();
 
-                                // Efecto de éxito
+                                // Organiza sección
                                 btn.html('<i class="fas fa-check me-1"></i> ¡Agregado!');
                                 btn.removeClass('btn-agregar').addClass('btn-success');
 
-                                // Restaurar después de 1.5s
+                                // Organiza sección
                                 setTimeout(function () {
                                     btn.html(originalHTML);
                                     btn.removeClass('btn-success').addClass('btn-agregar');
                                     btn.prop('disabled', false);
                                 }, 1500);
 
-                                // Notificación
+                                // Organiza sección
                                 mostrarNotificacionLumi('¡Tesoro añadido!', `${nombreProducto} se agregó a tu colección`, 'success');
 
-                                // Tracking
+                                // Organiza sección
                                 trackEvent('add_to_cart', {
                                     item_id: idProducto,
                                     item_name: nombreProducto
@@ -937,13 +937,13 @@
                         });
                 });
 
-                // Mostrar todos (cuando no hay resultados)
+                // Organiza sección
                 $(document).on('click', '#btnMostrarTodos', function () {
                     $('#btnLimpiarFiltros').trigger('click');
                 });
             }
 
-            // ================= INICIAR =================
+            // Organiza sección
             inicializar();
         });
     </script>

@@ -6,18 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Solicitud de Membresía - Lumi Store</title>
 
-    <!-- Bootstrap 5 -->
+    <!-- Organiza sección -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- FontAwesome -->
+    <!-- Organiza sección -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    <!-- Fuentes premium -->
+    <!-- Organiza sección -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* Paleta Lumi Store Premium */
+            /* Organiza sección */
             --zafiro-deep: #0d1c36;
             --zafiro-light: #2a4a7e;
             --coral-soft: #FF6B6B;
@@ -29,7 +29,7 @@
             --blanco-pure: #FFFFFF;
             --esmeralda-lumi: #10b981;
             --esmeralda-glow: rgba(16, 185, 129, 0.2);
-            /* Gradientes exclusivos */
+            /* Organiza sección */
             --gradient-gold: linear-gradient(135deg, #F5E9C8 0%, #FFF9E6 100%);
             --gradient-zafiro: linear-gradient(135deg, #0d1c36 0%, #2a4a7e 100%);
             --gradient-pink: linear-gradient(135deg, #ff85a2 0%, #FF6B6B 100%);
@@ -55,7 +55,7 @@
             overflow-x: hidden;
         }
 
-        /* Partículas de fondo */
+        /* Organiza sección */
         .luxury-particles {
             position: fixed;
             top: 0;
@@ -83,7 +83,7 @@
             }
         }
 
-        /* Contenedor principal */
+        /* Organiza sección */
         .registration-container {
             position: relative;
             z-index: 1;
@@ -91,7 +91,7 @@
             max-width: 520px;
         }
 
-        /* Tarjeta de registro premium */
+        /* Organiza sección */
         .registration-card-premium {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
@@ -127,7 +127,7 @@
             z-index: 10;
         }
 
-        /* Header premium */
+        /* Organiza sección */
         .registration-header-premium {
             padding: 3.5rem 3rem 2.5rem;
             text-align: center;
@@ -236,12 +236,12 @@
             opacity: 0.9;
         }
 
-        /* Formulario premium */
+        /* Organiza sección */
         .registration-body-premium {
             padding: 0 3rem 3rem;
         }
 
-        /* Campos del formulario */
+        /* Organiza sección */
         .form-group-premium {
             margin-bottom: 1.5rem;
             position: relative;
@@ -272,7 +272,7 @@
                 font-weight: 300;
             }
 
-        /* Iconos en campos */
+        /* Organiza sección */
         .input-icon-premium {
             position: absolute;
             right: 1.5rem;
@@ -288,7 +288,7 @@
             transform: translateY(-50%) scale(1.1);
         }
 
-        /* Mensaje de error */
+        /* Organiza sección */
         .alert-premium {
             background: rgba(255, 107, 107, 0.1);
             color: var(--coral-soft);
@@ -319,7 +319,7 @@
             margin-right: 8px;
         }
 
-        /* Botón de registro */
+        /* Organiza sección */
         .btn-register-premium {
             background: var(--gradient-zafiro);
             color: white;
@@ -373,7 +373,7 @@
                 transform: translateX(5px) scale(1.1);
             }
 
-        /* Enlace para miembros */
+        /* Organiza sección */
         .member-link-premium {
             display: block;
             margin-top: 2.5rem;
@@ -417,7 +417,7 @@
                 transform: translateX(-5px);
             }
 
-        /* Decoraciones */
+        /* Organiza sección */
         .corner-decoration {
             position: absolute;
             bottom: 20px;
@@ -427,7 +427,7 @@
             transform: rotate(15deg);
         }
 
-        /* Responsividad */
+        /* Organiza sección */
         @@media (max-width: 576px) {
             body {
                 padding: 1rem;
@@ -477,7 +477,7 @@
             }
         }
 
-        /* Efectos de entrada para campos */
+        /* Organiza sección */
         .form-group-premium {
             opacity: 0;
             transform: translateY(20px);
@@ -511,7 +511,7 @@
             animation-delay: 0.5s;
         }
 
-        /* Validación visual */
+        /* Organiza sección */
         .form-control-premium.valid {
             border-color: var(--esmeralda-lumi);
             background: rgba(16, 185, 129, 0.05);
@@ -553,17 +553,17 @@
     </style>
 </head>
 <body>
-    <!-- Partículas de fondo -->
+    <!-- Organiza sección -->
     <div class="luxury-particles" id="luxuryParticles"></div>
 
     <div class="registration-container">
         <div class="registration-card-premium">
-            <!-- Decoración de esquina -->
+            <!-- Organiza sección -->
             <div class="corner-decoration">
                 <i class="fas fa-feather"></i>
             </div>
 
-            <!-- Header -->
+            <!-- Organiza sección -->
             <div class="registration-header-premium">
                 <div class="gem-icon-container">
                     <div class="gem-icon-glow"></div>
@@ -577,10 +577,10 @@
                 </p>
             </div>
 
-            <!-- Formulario -->
+            <!-- Organiza sección -->
             <div class="registration-body-premium">
                 <form action="@Url.Action("Registrar","Acceso")" method="post" id="registerForm">
-                    <!-- Campos del formulario -->
+                    <!-- Organiza sección -->
                     <div class="row g-3">
                         <div class="col-md-6">
                             <div class="form-group-premium">
@@ -626,7 +626,7 @@
                         </div>
                     </div>
 
-                    <!-- Mensaje de error -->
+                    <!-- Organiza sección -->
                     @if (ViewBag.Error != null)
                     {
                         <div class="alert-premium py-2 mb-3">
@@ -634,12 +634,12 @@
                         </div>
                     }
 
-                    <!-- Botón de envío -->
+                    <!-- Organiza sección -->
                     <button class="btn btn-register-premium" type="submit">
                         <i class="fas fa-star"></i> SOLICITAR MEMBRESÍA
                     </button>
 
-                    <!-- Enlace para miembros existentes -->
+                    <!-- Organiza sección -->
                     <div class="text-center">
                         <a href="@Url.Action("Index")" class="member-link-premium">
                             <i class="fas fa-arrow-left"></i> Ya tengo una membresía, ingresar al salón
@@ -650,16 +650,16 @@
         </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- Organiza sección -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
 
     <script>
         $(document).ready(function () {
-            // Crear partículas de fondo
+            // Organiza sección
             createParticles();
 
-            // Configurar overlay de carga personalizado
+            // Organiza sección
             $.LoadingOverlaySetup({
                 background: "rgba(248, 245, 240, 0.95)",
                 custom: $("<div>", {
@@ -685,12 +685,12 @@
                 textColor: "#666666"
             });
 
-            // Manejar envío del formulario
+            // Organiza sección
             $("#registerForm").submit(function () {
                 $.LoadingOverlay("show");
             });
 
-            // Efecto de enfoque en los campos
+            // Organiza sección
             $(".form-control-premium").focus(function () {
                 $(this).closest(".form-group-premium").addClass("focused");
             }).blur(function () {
@@ -699,7 +699,7 @@
                 }
             });
 
-            // Validación en tiempo real del correo
+            // Organiza sección
             $("input[name='Correo']").on('input', function () {
                 const email = $(this).val();
                 const emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
@@ -718,7 +718,7 @@
                 }
             });
 
-            // Validación de fortaleza de contraseña
+            // Organiza sección
             $("input[name='Clave']").on('input', function () {
                 const password = $(this).val();
                 const strengthContainer = $("#passwordStrength");
@@ -728,20 +728,20 @@
                 if (password.length > 0) {
                     strengthContainer.addClass('show');
 
-                    // Calcular fortaleza
+                    // Organiza sección
                     let strength = 0;
                     if (password.length >= 8) strength++;
                     if (/[A-Z]/.test(password)) strength++;
                     if (/[0-9]/.test(password)) strength++;
                     if (/[^A-Za-z0-9]/.test(password)) strength++;
 
-                    // Actualizar puntos
+                    // Organiza sección
                     dots.removeClass('active');
                     for (let i = 0; i < strength; i++) {
                         $(dots[i]).addClass('active');
                     }
 
-                    // Actualizar texto
+                    // Organiza sección
                     const texts = ['Débil', 'Moderada', 'Buena', 'Excelente'];
                     strengthText.text(texts[strength - 1] || 'Débil');
                     strengthText.css('color',
@@ -750,7 +750,7 @@
                                 'var(--coral-soft)'
                     );
 
-                    // Actualizar borde del campo
+                    // Organiza sección
                     if (strength >= 3) {
                         $(this).removeClass('invalid').addClass('valid');
                         $(this).next('.input-icon-premium').css('color', 'var(--esmeralda-lumi)');
@@ -768,7 +768,7 @@
                 }
             });
 
-            // Validación de nombres y apellidos
+            // Organiza sección
             $("input[name='Nombres'], input[name='Apellidos']").on('input', function () {
                 const value = $(this).val();
                 if (value) {
@@ -785,7 +785,7 @@
                 }
             });
 
-            // Función para crear partículas
+            // Organiza sección
             function createParticles() {
                 const container = $('#luxuryParticles');
                 const particleCount = 15;
@@ -812,7 +812,7 @@
                 }
             }
 
-            // Animación de entrada para los campos
+            // Organiza sección
             setTimeout(() => {
                 $('.form-group-premium').each(function (i) {
                     $(this).css({

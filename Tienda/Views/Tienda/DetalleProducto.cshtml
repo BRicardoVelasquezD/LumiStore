@@ -26,7 +26,7 @@
 
     var precioFormateado = Model.Precio.ToString("C0", System.Globalization.CultureInfo.CreateSpecificCulture("es-CO"));
 
-    // Determinar el mensaje de stock - CORREGIDO CON LLAVES
+    // Organiza sección
     var stockMensaje = "";
 
     if (!esDisponible)
@@ -50,7 +50,7 @@
         stockMensaje = "DISPONIBLE";
     }
 
-    // Calcular envío estimado
+    // Organiza sección
     var hoy = DateTime.Now;
     var fechaEntrega = hoy.AddDays(3).ToString("dddd dd 'de' MMMM", new System.Globalization.CultureInfo("es-ES"));
     fechaEntrega = char.ToUpper(fechaEntrega[0]) + fechaEntrega.Substring(1);
@@ -58,7 +58,7 @@
 
 @section styles {
     <style>
-        /* ================= VARIABLES ESPECÍFICAS DETALLE ================= */
+        /* Organiza sección */
         :root {
             --product-hero-height: 600px;
             --product-gallery-width: 60%;
@@ -66,7 +66,7 @@
             --product-sticky-offset: 120px;
         }
 
-        /* ================= HERO DETALLE ================= */
+        /* Organiza sección */
         .producto-hero-section {
             padding: var(--product-sticky-offset) 0 0;
             background: linear-gradient(135deg, var(--bg-60), var(--bg-30));
@@ -96,7 +96,7 @@
             margin-bottom: 4rem;
         }
 
-        /* ================= GALERÍA ================= */
+        /* Organiza sección */
         .producto-gallery {
             padding: 3rem;
             background: linear-gradient(135deg, #FFFFFF, #F8F9FA);
@@ -139,7 +139,7 @@
             background: #FFFFFF;
         }
 
-        /* ================= BADGES ================= */
+        /* Organiza sección */
         .product-badges {
             position: absolute;
             top: 2rem;
@@ -183,7 +183,7 @@
             background: linear-gradient(135deg, var(--zafiro), #1565C0);
         }
 
-        /* ================= ZOOM OVERLAY ================= */
+        /* Organiza sección */
         .zoom-overlay {
             position: fixed;
             inset: 0;
@@ -240,7 +240,7 @@
                 transform: rotate(90deg);
             }
 
-        /* ================= INFORMACIÓN DEL PRODUCTO ================= */
+        /* Organiza sección */
         .producto-info {
             padding: 3rem;
             background: var(--glass);
@@ -299,7 +299,7 @@
                 color: var(--zafiro);
             }
 
-        /* ================= PRECIO ================= */
+        /* Organiza sección */
         .product-price-section {
             margin: 2rem 0;
             padding: 1.5rem;
@@ -354,7 +354,7 @@
             border: 1px solid rgba(114, 103, 90, 0.2);
         }
 
-        /* ================= DESCRIPCIÓN ================= */
+        /* Organiza sección */
         .product-description {
             color: var(--text-muted);
             line-height: 1.8;
@@ -370,7 +370,7 @@
                 margin-bottom: 1rem;
             }
 
-        /* ================= ESPECIFICACIONES ================= */
+        /* Organiza sección */
         .product-specs {
             margin: 2rem 0;
         }
@@ -400,7 +400,7 @@
             color: var(--text-main);
         }
 
-        /* ================= ACCIONES ================= */
+        /* Organiza sección */
         .product-actions {
             margin-top: 3rem;
             position: sticky;
@@ -488,7 +488,7 @@
                 cursor: not-allowed;
             }
 
-        /* ================= GARANTÍAS ================= */
+        /* Organiza sección */
         .product-guarantees {
             margin-top: 2rem;
             padding-top: 2rem;
@@ -508,7 +508,7 @@
                 font-size: 1.25rem;
             }
 
-        /* ================= ENVÍO ESTIMADO ================= */
+        /* Organiza sección */
         .shipping-estimate {
             background: linear-gradient(135deg, rgba(15, 82, 186, 0.05), rgba(93, 58, 140, 0.05));
             border-radius: 16px;
@@ -532,7 +532,7 @@
             color: var(--zafiro);
         }
 
-        /* ================= PRODUCTOS RELACIONADOS ================= */
+        /* Organiza sección */
         .related-products {
             padding: 4rem 0;
             background: var(--bg-30);
@@ -547,7 +547,7 @@
             margin-bottom: 3rem;
         }
 
-        /* ================= RESPONSIVE ================= */
+        /* Organiza sección */
         @@media (max-width: 1200px) {
             .product-name {
                 font-size: 2.5rem;
@@ -637,7 +637,7 @@
     </style>
 }
 
-<!-- JSON-LD PARA PRODUCTO (SEO) -->
+<!-- Organiza sección -->
 <script type="application/ld+json">
 {
     "context": "https://schema.org",
@@ -683,10 +683,10 @@
     <div class="container">
         <div class="row g-0">
             <div class="col-lg-7">
-                <!-- GALERÍA -->
+                <!-- Organiza sección -->
                 <div class="producto-gallery">
                     <div class="gallery-container">
-                        <!-- BADGES -->
+                        <!-- Organiza sección -->
                         <div class="product-badges">
                             @if (esExclusivo)
                             {
@@ -706,7 +706,7 @@
                             }
                         </div>
 
-                        <!-- IMAGEN PRINCIPAL -->
+                        <!-- Organiza sección -->
                         <div class="main-image-container" id="zoomTrigger" aria-label="Ampliar imagen" role="button" tabindex="0">
                             <img src="@img" alt="@Model.Nombre - Colección Lumi Premium" class="main-image" loading="eager" />
                         </div>
@@ -715,9 +715,9 @@
             </div>
 
             <div class="col-lg-5">
-                <!-- INFORMACIÓN -->
+                <!-- Organiza sección -->
                 <div class="producto-info">
-                    <!-- MIGA DE PAN -->
+                    <!-- Organiza sección -->
                     <div class="product-breadcrumb" aria-label="Ruta de navegación">
                         <a href="@Url.Action("Index","Tienda")">Colección</a>
                         <span class="separator">›</span>
@@ -726,10 +726,10 @@
                         <strong>@Model.Nombre</strong>
                     </div>
 
-                    <!-- NOMBRE -->
+                    <!-- Organiza sección -->
                     <h1 class="product-name" itemprop="name">@Model.Nombre</h1>
 
-                    <!-- META INFORMACIÓN -->
+                    <!-- Organiza sección -->
                     <div class="product-meta" aria-label="Información del producto">
                         <div class="meta-item">
                             <i class="fas fa-building" aria-hidden="true"></i>
@@ -745,7 +745,7 @@
                         </div>
                     </div>
 
-                    <!-- PRECIO Y STOCK -->
+                    <!-- Organiza sección -->
                     <div class="product-price-section">
                         <div class="product-price" itemprop="offers" itemscope itemtype="https://schema.org/Offer">
                             <meta itemprop="priceCurrency" content="COP" />
@@ -769,7 +769,7 @@
                         </div>
                     </div>
 
-                    <!-- DESCRIPCIÓN -->
+                    <!-- Organiza sección -->
                     <div class="product-description" itemprop="description">
                         <h4><i class="fas fa-align-left me-2" aria-hidden="true"></i>Descripción</h4>
                         <p>
@@ -779,7 +779,7 @@
                         </p>
                     </div>
 
-                    <!-- ESPECIFICACIONES -->
+                    <!-- Organiza sección -->
                     <div class="product-specs">
                         <h4><i class="fas fa-clipboard-list me-2" aria-hidden="true"></i>Especificaciones</h4>
                         <div class="specs-grid">
@@ -802,7 +802,7 @@
                         </div>
                     </div>
 
-                    <!-- ACCIONES (STICKY) -->
+                    <!-- Organiza sección -->
                     <div class="product-actions" aria-label="Acciones de compra">
                         <div class="action-buttons">
                             <button id="btnAddToHistory"
@@ -824,7 +824,7 @@
                             }
                         </div>
 
-                        <!-- GARANTÍAS -->
+                        <!-- Organiza sección -->
                         <div class="product-guarantees">
                             <div class="guarantee-item">
                                 <i class="fas fa-shield-alt" aria-hidden="true"></i>
@@ -844,7 +844,7 @@
                             </div>
                         </div>
 
-                        <!-- ENVÍO ESTIMADO -->
+                        <!-- Organiza sección -->
                         <div class="shipping-estimate">
                             <h5><i class="fas fa-clock" aria-hidden="true"></i>Envío estimado</h5>
                             <p>
@@ -859,7 +859,7 @@
     </div>
 </section>
 
-<!-- ZOOM OVERLAY -->
+<!-- Organiza sección -->
 <div class="zoom-overlay" id="zoomOverlay" role="dialog" aria-label="Vista ampliada" aria-modal="true">
     <div class="zoom-content">
         <button class="btn-close-zoom" id="btnCloseZoom" aria-label="Cerrar vista ampliada">
@@ -869,7 +869,7 @@
     </div>
 </div>
 
-<!-- PRODUCTOS RELACIONADOS (SIMULADO - SE IMPLEMENTARÍA CON BACKEND) -->
+<!-- Organiza sección -->
 @if (Model.oCategoria != null)
 {
     <section class="related-products">
@@ -892,24 +892,24 @@
             const esUltimaUnidad = @esUltimaUnidad.ToString().ToLower();
             const stockDisponible = @Model.Stock;
 
-            // ================= ZOOM DE IMAGEN =================
+            // Organiza sección
             const $zoomTrigger = $('#zoomTrigger');
             const $zoomOverlay = $('#zoomOverlay');
             const $btnCloseZoom = $('#btnCloseZoom');
 
-            // Abrir zoom
+            // Organiza sección
             $zoomTrigger.on('click keypress', function(e) {
                 if (e.type === 'click' || (e.type === 'keypress' && (e.key === 'Enter' || e.key === ' '))) {
                     e.preventDefault();
                     $zoomOverlay.addClass('active');
                     $('body').css('overflow', 'hidden');
 
-                    // Enfocar botón de cerrar para accesibilidad
+                    // Organiza sección
                     setTimeout(() => {
                         $btnCloseZoom.focus();
                     }, 100);
 
-                    // Track event
+                    // Organiza sección
                     trackEvent('product_image_zoom', {
                         product_id: productoId,
                         product_name: '@Model.Nombre'
@@ -917,14 +917,14 @@
                 }
             });
 
-            // Cerrar zoom
+            // Organiza sección
             $btnCloseZoom.on('click', function() {
                 $zoomOverlay.removeClass('active');
                 $('body').css('overflow', '');
-                $zoomTrigger.focus(); // Regresar foco al trigger
+                $zoomTrigger.focus(); // Organiza sección
             });
 
-            // Cerrar con ESC
+            // Organiza sección
             $(document).on('keydown', function(e) {
                 if (e.key === 'Escape' && $zoomOverlay.hasClass('active')) {
                     $zoomOverlay.removeClass('active');
@@ -933,7 +933,7 @@
                 }
             });
 
-            // Cerrar al hacer clic fuera de la imagen
+            // Organiza sección
             $zoomOverlay.on('click', function(e) {
                 if (e.target === this) {
                     $zoomOverlay.removeClass('active');
@@ -942,7 +942,7 @@
                 }
             });
 
-            // ================= AGREGAR AL CARRITO =================
+            // Organiza sección
             $('#btnAddToHistory').on('click', function() {
                 if (!esDisponible) return;
 
@@ -950,11 +950,11 @@
                 const originalHTML = $btn.html();
                 const originalState = $btn.prop('disabled');
 
-                // Feedback visual
+                // Organiza sección
                 $btn.html('<i class="fas fa-spinner fa-spin"></i> AGREGANDO...');
                 $btn.prop('disabled', true);
 
-                // Animación de pulso
+                // Organiza sección
                 $btn.css({
                     'animation': 'pulse 0.5s',
                     'transform': 'scale(0.98)'
@@ -970,28 +970,28 @@
                 })
                 .done(function(response) {
                     if (response && response.respuesta) {
-                        // Éxito
+                        // Organiza sección
                         $btn.html('<i class="fas fa-check"></i> ¡AGREGADO!');
                         $btn.removeClass('btn-add-to-history').addClass('btn-success');
 
-                        // Actualizar contador global
+                        // Organiza sección
                         if (typeof actualizarCarrito === 'function') {
                             actualizarCarrito();
                         }
 
-                        // Actualizar UI de stock si es última unidad
+                        // Organiza sección
                         if (esUltimaUnidad) {
                             $('.stock-indicator').removeClass('stock-available').addClass('stock-out')
                                 .html('<i class="fas fa-times-circle"></i> AGOTADO');
                             $('#btnComprarAhora').prop('disabled', true).html('<i class="fas fa-times"></i> AGOTADO');
                         }
 
-                        // Notificación
+                        // Organiza sección
                         mostrarNotificacionLumi('¡Tesoro añadido!',
                             '@Model.Nombre ha sido agregado a tu colección personal',
                             'success');
 
-                        // Track event
+                        // Organiza sección
                         trackEvent('add_to_cart', {
                             item_id: productoId,
                             item_name: '@Model.Nombre',
@@ -1000,7 +1000,7 @@
                             quantity: 1
                         });
 
-                        // Restaurar botón después de 2 segundos
+                        // Organiza sección
                         setTimeout(function() {
                             $btn.html(originalHTML);
                             $btn.removeClass('btn-success').addClass('btn-add-to-history');
@@ -1011,7 +1011,7 @@
                             });
                         }, 2000);
                     } else {
-                        // Error
+                        // Organiza sección
                         $btn.html(originalHTML);
                         $btn.prop('disabled', originalState);
                         $btn.css({
@@ -1025,7 +1025,7 @@
                     }
                 })
                 .fail(function() {
-                    // Error de conexión
+                    // Organiza sección
                     $btn.html(originalHTML);
                     $btn.prop('disabled', originalState);
                     $btn.css({
@@ -1039,18 +1039,18 @@
                 });
             });
 
-            // ================= COMPRAR AHORA =================
+            // Organiza sección
             $('#btnComprarAhora').on('click', function() {
                 if (!esDisponible) return;
 
                 const $btn = $(this);
                 const originalHTML = $btn.html();
 
-                // Feedback visual
+                // Organiza sección
                 $btn.html('<i class="fas fa-spinner fa-spin"></i> PROCESANDO...');
                 $btn.prop('disabled', true);
 
-                // Primero agregar al carrito
+                // Organiza sección
                 $.ajax({
                     url: '@Url.Action("AgregarCarrito","Tienda")',
                     type: 'POST',
@@ -1061,17 +1061,17 @@
                 })
                 .done(function(response) {
                     if (response && response.respuesta) {
-                        // Actualizar contador
+                        // Organiza sección
                         if (typeof actualizarCarrito === 'function') {
                             actualizarCarrito();
                         }
 
-                        // Redirigir al carrito después de breve delay
+                        // Organiza sección
                         setTimeout(function() {
                             window.location.href = '@Url.Action("Carrito","Tienda")';
                         }, 500);
 
-                        // Track event
+                        // Organiza sección
                         trackEvent('begin_checkout', {
                             value: @Model.Precio,
                             currency: 'COP',
@@ -1099,7 +1099,7 @@
                 });
             });
 
-            // ================= CARGAR PRODUCTOS RELACIONADOS =================
+            // Organiza sección
             function cargarProductosRelacionados() {
                 const categoriaId = @(Model.oCategoria?.IdCategoria ?? 0);
                 if (categoriaId === 0) return;
@@ -1117,7 +1117,7 @@
                 })
                 .done(function(response) {
                     if (response && response.data && response.data.length > 0) {
-                        // Filtrar producto actual y tomar máximo 4 productos
+                        // Organiza sección
                         const relacionados = response.data
                             .filter(p => p.IdProducto !== productoId)
                             .slice(0, 4);
@@ -1164,29 +1164,29 @@
                     }
                 })
                 .fail(function() {
-                    // Ocultar sección si hay error
+                    // Organiza sección
                     $('.related-products').hide();
                 });
             }
 
-            // Cargar productos relacionados después de un delay
+            // Organiza sección
             setTimeout(cargarProductosRelacionados, 1000);
 
-            // ================= INICIALIZACIÓN =================
+            // Organiza sección
 
-            // Añadir clase de animación al cargar
+            // Organiza sección
             setTimeout(function() {
                 $('.producto-container').addClass('animate__animated animate__fadeInUp');
             }, 100);
 
-            // Configurar accesibilidad para zoom
+            // Organiza sección
             $zoomTrigger.attr({
                 'role': 'button',
                 'tabindex': '0',
                 'aria-label': 'Ampliar imagen para ver detalles'
             });
 
-            // Track view del producto
+            // Organiza sección
             trackEvent('view_item', {
                 item_id: productoId,
                 item_name: '@Model.Nombre',
@@ -1197,7 +1197,7 @@
         });
     </script>
 
-    <!-- ANIMACIÓN PULSO PARA BOTONES -->
+    <!-- Organiza sección -->
     <style>
         @@keyframes pulse {
             0% {

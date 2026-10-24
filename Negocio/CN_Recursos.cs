@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.IO;
 using System.Net;
 using System.Net.Mail;
@@ -28,23 +29,27 @@ namespace Negocio
 
         public static bool EnviarCorreo(string correo, string asunto, string mensaje)
         {
+            string usuario = Environment.GetEnvironmentVariable("LUMISTORE_SMTP_USERNAME");
+            string clave = Environment.GetEnvironmentVariable("LUMISTORE_SMTP_PASSWORD");
+            if (string.IsNullOrWhiteSpace(usuario) || string.IsNullOrWhiteSpace(clave))
+                return false;
+
             try
             {
-                MailMessage mail = new MailMessage();
-                mail.To.Add(correo);
-                mail.From = new MailAddress("brayanvelasquez728@gmail.com");
-                mail.Subject = asunto;
-                mail.Body = mensaje;
-                mail.IsBodyHtml = true;
-
-                var smtp = new SmtpClient()
+                using (MailMessage mail = new MailMessage())
+                using (var smtp = new SmtpClient())
                 {
-                    Credentials = new NetworkCredential("brayanvelasquez728@gmail.com", "pgev zkfb hkfb nkze"),
-                    Host = "smtp.gmail.com",
-                    Port = 587,
-                    EnableSsl = true
-                };
-                smtp.Send(mail);
+                    mail.To.Add(correo);
+                    mail.From = new MailAddress(ConfigurationManager.AppSettings["SmtpFrom"] ?? "brayanvelasquez728@gmail.com");
+                    mail.Subject = asunto;
+                    mail.Body = mensaje;
+                    mail.IsBodyHtml = true;
+                    smtp.Credentials = new NetworkCredential(usuario, clave);
+                    smtp.Host = "smtp.gmail.com";
+                    smtp.Port = 587;
+                    smtp.EnableSsl = true;
+                    smtp.Send(mail);
+                }
                 return true;
             }
             catch { return false; }
@@ -61,7 +66,7 @@ namespace Negocio
 
                 textoBase64 = Convert.ToBase64String(bytes);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 conversion = false;
             }

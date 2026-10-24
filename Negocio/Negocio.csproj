@@ -8,6 +8,7 @@
     <PackageReference Include="AngleSharp" Version="1.8.5-beta.849" />
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Net.Http" />

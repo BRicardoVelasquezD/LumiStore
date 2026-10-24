@@ -1,17 +1,4 @@
-/*
-	LumiStore — diagnóstico de catálogo de DBCARRITO
-	Alcance: SOLO LECTURA. No consulta filas de negocio ni ejecuta CRUD.
-
-	Conexión local Windows Authentication (PowerShell):
-	  sqlcmd -S "(localdb)\MSSQLLocalDB" -d "DBCARRITO" -E -b -i "docs\sql\diagnostico_catalogo_dbcarrito.sql"
-
-	Cada bloque consulta metadatos sys.* / INFORMATION_SCHEMA. No incluye INSERT,
-	UPDATE, DELETE, MERGE, EXEC, DDL, transacciones de escritura ni migraciones.
-	El bloque de definiciones devuelve el texto de procedimientos, funciones,
-	vistas y triggers para contrastarlo manualmente con el código de Datos/ y
-	Negocio/. Este script no crea objetos y no demuestra que las rutas CRUD
-	funcionen. Ejecutar solo en DBCARRITO; si el contexto es otra base, aborta.
-*/
+/* Organiza sección */
 SET NOCOUNT ON;
 
 IF DB_NAME() <> N'DBCARRITO'
@@ -20,7 +7,7 @@ BEGIN
 	RETURN;
 END;
 
--- 1. Identidad de la conexión y resumen de objetos de usuario (sin datos de negocio).
+-- Organiza sección
 SELECT DB_NAME() AS BaseActual, @@SERVERNAME AS ServidorActual;
 
 SELECT o.type AS CodigoTipo,
@@ -31,7 +18,7 @@ WHERE o.is_ms_shipped = 0
 GROUP BY o.type, o.type_desc
 ORDER BY o.type_desc;
 
--- 2. Tablas y columnas: tipo SQL, nulabilidad, identidad y computed.
+-- Organiza sección
 SELECT s.name AS Esquema,
 	   t.name AS Tabla,
 	   c.column_id AS OrdenColumna,
@@ -51,7 +38,7 @@ JOIN sys.types AS ty ON ty.user_type_id = c.user_type_id
 WHERE t.is_ms_shipped = 0
 ORDER BY s.name, t.name, c.column_id;
 
--- 3. Claves primarias y únicas, con el orden de sus columnas.
+-- Organiza sección
 SELECT s.name AS Esquema,
 	   t.name AS Tabla,
 	   kc.name AS Restriccion,
@@ -68,7 +55,7 @@ JOIN sys.index_columns AS ic ON ic.object_id = i.object_id AND ic.index_id = i.i
 JOIN sys.columns AS c ON c.object_id = ic.object_id AND c.column_id = ic.column_id
 ORDER BY s.name, t.name, kc.type_desc, kc.name, ic.key_ordinal;
 
--- 4. Relaciones declaradas mediante claves foráneas, incluidos sus extremos.
+-- Organiza sección
 SELECT fk.name AS ClaveForanea,
 	   ps.name AS EsquemaOrigen,
 	   pt.name AS TablaOrigen,
@@ -90,7 +77,7 @@ JOIN sys.schemas AS rs ON rs.schema_id = rt.schema_id
 JOIN sys.columns AS rc ON rc.object_id = fkc.referenced_object_id AND rc.column_id = fkc.referenced_column_id
 ORDER BY ps.name, pt.name, fk.name, fkc.constraint_column_id;
 
--- 5. Índices y restricciones por columna, para completar la inspección de claves.
+-- Organiza sección
 SELECT s.name AS Esquema,
 	   t.name AS Tabla,
 	   i.name AS Indice,
@@ -109,7 +96,7 @@ JOIN sys.columns AS c ON c.object_id = ic.object_id AND c.column_id = ic.column_
 WHERE i.index_id > 0 AND i.is_hypothetical = 0
 ORDER BY s.name, t.name, i.name, ic.key_ordinal, ic.index_column_id;
 
--- 6. Restricciones DEFAULT y CHECK definidas en tablas.
+-- Organiza sección
 SELECT s.name AS Esquema,
 	   t.name AS Tabla,
 	   dc.name AS RestriccionDefault,
@@ -133,7 +120,7 @@ JOIN sys.tables AS t ON t.object_id = cc.parent_object_id
 JOIN sys.schemas AS s ON s.schema_id = t.schema_id
 ORDER BY s.name, t.name, cc.name;
 
--- 7. Procedimientos, funciones y vistas de usuario, parámetros y definiciones.
+-- Organiza sección
 SELECT s.name AS Esquema,
 	   o.name AS Objeto,
 	   o.type_desc AS TipoObjeto,
@@ -154,7 +141,7 @@ WHERE o.is_ms_shipped = 0
   AND o.type IN ('P', 'FN', 'IF', 'TF', 'FS', 'FT', 'V')
 ORDER BY o.type_desc, s.name, o.name, p.parameter_id;
 
--- 8. Tipos de tabla definidos por el usuario (relevante para parámetros TVP).
+-- Organiza sección
 SELECT s.name AS Esquema,
 	   tt.name AS TipoTabla,
 	   c.column_id AS OrdenColumna,
@@ -170,7 +157,7 @@ JOIN sys.columns AS c ON c.object_id = tt.type_table_object_id
 JOIN sys.types AS ty ON ty.user_type_id = c.user_type_id
 ORDER BY s.name, tt.name, c.column_id;
 
--- 9. Triggers DML/DDL de usuario y definiciones (no se ejecutan).
+-- Organiza sección
 SELECT s.name AS Esquema,
 	   o.name AS ObjetoPadre,
 		  tr.name AS NombreTrigger,

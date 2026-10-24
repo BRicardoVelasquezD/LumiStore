@@ -6,18 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Actualizar Credenciales - Lumi Store</title>
 
-    <!-- Bootstrap 5 -->
+    <!-- Organiza sección -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- FontAwesome -->
+    <!-- Organiza sección -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    <!-- Fuentes premium -->
+    <!-- Organiza sección -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* Paleta Lumi Store Premium */
+            /* Organiza sección */
             --zafiro-deep: #0d1c36;
             --zafiro-light: #2a4a7e;
             --coral-soft: #FF6B6B;
@@ -30,13 +30,13 @@
             --esmeralda-lumi: #10b981;
             --esmeralda-glow: rgba(16, 185, 129, 0.2);
             --texto-suave: #6b7280;
-            /* Gradientes exclusivos */
+            /* Organiza sección */
             --gradient-gold: linear-gradient(135deg, #F5E9C8 0%, #FFF9E6 100%);
             --gradient-zafiro: linear-gradient(135deg, #0d1c36 0%, #2a4a7e 100%);
             --gradient-pink: linear-gradient(135deg, #ff85a2 0%, #FF6B6B 100%);
             --gradient-gem: linear-gradient(135deg, #ff85a2 0%, #FF6B6B 50%, #0d1c36 100%);
             --gradient-emerald: linear-gradient(135deg, #10b981 0%, #34d399 100%);
-            /* Sombras premium */
+            /* Organiza sección */
             --shadow-premium: 0 30px 80px rgba(13, 28, 54, 0.15);
             --shadow-glow: 0 0 50px rgba(255, 133, 162, 0.25);
             --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.05);
@@ -61,7 +61,7 @@
             overflow-x: hidden;
         }
 
-        /* Partículas de fondo */
+        /* Organiza sección */
         .security-particles {
             position: fixed;
             top: 0;
@@ -89,7 +89,7 @@
             }
         }
 
-        /* Contenedor principal */
+        /* Organiza sección */
         .security-container {
             position: relative;
             z-index: 1;
@@ -97,7 +97,7 @@
             max-width: 480px;
         }
 
-        /* Tarjeta de seguridad premium */
+        /* Organiza sección */
         .security-card-premium {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
@@ -133,7 +133,7 @@
             z-index: 10;
         }
 
-        /* Header premium */
+        /* Organiza sección */
         .security-header-premium {
             padding: 3rem 3rem 2rem;
             text-align: center;
@@ -242,12 +242,12 @@
             opacity: 0.9;
         }
 
-        /* Formulario premium */
+        /* Organiza sección */
         .security-body-premium {
             padding: 0 3rem 3rem;
         }
 
-        /* Campos del formulario */
+        /* Organiza sección */
         .form-group-security {
             margin-bottom: 1.5rem;
             position: relative;
@@ -279,7 +279,7 @@
                 font-weight: 300;
             }
 
-        /* Iconos en campos */
+        /* Organiza sección */
         .input-icon-security {
             position: absolute;
             right: 1.5rem;
@@ -295,7 +295,7 @@
             transform: translateY(-50%) scale(1.1);
         }
 
-        /* Indicador de fortaleza */
+        /* Organiza sección */
         .strength-indicator {
             margin-top: 0.8rem;
             display: flex;
@@ -336,7 +336,7 @@
             text-align: right;
         }
 
-        /* Mensaje de error */
+        /* Organiza sección */
         .alert-security-premium {
             background: rgba(255, 107, 107, 0.1);
             color: var(--coral-soft);
@@ -367,7 +367,7 @@
             margin-right: 8px;
         }
 
-        /* Botón de actualización */
+        /* Organiza sección */
         .btn-update-premium {
             background: var(--gradient-emerald);
             color: white;
@@ -421,7 +421,7 @@
                 transform: scale(1.2);
             }
 
-        /* Decoraciones */
+        /* Organiza sección */
         .security-decoration {
             position: absolute;
             top: 20px;
@@ -431,7 +431,7 @@
             transform: rotate(15deg);
         }
 
-        /* Responsividad */
+        /* Organiza sección */
         @@media (max-width: 576px) {
             body {
                 padding: 1rem;
@@ -481,7 +481,7 @@
             }
         }
 
-        /* Efectos de entrada para campos */
+        /* Organiza sección */
         .form-group-security {
             opacity: 0;
             transform: translateY(20px);
@@ -503,7 +503,7 @@
             animation-delay: 0.2s;
         }
 
-        /* Validación visual */
+        /* Organiza sección */
         .form-control-security.valid {
             border-color: var(--esmeralda-lumi);
             background: rgba(16, 185, 129, 0.05);
@@ -514,7 +514,7 @@
             background: rgba(255, 107, 107, 0.05);
         }
 
-        /* Confirmación visual */
+        /* Organiza sección */
         .confirmation-message {
             margin-top: 0.5rem;
             font-size: 0.85rem;
@@ -535,7 +535,7 @@
                 font-size: 0.9rem;
             }
 
-        /* Indicador de seguridad */
+        /* Organiza sección */
         .security-levels {
             display: flex;
             justify-content: space-between;
@@ -558,7 +558,7 @@
                 opacity: 1;
             }
 
-        /* Animación shake para errores */
+        /* Organiza sección */
         @@keyframes shake {
             0%, 100% {
                 transform: translateX(0);
@@ -573,7 +573,7 @@
             }
         }
 
-        /* Enlace de regreso */
+        /* Organiza sección */
         .back-link-premium {
             display: block;
             margin-top: 2rem;
@@ -617,7 +617,7 @@
                 transform: translateX(-5px);
             }
 
-        /* Mensaje de éxito */
+        /* Organiza sección */
         .success-message-premium {
             background: rgba(16, 185, 129, 0.1);
             color: var(--esmeralda-lumi);
@@ -638,17 +638,17 @@
     </style>
 </head>
 <body>
-    <!-- Partículas de fondo -->
+    <!-- Organiza sección -->
     <div class="security-particles" id="securityParticles"></div>
 
     <div class="security-container">
         <div class="security-card-premium">
-            <!-- Decoración -->
+            <!-- Organiza sección -->
             <div class="security-decoration">
                 <i class="fas fa-shield-alt"></i>
             </div>
 
-            <!-- Header -->
+            <!-- Organiza sección -->
             <div class="security-header-premium">
                 <div class="lock-icon-container">
                     <div class="lock-icon-glow"></div>
@@ -661,12 +661,12 @@
                 </p>
             </div>
 
-            <!-- Formulario -->
+            <!-- Organiza sección -->
             <div class="security-body-premium">
                 <form action="@Url.Action("CambiarClave","Acceso")" method="post" id="passForm">
                     <input type="hidden" name="idCliente" value="@id" />
 
-                    <!-- Nueva contraseña -->
+                    <!-- Organiza sección -->
                     <div class="form-group-security">
                         <input type="password" name="nuevaClave" class="form-control-security"
                                id="nuevaClave" placeholder="Nueva clave de acceso" required />
@@ -674,7 +674,7 @@
                             <i class="fas fa-key"></i>
                         </span>
 
-                        <!-- Indicador de fortaleza -->
+                        <!-- Organiza sección -->
                         <div class="strength-indicator" id="strengthIndicator">
                             <div class="strength-dots">
                                 <div class="strength-dot" data-level="1"></div>
@@ -686,7 +686,7 @@
                             <div class="strength-text" id="strengthText">Seguridad</div>
                         </div>
 
-                        <!-- Niveles de seguridad -->
+                        <!-- Organiza sección -->
                         <div class="security-levels">
                             <div class="security-level" data-level="1">Muy Débil</div>
                             <div class="security-level" data-level="2">Débil</div>
@@ -696,7 +696,7 @@
                         </div>
                     </div>
 
-                    <!-- Confirmar contraseña -->
+                    <!-- Organiza sección -->
                     <div class="form-group-security">
                         <input type="password" name="confirmarClave" class="form-control-security"
                                id="confirmarClave" placeholder="Confirmar nueva clave" required />
@@ -704,14 +704,14 @@
                             <i class="fas fa-key"></i>
                         </span>
 
-                        <!-- Mensaje de confirmación -->
+                        <!-- Organiza sección -->
                         <div class="confirmation-message" id="confirmationMessage">
                             <i class="fas fa-circle"></i>
                             <span id="confirmationText">Coincidencia</span>
                         </div>
                     </div>
 
-                    <!-- Mensaje de error -->
+                    <!-- Organiza sección -->
                     @if (ViewBag.Error != null)
                     {
                         <div class="alert-security-premium py-2 mb-3">
@@ -719,7 +719,7 @@
                         </div>
                     }
 
-                    <!-- Mensaje de éxito -->
+                    <!-- Organiza sección -->
                     @if (ViewBag.Success != null)
                     {
                         <div class="success-message-premium py-2 mb-3">
@@ -727,12 +727,12 @@
                         </div>
                     }
 
-                    <!-- Botón de envío -->
+                    <!-- Organiza sección -->
                     <button type="submit" class="btn btn-update-premium" id="btnActualizar">
                         <i class="fas fa-shield-alt"></i> RESGUARDAR ACCESO
                     </button>
 
-                    <!-- Enlace de regreso -->
+                    <!-- Organiza sección -->
                     <div class="text-center">
                         <a href="@Url.Action("Index","Acceso")" class="back-link-premium">
                             <i class="fas fa-arrow-left"></i> VOLVER AL SALÓN PRIVADO
@@ -743,16 +743,16 @@
         </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- Organiza sección -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
 
     <script>
         $(document).ready(function () {
-            // Crear partículas de fondo
+            // Organiza sección
             createSecurityParticles();
 
-            // Configurar overlay de carga personalizado
+            // Organiza sección
             $.LoadingOverlaySetup({
                 background: "rgba(248, 245, 240, 0.95)",
                 custom: $("<div>", {
@@ -778,15 +778,15 @@
                 textColor: "var(--texto-suave)"
             });
 
-            // Variables de validación
+            // Organiza sección
             let isPasswordValid = false;
             let isPasswordMatch = false;
 
-            // Manejar envío del formulario
+            // Organiza sección
             $("#passForm").submit(function (e) {
                 e.preventDefault();
 
-                // Validación final
+                // Organiza sección
                 if (!isPasswordValid) {
                     showSecurityError("La clave debe tener al menos 8 caracteres, incluyendo mayúsculas, minúsculas y números");
                     return false;
@@ -797,61 +797,61 @@
                     return false;
                 }
 
-                // Mostrar overlay de carga
+                // Organiza sección
                 $.LoadingOverlay("show");
 
-                // Enviar formulario después de pequeña pausa para animación
+                // Organiza sección
                 setTimeout(() => {
                     this.submit();
                 }, 800);
             });
 
-            // Función para mostrar errores
+            // Organiza sección
             function showSecurityError(message) {
-                // Remover mensajes existentes
+                // Organiza sección
                 $(".alert-security-premium, .success-message-premium").remove();
 
-                // Crear nuevo mensaje de error
+                // Organiza sección
                 const errorDiv = $(`
                     <div class="alert-security-premium py-2 mb-3">
                         <i class="fas fa-exclamation-circle"></i> ${message}
                     </div>
                 `);
 
-                // Insertar después del segundo campo
+                // Organiza sección
                 $(".form-group-security").last().after(errorDiv);
 
-                // Efecto visual en los campos
+                // Organiza sección
                 $("#nuevaClave, #confirmarClave").addClass("invalid");
 
-                // Efecto de shake
+                // Organiza sección
                 $("#passForm").css('animation', 'shake 0.5s ease');
                 setTimeout(() => {
                     $("#passForm").css('animation', '');
                 }, 500);
             }
 
-            // Calcular fortaleza de contraseña
+            // Organiza sección
             function calculatePasswordStrength(password) {
                 let strength = 0;
 
-                // Longitud mínima
+                // Organiza sección
                 if (password.length >= 6) strength += 1;
-                // Longitud buena
+                // Organiza sección
                 if (password.length >= 8) strength += 1;
-                // Longitud excelente
+                // Organiza sección
                 if (password.length >= 12) strength += 1;
 
-                // Complejidad
-                if (/[a-z]/.test(password)) strength += 1; // Minúsculas
-                if (/[A-Z]/.test(password)) strength += 1; // Mayúsculas
-                if (/[0-9]/.test(password)) strength += 1; // Números
-                if (/[^A-Za-z0-9]/.test(password)) strength += 1; // Caracteres especiales
+                // Organiza sección
+                if (/[a-z]/.test(password)) strength += 1; // Organiza sección
+                if (/[A-Z]/.test(password)) strength += 1; // Organiza sección
+                if (/[0-9]/.test(password)) strength += 1; // Organiza sección
+                if (/[^A-Za-z0-9]/.test(password)) strength += 1; // Organiza sección
 
                 return Math.min(strength, 5);
             }
 
-            // Actualizar indicador de fortaleza
+            // Organiza sección
             $("#nuevaClave").on('input', function() {
                 const password = $(this).val();
                 const strengthIndicator = $("#strengthIndicator");
@@ -864,26 +864,26 @@
 
                     const strength = calculatePasswordStrength(password);
 
-                    // Actualizar puntos
+                    // Organiza sección
                     dots.removeClass('active');
                     for (let i = 0; i < strength; i++) {
                         $(dots[i]).addClass('active');
                     }
 
-                    // Actualizar texto y color
+                    // Organiza sección
                     const texts = ['Muy Débil', 'Débil', 'Media', 'Fuerte', 'Muy Fuerte'];
                     const colors = ['#ff6b6b', '#ffa726', '#ffd54f', '#81c784', '#4caf50'];
 
                     strengthText.text(texts[strength - 1] || 'Muy Débil');
                     strengthText.css('color', colors[strength - 1] || '#ff6b6b');
 
-                    // Actualizar niveles
+                    // Organiza sección
                     levels.removeClass('active');
                     if (strength > 0) {
                         $(levels[strength - 1]).addClass('active');
                     }
 
-                    // Actualizar color de puntos
+                    // Organiza sección
                     dots.each(function(i) {
                         if (i < strength) {
                             $(this).css('background-color', colors[strength - 1]);
@@ -892,15 +892,15 @@
                         }
                     });
 
-                    // Validar contraseña
+                    // Organiza sección
                     const isValid = password.length >= 8 && /[A-Z]/.test(password) && /[a-z]/.test(password) && /[0-9]/.test(password);
                     isPasswordValid = isValid && strength >= 3;
 
-                    // Actualizar estado del campo
+                    // Organiza sección
                     if (isPasswordValid) {
                         $(this).removeClass('invalid').addClass('valid');
                         $(this).next('.input-icon-security').css('color', colors[strength - 1]);
-                        // Remover error si existe
+                        // Organiza sección
                         $(".alert-security-premium").remove();
                     } else {
                         $(this).removeClass('valid').addClass('invalid');
@@ -915,11 +915,11 @@
                     isPasswordValid = false;
                 }
 
-                // Verificar coincidencia
+                // Organiza sección
                 checkPasswordMatch();
             });
 
-            // Verificar coincidencia de contraseñas
+            // Organiza sección
             $("#confirmarClave").on('input', checkPasswordMatch);
 
             function checkPasswordMatch() {
@@ -939,7 +939,7 @@
                         $("#confirmarClave").removeClass('invalid').addClass('valid');
                         $("#confirmarClave").next('.input-icon-security').css('color', 'var(--esmeralda-lumi)');
                         isPasswordMatch = true;
-                        // Remover error si existe
+                        // Organiza sección
                         $(".alert-security-premium").remove();
                     } else {
                         text.text("Las claves no coinciden");
@@ -957,7 +957,7 @@
                 }
             }
 
-            // Función para crear partículas
+            // Organiza sección
             function createSecurityParticles() {
                 const container = $('#securityParticles');
                 const particleCount = 12;
@@ -984,7 +984,7 @@
                 }
             }
 
-            // Efecto de enfoque en los campos
+            // Organiza sección
             $(".form-control-security").focus(function() {
                 $(this).closest(".form-group-security").addClass("focused");
                 $(this).css('background', 'white');
@@ -995,10 +995,10 @@
                 }
             });
 
-            // Inicializar icono de confirmación
+            // Organiza sección
             $("#confirmationMessage i").addClass("fa-circle");
 
-            // Animación de entrada para los campos
+            // Organiza sección
             setTimeout(() => {
                 $('.form-group-security').each(function(i) {
                     $(this).css({
@@ -1016,7 +1016,7 @@
                 });
             }, 300);
 
-            // Si hay un mensaje de éxito, redirigir después de un tiempo
+            // Organiza sección
             @if (ViewBag.Success != null)
             {
                 <text>
@@ -1029,14 +1029,14 @@
                 </text>
             }
 
-            // Si hay un mensaje de error, ocultar al hacer clic
+            // Organiza sección
             $('body').on('click', '.alert-security-premium', function() {
                 $(this).fadeOut(300, function() {
                     $(this).remove();
                 });
             });
 
-            // Habilitar/deshabilitar botón basado en validación
+            // Organiza sección
             function updateSubmitButton() {
                 const isValid = isPasswordValid && isPasswordMatch;
                 $("#btnActualizar").prop('disabled', !isValid);
@@ -1054,16 +1054,16 @@
                 }
             }
 
-            // Actualizar estado del botón
+            // Organiza sección
             setInterval(updateSubmitButton, 500);
 
-            // Toggle para mostrar/ocultar contraseña
+            // Organiza sección
             function createPasswordToggle() {
                 $('.form-control-security').each(function() {
                     const field = $(this);
                     const icon = field.next('.input-icon-security');
 
-                    // Crear nuevo icono de ojo
+                    // Organiza sección
                     const eyeIcon = $('<i class="fas fa-eye password-toggle"></i>');
                     eyeIcon.css({
                         'position': 'absolute',
@@ -1093,7 +1093,7 @@
                 });
             }
 
-            // Inicializar toggles de contraseña
+            // Organiza sección
             setTimeout(createPasswordToggle, 500);
         });
     </script>

@@ -6,18 +6,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Recuperar Acceso Exclusivo - Lumi Store</title>
 
-    <!-- Bootstrap 5 -->
+    <!-- Organiza sección -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- FontAwesome -->
+    <!-- Organiza sección -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    <!-- Fuentes premium -->
+    <!-- Organiza sección -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 
     <style>
         :root {
-            /* Paleta Lumi Store Premium */
+            /* Organiza sección */
             --zafiro-deep: #0d1c36;
             --zafiro-light: #2a4a7e;
             --coral-soft: #FF6B6B;
@@ -30,12 +30,12 @@
             --esmeralda-lumi: #10b981;
             --esmeralda-glow: rgba(16, 185, 129, 0.2);
             --texto-suave: #6b7280;
-            /* Gradientes exclusivos */
+            /* Organiza sección */
             --gradient-gold: linear-gradient(135deg, #F5E9C8 0%, #FFF9E6 100%);
             --gradient-zafiro: linear-gradient(135deg, #0d1c36 0%, #2a4a7e 100%);
             --gradient-pink: linear-gradient(135deg, #ff85a2 0%, #FF6B6B 100%);
             --gradient-gem: linear-gradient(135deg, #ff85a2 0%, #FF6B6B 50%, #0d1c36 100%);
-            /* Sombras premium */
+            /* Organiza sección */
             --shadow-premium: 0 30px 80px rgba(13, 28, 54, 0.15);
             --shadow-glow: 0 0 50px rgba(255, 133, 162, 0.25);
             --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.05);
@@ -60,7 +60,7 @@
             overflow-x: hidden;
         }
 
-        /* Partículas de fondo */
+        /* Organiza sección */
         .recovery-particles {
             position: fixed;
             top: 0;
@@ -88,7 +88,7 @@
             }
         }
 
-        /* Contenedor principal */
+        /* Organiza sección */
         .recovery-container {
             position: relative;
             z-index: 1;
@@ -96,7 +96,7 @@
             max-width: 480px;
         }
 
-        /* Tarjeta de recuperación premium */
+        /* Organiza sección */
         .recovery-card-premium {
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(20px);
@@ -132,7 +132,7 @@
             z-index: 10;
         }
 
-        /* Header premium */
+        /* Organiza sección */
         .recovery-header-premium {
             padding: 3.5rem 3rem 2.5rem;
             text-align: center;
@@ -241,12 +241,12 @@
             opacity: 0.9;
         }
 
-        /* Formulario premium */
+        /* Organiza sección */
         .recovery-body-premium {
             padding: 0 3rem 3rem;
         }
 
-        /* Campo del formulario */
+        /* Organiza sección */
         .form-group-premium {
             margin-bottom: 1.5rem;
             position: relative;
@@ -278,7 +278,7 @@
                 font-weight: 300;
             }
 
-        /* Icono en campo */
+        /* Organiza sección */
         .input-icon-premium {
             position: absolute;
             right: 1.5rem;
@@ -294,7 +294,7 @@
             transform: translateY(-50%) scale(1.1);
         }
 
-        /* Mensaje de error */
+        /* Organiza sección */
         .alert-premium {
             background: rgba(255, 107, 107, 0.1);
             color: var(--coral-soft);
@@ -325,7 +325,7 @@
             margin-right: 8px;
         }
 
-        /* Botón de envío */
+        /* Organiza sección */
         .btn-send-premium {
             background: var(--gradient-zafiro);
             color: white;
@@ -379,7 +379,7 @@
                 transform: translateX(5px) scale(1.1);
             }
 
-        /* Enlace de regreso */
+        /* Organiza sección */
         .back-link-premium {
             display: block;
             margin-top: 2.5rem;
@@ -423,7 +423,7 @@
                 transform: translateX(-5px);
             }
 
-        /* Decoraciones */
+        /* Organiza sección */
         .corner-decoration {
             position: absolute;
             bottom: 20px;
@@ -433,7 +433,7 @@
             transform: rotate(15deg);
         }
 
-        /* Responsividad */
+        /* Organiza sección */
         @@media (max-width: 576px) {
             body {
                 padding: 1rem;
@@ -483,7 +483,7 @@
             }
         }
 
-        /* Efectos de validación */
+        /* Organiza sección */
         .form-control-premium.valid {
             border-color: var(--esmeralda-lumi);
             background: rgba(16, 185, 129, 0.05);
@@ -494,7 +494,7 @@
             background: rgba(255, 107, 107, 0.05);
         }
 
-        /* Mensaje de éxito */
+        /* Organiza sección */
         .success-message-premium {
             background: rgba(16, 185, 129, 0.1);
             color: var(--esmeralda-lumi);
@@ -513,13 +513,13 @@
                 margin-right: 8px;
             }
 
-        /* Animación para el formulario al cargar */
+        /* Organiza sección */
         .form-group-premium {
             opacity: 0;
             transform: translateY(20px);
         }
 
-        /* Spinner de carga */
+        /* Organiza sección */
         .loading-spinner {
             display: none;
             position: fixed;
@@ -552,17 +552,17 @@
     </style>
 </head>
 <body>
-    <!-- Partículas de fondo -->
+    <!-- Organiza sección -->
     <div class="recovery-particles" id="recoveryParticles"></div>
 
     <div class="recovery-container">
         <div class="recovery-card-premium">
-            <!-- Decoración de esquina -->
+            <!-- Organiza sección -->
             <div class="corner-decoration">
                 <i class="fas fa-feather"></i>
             </div>
 
-            <!-- Header -->
+            <!-- Organiza sección -->
             <div class="recovery-header-premium">
                 <div class="key-icon-container">
                     <div class="key-icon-glow"></div>
@@ -575,10 +575,10 @@
                 </p>
             </div>
 
-            <!-- Formulario -->
+            <!-- Organiza sección -->
             <div class="recovery-body-premium">
                 <form action="@Url.Action("Reestablecer","Acceso")" method="post" id="recoveryForm">
-                    <!-- Campo de email -->
+                    <!-- Organiza sección -->
                     <div class="form-group-premium">
                         <input type="email" name="correo" class="form-control-premium"
                                placeholder="Ingresa tu correo registrado" required id="emailInput">
@@ -587,7 +587,7 @@
                         </span>
                     </div>
 
-                    <!-- Mensaje de error -->
+                    <!-- Organiza sección -->
                     @if (ViewBag.Error != null)
                     {
                         <div class="alert-premium py-2 mb-3">
@@ -595,7 +595,7 @@
                         </div>
                     }
 
-                    <!-- Mensaje de éxito -->
+                    <!-- Organiza sección -->
                     @if (ViewBag.Success != null)
                     {
                         <div class="success-message-premium py-2 mb-3">
@@ -603,12 +603,12 @@
                         </div>
                     }
 
-                    <!-- Botón de envío -->
+                    <!-- Organiza sección -->
                     <button class="btn btn-send-premium" type="submit" id="submitBtn">
                         <i class="fas fa-paper-plane"></i> ENVIAR INSTRUCCIONES
                     </button>
 
-                    <!-- Enlace de regreso -->
+                    <!-- Organiza sección -->
                     <div class="text-center">
                         <a href="@Url.Action("Index","Acceso")" class="back-link-premium">
                             <i class="fas fa-arrow-left"></i> VOLVER AL SALÓN PRIVADO
@@ -619,7 +619,7 @@
         </div>
     </div>
 
-    <!-- Spinner de carga -->
+    <!-- Organiza sección -->
     <div class="loading-spinner" id="loadingSpinner">
         <div class="spinner-content">
             <i class="fas fa-key"></i>
@@ -627,16 +627,16 @@
         </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- Organiza sección -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
 
     <script>
         $(document).ready(function () {
-            // Crear partículas de fondo
+            // Organiza sección
             createParticles();
 
-            // Configurar overlay de carga personalizado
+            // Organiza sección
             $.LoadingOverlaySetup({
                 background: "rgba(248, 245, 240, 0.95)",
                 custom: $("<div>", {
@@ -662,7 +662,7 @@
                 textColor: "var(--texto-suave)"
             });
 
-            // Manejar envío del formulario
+            // Organiza sección
             $("#recoveryForm").submit(function (e) {
                 const email = $("#emailInput").val();
                 const emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
@@ -678,7 +678,7 @@
                 return true;
             });
 
-            // Validación en tiempo real del correo
+            // Organiza sección
             $("#emailInput").on('input', function () {
                 const email = $(this).val();
                 const emailRegex = /^[^\s@@]+@@[^\s@@]+\.[^\s@@]+$/;
@@ -697,7 +697,7 @@
                 }
             });
 
-            // Efecto de enfoque en el campo
+            // Organiza sección
             $(".form-control-premium").focus(function () {
                 $(this).closest(".form-group-premium").addClass("focused");
             }).blur(function () {
@@ -706,22 +706,22 @@
                 }
             });
 
-            // Función para mostrar error
+            // Organiza sección
             function showError(message) {
-                // Remover mensajes existentes
+                // Organiza sección
                 $(".alert-premium, .success-message-premium").remove();
 
-                // Crear nuevo mensaje de error
+                // Organiza sección
                 const errorDiv = $(`
                         <div class="alert-premium py-2 mb-3">
                             <i class="fas fa-exclamation-circle"></i> ${message}
                         </div>
                     `);
 
-                // Insertar después del campo de email
+                // Organiza sección
                 $(".form-group-premium").after(errorDiv);
 
-                // Animar entrada
+                // Organiza sección
                 errorDiv.css({
                     'opacity': '0',
                     'transform': 'translateY(-10px)'
@@ -736,7 +736,7 @@
                 }, 10);
             }
 
-            // Función para crear partículas
+            // Organiza sección
             function createParticles() {
                 const container = $('#recoveryParticles');
                 const particleCount = 12;
@@ -763,7 +763,7 @@
                 }
             }
 
-            // Animación de entrada para el contenido
+            // Organiza sección
             setTimeout(() => {
                 $('.form-group-premium').css({
                     'opacity': '0',
@@ -779,7 +779,7 @@
                 }, 300);
             }, 300);
 
-            // Si hay un mensaje de éxito, ocultar automáticamente después de 5 segundos
+            // Organiza sección
             @if (ViewBag.Success != null)
             {
                 <text>
@@ -791,7 +791,7 @@
                 </text>
             }
 
-            // Si hay un mensaje de error, ocultar al hacer clic
+            // Organiza sección
             $('body').on('click', '.alert-premium', function() {
                 $(this).fadeOut(300, function() {
                     $(this).remove();

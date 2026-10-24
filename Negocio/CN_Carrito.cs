@@ -8,7 +8,7 @@ namespace Negocio
     {
         private CD_Carrito objDato = new CD_Carrito();
 
-        // Métodos relacionados con el carrito
+        // Organiza sección
         public List<Carrito> ListarProducto(int idcliente)
             => objDato.ListarProducto(idcliente);
 

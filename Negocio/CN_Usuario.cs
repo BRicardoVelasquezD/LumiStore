@@ -77,7 +77,7 @@ namespace Negocio
             {
                 string asunto = "Restablecer Acceso - Lumi Store";
 
-                // HTML Moderno para Restablecimiento
+                // Organiza sección
                 string mensaje_correo = $@"
                 <div style='font-family: ""Segoe UI"", Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7ff; padding: 40px 0;'>
                     <div style='max-width: 600px; margin: 0 auto; background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(22, 46, 85, 0.1); border: 1px solid #e0e7ff;'>

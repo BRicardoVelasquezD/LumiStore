@@ -163,11 +163,11 @@
         var tabladata;
 
         $(document).ready(function () {
-            // 1. Inicializar Calendarios
+            // Organiza sección
             $("#txtfechainicio").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker('setDate', new Date());
             $("#txtfechafin").datepicker({ dateFormat: 'dd/mm/yy' }).datepicker('setDate', new Date());
 
-            // 2. Cargar indicadores del Dashboard
+            // Organiza sección
             jQuery.ajax({
                 url: '@Url.Action("VistaDashboard", "Home")',
                 type: "GET",
@@ -182,7 +182,7 @@
                 }
             });
 
-            // 3. Configurar DataTable
+            // Organiza sección
             var url_reporte = '@Url.Action("ListarReporte", "Home")' +
                 "?fechainicio=" + $("#txtfechainicio").val() +
                 "&fechafin=" + $("#txtfechafin").val() +
@@ -227,7 +227,7 @@
             });
         });
 
-        // 4. Función de búsqueda
+        // Organiza sección
         $("#btnbuscar").on("click", function () {
             var nueva_url = '@Url.Action("ListarReporte", "Home")' +
                 "?fechainicio=" + $("#txtfechainicio").val() +

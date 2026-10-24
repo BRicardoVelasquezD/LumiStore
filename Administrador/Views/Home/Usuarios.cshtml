@@ -205,7 +205,7 @@
             abrirModal(data);
         });
 
-        // ACTUALIZADO CON SWEETALERT2 PARA ELIMINAR
+        // Organiza sección
         $("#tabla tbody").on("click", '.btn-eliminar', function () {
             var usuarioSeleccionado = tabladata.row($(this).closest("tr")).data();
 
@@ -261,7 +261,7 @@
                         tabladata.ajax.reload();
                         $("#FormModal").modal("hide");
 
-                        // ALERTA DE ÉXITO PREMIUM
+                        // Organiza sección
                         Swal.fire({
                             icon: 'success',
                             title: '¡Logrado!',

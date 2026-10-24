@@ -4,7 +4,7 @@ namespace SweetAlert.Controllers
 {
     public class SweetController : Controller
     {
-        // GET: Sweet
+        // Organiza sección
         public ActionResult Alert()
         {
             return View();

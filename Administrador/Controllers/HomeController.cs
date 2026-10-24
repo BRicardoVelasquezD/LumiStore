@@ -43,10 +43,10 @@ namespace Administrador.Controllers
         [HttpPost]
         public FileResult ExportarVenta(string fechainicio, string fechafin, string idtransaccion)
         {
-            // 1. Obtener la lista de datos desde la capa de negocio
+            // Organiza sección
             List<Reporte> oLista = new CN_Reporte().Ventas(fechainicio, fechafin, idtransaccion);
 
-            // 2. Crear y llenar el DataTable
+            // Organiza sección
             DataTable dt = new DataTable();
             dt.TableName = "Reporte";
             dt.Columns.Add("Fecha Venta", typeof(string));
@@ -70,7 +70,7 @@ namespace Administrador.Controllers
 });
             }
 
-            // 3. Generar el archivo Excel con ClosedXML
+            // Organiza sección
             using (XLWorkbook wb = new XLWorkbook())
             {
                 var hoja = wb.Worksheets.Add(dt);
@@ -81,7 +81,7 @@ namespace Administrador.Controllers
                     wb.SaveAs(stream);
                     string nombreArchivo = "Reporte_" + DateTime.Now.ToString("yyyyMMddHHmmss") + ".xlsx";
 
-                    // Retornar el archivo al navegador
+                    // Organiza sección
                     return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", nombreArchivo);
                 }
             }

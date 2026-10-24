@@ -11,13 +11,13 @@
 
     <style>
         :root {
-            --gem-sapphire: #162e55; /* Zafiro */
-            --gem-emerald: #1d4d44; /* Esmeralda Dark */
-            --gem-ruby: #dc3545; /* Rubí */
-            --gem-diamond: #ffffff; /* Diamante */
-            --gem-sapphire-soft: #eef2ff; /* Zafiro Soft */
-            --gem-emerald-vivid: #10b981; /* Esmeralda Vivo */
-            --gem-pink-fancy: #ff85a2; /* Fancy Pink */
+            --gem-sapphire: #162e55; /* Organiza sección */
+            --gem-emerald: #1d4d44; /* Organiza sección */
+            --gem-ruby: #dc3545; /* Organiza sección */
+            --gem-diamond: #ffffff; /* Organiza sección */
+            --gem-sapphire-soft: #eef2ff; /* Organiza sección */
+            --gem-emerald-vivid: #10b981; /* Organiza sección */
+            --gem-pink-fancy: #ff85a2; /* Organiza sección */
         }
 
         body {
@@ -30,7 +30,7 @@
             overflow-x: hidden;
         }
 
-            /* Efecto de partículas de luz */
+            /* Organiza sección */
             body::before {
                 content: "";
                 position: absolute;
@@ -96,7 +96,7 @@
             padding: 40px !important;
         }
 
-        /* Inputs Personalizados */
+        /* Organiza sección */
         .form-floating > .form-control {
             border: 2px solid var(--gem-sapphire-soft);
             border-radius: 15px;
@@ -110,7 +110,7 @@
                 box-shadow: 0 0 0 4px rgba(255, 133, 162, 0.1);
             }
 
-        /* Botón Guardar - Mix Esmeralda/Zafiro */
+        /* Organiza sección */
         .btn-update {
             background: linear-gradient(45deg, var(--gem-emerald) 0%, var(--gem-emerald-vivid) 100%);
             border: none;
@@ -198,7 +198,7 @@
 
     <script>
         $(document).ready(function () {
-            // Loading con estilo Elite
+            // Organiza sección
             $("#updateForm").submit(function () {
                 $.LoadingOverlay("show", {
                     image: "",
@@ -208,7 +208,7 @@
                 });
             });
 
-            // Manejo de errores (Rubí)
+            // Organiza sección
             @if (ViewBag.Error != null)
             {
                 <text>

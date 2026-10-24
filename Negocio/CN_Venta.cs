@@ -11,7 +11,7 @@ namespace CapaNegocio
 
         public bool Registrar(Venta obj, DataTable DetalleVenta, out string Mensaje)
         {
-            // Validaciones de negocio si las necesitas
+            // Organiza sección
             return objCapaDato.Registrar(obj, DetalleVenta, out Mensaje);
         }
 

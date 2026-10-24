@@ -1,25 +1,32 @@
 ﻿using Datos;
 using Entidad;
 using Negocio;
+using Newtonsoft.Json.Linq;
+using Tienda.Services;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.IO;
+using System.Globalization;
 using System.Linq;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 
 namespace Tienda.Controllers
 {
     public class TiendaController : Controller
     {
-        // GET: Tienda
+        private static readonly HttpClient FxHttp = new HttpClient { Timeout = TimeSpan.FromSeconds(12) };
+
+        // Organiza sección
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: Vista del Carrito
+        // Organiza sección
         public ActionResult Carrito()
         {
             if (Session["Cliente"] == null)
@@ -38,7 +45,7 @@ namespace Tienda.Controllers
             try
             {
                 bool conversion;
-                string rutaCompleta = Path.Combine(oProducto.RutaImagen, oProducto.NombreImagen);
+                string rutaCompleta = RutaImagenProducto(oProducto);
                 oProducto.Base64 = CN_Recursos.ConvertirBase64(rutaCompleta, out conversion);
                 oProducto.Extension = Path.GetExtension(oProducto.NombreImagen)?.Replace(".", "") ?? "jpg";
             }
@@ -78,7 +85,7 @@ namespace Tienda.Controllers
                 Stock = p.Stock,
                 oMarca = p.oMarca,
                 oCategoria = p.oCategoria,
-                Base64 = negocio.ConvertirBase64(Path.Combine(p.RutaImagen, p.NombreImagen), out bool ok),
+                Base64 = negocio.ConvertirBase64(RutaImagenProducto(p), out bool ok),
                 Extension = Path.GetExtension(p.NombreImagen)?.Replace(".", "") ?? "jpg",
                 Activo = p.Activo
             }).Where(p =>
@@ -92,7 +99,7 @@ namespace Tienda.Controllers
             return jsonresult;
         }
 
-        // --- MÉTODOS DE CARRITO ---
+        // Organiza sección
 
         [HttpPost]
         public JsonResult AgregarCarrito(int idproducto)
@@ -155,7 +162,7 @@ namespace Tienda.Controllers
                 {
                     try
                     {
-                        oC.oProducto.Base64 = CN_Recursos.ConvertirBase64(Path.Combine(oC.oProducto.RutaImagen, oC.oProducto.NombreImagen), out conversion);
+                        oC.oProducto.Base64 = CN_Recursos.ConvertirBase64(RutaImagenProducto(oC.oProducto), out conversion);
                         oC.oProducto.Extension = Path.GetExtension(oC.oProducto.NombreImagen)?.Replace(".", "") ?? "jpg";
                     }
                     catch
@@ -191,7 +198,7 @@ namespace Tienda.Controllers
             }
         }
 
-        // --- MÉTODOS DE UBICACIÓN ---
+        // Organiza sección
 
         [HttpPost]
         public JsonResult ObtenerDepartamento()
@@ -221,7 +228,7 @@ namespace Tienda.Controllers
             }
             catch (Exception ex)
             {
-                // Log el error si es necesario
+                // Organiza sección
                 System.Diagnostics.Debug.WriteLine("Error ObtenerDepartamento: " + ex.Message);
                 lista = new List<Departamento>();
             }
@@ -312,36 +319,246 @@ namespace Tienda.Controllers
             return Json(new { lista = lista }, JsonRequestBehavior.AllowGet);
         }
 
-        // --- MÉTODO PARA PROCESAR COMPRA ---
         [HttpPost]
-        public JsonResult ProcesarCompra(Venta venta)
+        [ValidateAntiForgeryToken]
+        public async Task<JsonResult> ProcesarCompra(Venta venta)
         {
             if (Session["Cliente"] == null)
-                return Json(new { respuesta = false, mensaje = "Debe iniciar sesión" }, JsonRequestBehavior.AllowGet);
+                return Json(new { respuesta = false, mensaje = "Debe iniciar sesión" });
 
             try
             {
-                int idcliente = ((Cliente)Session["Cliente"]).IdCliente;
-                venta.IdCliente = idcliente;
+                var cliente = (Cliente)Session["Cliente"];
+                var carrito = new CN_Carrito().ListarProducto(cliente.IdCliente);
+                if (carrito == null || carrito.Count == 0)
+                    return Json(new { respuesta = false, mensaje = "El carrito está vacío." });
+                if (venta == null || string.IsNullOrWhiteSpace(venta.IdCiudad) || string.IsNullOrWhiteSpace(venta.Telefono) || string.IsNullOrWhiteSpace(venta.Direccion))
+                    return Json(new { respuesta = false, mensaje = "Completa los datos de entrega." });
 
-                // Aquí deberías implementar la lógica para crear la venta
-                // usando tu capa de negocio (CN_Venta)
+                var pending = new PendingPaypalOrder
+                {
+                    CustomerId = cliente.IdCliente,
+                    IdCiudad = venta.IdCiudad,
+                    Telefono = venta.Telefono.Trim(),
+                    Direccion = venta.Direccion.Trim(),
+                    Contacto = (cliente.Nombres + " " + cliente.Apellidos).Trim(),
+                    Lines = carrito.Select(item => new PendingPaypalLine
+                    {
+                        ProductId = item.oProducto.IdProducto,
+                        Quantity = item.Cantidad,
+                        UnitPrice = item.oProducto.Precio
+                    }).ToList()
+                };
+
+                decimal subtotal = pending.Lines.Sum(item => item.UnitPrice * item.Quantity);
+                decimal envio = subtotal >= 500000m ? 0m : 15000m;
+                pending.TotalCop = decimal.Round(subtotal + decimal.Round(subtotal * 0.19m, 2, MidpointRounding.AwayFromZero) + envio, 2, MidpointRounding.AwayFromZero);
+                pending.CopPerUsd = await ObtenerTasaCopPorUsdAsync();
+                pending.TotalUsd = decimal.Round(pending.TotalCop / pending.CopPerUsd, 2, MidpointRounding.AwayFromZero);
+                if (pending.TotalUsd <= 0m)
+                    throw new InvalidOperationException("El total convertido no es válido.");
+
+                var gateway = new PaypalGateway();
+                string returnUrl = Url.Action("PaypalRetorno", "Tienda", null, Request.Url.Scheme);
+                string cancelUrl = Url.Action("PaypalCancelar", "Tienda", null, Request.Url.Scheme);
+                var order = await gateway.CreateOrderAsync(pending.TotalUsd, returnUrl, cancelUrl);
+                pending.OrderId = order.Item1;
+                Session["PaypalPendingOrder"] = pending;
 
                 return Json(new
                 {
                     respuesta = true,
-                    mensaje = "Compra procesada exitosamente",
-                    numeroTransaccion = "TRX-" + DateTime.Now.Ticks.ToString().Substring(0, 8)
-                }, JsonRequestBehavior.AllowGet);
+                    approvalUrl = order.Item2,
+                    totalCop = pending.TotalCop,
+                    totalUsd = pending.TotalUsd.ToString("0.00", CultureInfo.InvariantCulture),
+                    copPerUsd = pending.CopPerUsd
+                });
             }
             catch (Exception ex)
             {
-                return Json(new
-                {
-                    respuesta = false,
-                    mensaje = "Error al procesar la compra: " + ex.Message
-                }, JsonRequestBehavior.AllowGet);
+                System.Diagnostics.Debug.WriteLine("ProcesarCompra: " + ex.Message);
+                Response.StatusCode = 503;
+                return Json(new { respuesta = false, mensaje = "No se pudo iniciar el pago. Revisa la configuración sandbox de PayPal y la tasa USD/COP." });
             }
+        }
+
+        [HttpGet]
+        public async Task<ActionResult> PaypalRetorno(string token)
+        {
+            var pending = Session["PaypalPendingOrder"] as PendingPaypalOrder;
+            if (Session["Cliente"] == null || pending == null || string.IsNullOrWhiteSpace(token) || token != pending.OrderId)
+                return MostrarResultadoPago(false, "No encontramos una compra pendiente para confirmar.");
+
+            try
+            {
+                var cliente = (Cliente)Session["Cliente"];
+                if (cliente.IdCliente != pending.CustomerId || !CarritoCoincide(pending))
+                    return MostrarResultadoPago(false, "El carrito cambió durante el pago. No se capturó el pedido.");
+
+                var gateway = new PaypalGateway();
+                JObject capture = await gateway.CaptureOrderAsync(pending.OrderId);
+                JToken pago = capture["purchase_units"]?.FirstOrDefault()?["payments"]?["captures"]?.FirstOrDefault();
+                string captureId = (string)pago?["id"];
+                string estado = (string)pago?["status"];
+                string moneda = (string)pago?["amount"]?["currency_code"];
+                decimal amountUsd;
+                if (!string.Equals((string)capture["status"], "COMPLETED", StringComparison.OrdinalIgnoreCase) ||
+                    !string.Equals(estado, "COMPLETED", StringComparison.OrdinalIgnoreCase) ||
+                    !string.Equals(moneda, "USD", StringComparison.OrdinalIgnoreCase) ||
+                    !decimal.TryParse((string)pago?["amount"]?["value"], NumberStyles.Number, CultureInfo.InvariantCulture, out amountUsd) ||
+                    amountUsd != pending.TotalUsd || string.IsNullOrWhiteSpace(captureId))
+                    return MostrarResultadoPago(false, "PayPal no confirmó el monto esperado en USD.");
+
+                DataTable detalle = new DataTable();
+                detalle.Columns.Add("IdProducto", typeof(int));
+                detalle.Columns.Add("Cantidad", typeof(int));
+                detalle.Columns.Add("Total", typeof(decimal));
+                foreach (var linea in pending.Lines)
+                    detalle.Rows.Add(linea.ProductId, linea.Quantity, decimal.Round(linea.UnitPrice * linea.Quantity, 2, MidpointRounding.AwayFromZero));
+
+                var venta = new Venta
+                {
+                    IdCliente = pending.CustomerId,
+                    TotalProducto = pending.Lines.Sum(linea => linea.Quantity),
+                    MontoTotal = pending.TotalCop,
+                    Contacto = pending.Contacto,
+                    IdCiudad = pending.IdCiudad,
+                    Telefono = pending.Telefono,
+                    Direccion = pending.Direccion,
+                    IdTransaccion = captureId
+                };
+
+                if (!new CN_Venta().Registrar(venta, detalle, out string mensaje))
+                {
+                    bool reembolso = await gateway.RefundCaptureAsync(captureId);
+                    Session.Remove("PaypalPendingOrder");
+                    return MostrarResultadoPago(false, reembolso
+                        ? "El inventario cambió después del pago. PayPal inició el reembolso automático."
+                        : "PayPal confirmó el pago, pero no se pudo guardar la venta ni confirmar el reembolso. Contacta a soporte con el código " + captureId + ".");
+                }
+
+                Session.Remove("PaypalPendingOrder");
+                TempData["CompraNumero"] = captureId;
+                TempData["CompraTotalCop"] = pending.TotalCop.ToString("C0", CultureInfo.GetCultureInfo("es-CO"));
+                TempData["CompraTotalUsd"] = pending.TotalUsd.ToString("C2", CultureInfo.GetCultureInfo("en-US"));
+                TempData["CompraFecha"] = DateTime.Now.ToString("dd/MM/yyyy HH:mm");
+                return RedirectToAction("CompraConfirmada");
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("PaypalRetorno: " + ex.Message);
+                return MostrarResultadoPago(false, "No fue posible confirmar el pago. Revisa el estado de la operación en PayPal antes de volver a intentarlo.");
+            }
+        }
+
+        [HttpGet]
+        public ActionResult PaypalCancelar()
+        {
+            Session.Remove("PaypalPendingOrder");
+            return MostrarResultadoPago(false, "Cancelaste el pago. No se registró la compra.");
+        }
+
+        [HttpGet]
+        public ActionResult CompraConfirmada()
+        {
+            if (TempData["CompraNumero"] == null)
+                return RedirectToAction("Index");
+            ViewBag.Numero = TempData["CompraNumero"];
+            ViewBag.TotalCop = TempData["CompraTotalCop"];
+            ViewBag.TotalUsd = TempData["CompraTotalUsd"];
+            ViewBag.Fecha = TempData["CompraFecha"];
+            return View();
+        }
+
+        private ActionResult MostrarResultadoPago(bool exito, string mensaje)
+        {
+            ViewBag.Exito = exito;
+            ViewBag.Mensaje = mensaje;
+            return View("PagoResultado");
+        }
+
+        private bool CarritoCoincide(PendingPaypalOrder pending)
+        {
+            var actual = new CN_Carrito().ListarProducto(pending.CustomerId);
+            if (actual == null || actual.Count != pending.Lines.Count)
+                return false;
+            var lineas = actual.OrderBy(item => item.oProducto.IdProducto).ToList();
+            var esperadas = pending.Lines.OrderBy(item => item.ProductId).ToList();
+            for (int i = 0; i < lineas.Count; i++)
+            {
+                if (lineas[i].oProducto.IdProducto != esperadas[i].ProductId ||
+                    lineas[i].Cantidad != esperadas[i].Quantity ||
+                    lineas[i].oProducto.Precio != esperadas[i].UnitPrice)
+                    return false;
+            }
+            return true;
+        }
+
+        private string RutaImagenProducto(Producto producto)
+        {
+            string nombre = Path.GetFileName(producto?.NombreImagen ?? string.Empty);
+            if (string.IsNullOrWhiteSpace(nombre))
+                return string.Empty;
+
+            string rutaLocal = Server.MapPath("~/Imagenes/Productos/" + nombre);
+            if (System.IO.File.Exists(rutaLocal))
+                return rutaLocal;
+
+            if (!string.IsNullOrWhiteSpace(producto.RutaImagen))
+            {
+                string rutaOriginal = Path.Combine(producto.RutaImagen, nombre);
+                if (System.IO.File.Exists(rutaOriginal))
+                    return rutaOriginal;
+            }
+
+            return rutaLocal;
+        }
+
+        private static async Task<decimal> ObtenerTasaCopPorUsdAsync()
+        {
+            try
+            {
+                using (HttpResponseMessage response = await FxHttp.GetAsync("https://open.er-api.com/v6/latest/USD"))
+                {
+                    response.EnsureSuccessStatusCode();
+                    JObject json = JObject.Parse(await response.Content.ReadAsStringAsync());
+                    decimal rate = (decimal?)json["rates"]?["COP"] ?? 0m;
+                    if (string.Equals((string)json["result"], "success", StringComparison.OrdinalIgnoreCase) && rate > 0m)
+                        return rate;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine("ObtenerTasaCopPorUsd: " + ex.Message);
+            }
+
+            string fallback = Environment.GetEnvironmentVariable("LUMISTORE_COP_PER_USD");
+            if (decimal.TryParse(fallback, NumberStyles.Number, CultureInfo.InvariantCulture, out decimal configuredRate) && configuredRate > 0m)
+                return configuredRate;
+            throw new InvalidOperationException("No hay una tasa USD/COP disponible.");
+        }
+
+        [Serializable]
+        private sealed class PendingPaypalOrder
+        {
+            public int CustomerId { get; set; }
+            public string OrderId { get; set; }
+            public string Contacto { get; set; }
+            public string IdCiudad { get; set; }
+            public string Telefono { get; set; }
+            public string Direccion { get; set; }
+            public decimal TotalCop { get; set; }
+            public decimal TotalUsd { get; set; }
+            public decimal CopPerUsd { get; set; }
+            public List<PendingPaypalLine> Lines { get; set; }
+        }
+
+        [Serializable]
+        private sealed class PendingPaypalLine
+        {
+            public int ProductId { get; set; }
+            public int Quantity { get; set; }
+            public decimal UnitPrice { get; set; }
         }
     }
 }

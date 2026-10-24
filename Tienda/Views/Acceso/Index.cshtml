@@ -8,13 +8,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Salón Privado - Lumi Store</title>
 
-    <!-- Bootstrap 5 -->
+    <!-- Organiza sección -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- FontAwesome -->
+    <!-- Organiza sección -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    <!-- Fuentes premium -->
+    <!-- Organiza sección -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500;600;700&family=Montserrat:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
@@ -53,7 +53,7 @@
             overflow-x: hidden;
         }
 
-        /* BOTÓN VOLVER AL INICIO */
+        /* Organiza sección */
         .btn-volver-inicio {
             position: fixed;
             top: 30px;
@@ -102,7 +102,7 @@
             }
         }
 
-        /* Resto del CSS permanece igual */
+        /* Organiza sección */
         .luxury-particle {
             position: fixed;
             background: var(--pink-glow);
@@ -570,18 +570,18 @@
     </style>
 </head>
 <body>
-    <!-- BOTÓN VOLVER AL INICIO -->
+    <!-- Organiza sección -->
     <a href="@Url.Action("Index","Tienda")" class="btn-volver-inicio" aria-label="Volver a la tienda principal">
         <i class="fas fa-arrow-left"></i>
         <span>VOLVER A LA TIENDA</span>
     </a>
 
-    <!-- Partículas de lujo -->
+    <!-- Organiza sección -->
     <div id="luxuryParticles"></div>
 
     <div class="login-premium-container">
         <div class="login-card-premium">
-            <!-- Encabezado -->
+            <!-- Organiza sección -->
             <div class="login-header-premium">
                 <div class="gem-container-premium">
                     <i class="fas fa-gem gem-logo-premium"></i>
@@ -595,9 +595,9 @@
                 </p>
             </div>
 
-            <!-- Formulario -->
+            <!-- Organiza sección -->
             <form action="@Url.Action("Index","Acceso")" method="post" id="loginForm" class="login-form-premium">
-                <!-- Campo Email -->
+                <!-- Organiza sección -->
                 <div class="form-group-premium">
                     <div class="input-group-premium">
                         <input type="email"
@@ -610,7 +610,7 @@
                     </div>
                 </div>
 
-                <!-- Campo Contraseña -->
+                <!-- Organiza sección -->
                 <div class="form-group-premium">
                     <div class="input-group-premium">
                         <input type="password"
@@ -623,7 +623,7 @@
                     </div>
                 </div>
 
-                <!-- Mensaje de error -->
+                <!-- Organiza sección -->
                 @if (ViewBag.Error != null)
                 {
                     <div class="alert-error-premium">
@@ -632,13 +632,13 @@
                     </div>
                 }
 
-                <!-- Botón de ingreso -->
+                <!-- Organiza sección -->
                 <button class="btn-login-premium" type="submit">
                     <i class="fas fa-arrow-right-to-bracket"></i>
                     <span>INGRESAR AL SALÓN</span>
                 </button>
 
-                <!-- Enlaces -->
+                <!-- Organiza sección -->
                 <div class="links-container-premium">
                     <a href="@Url.Action("Reestablecer","Acceso")" class="login-link-premium">
                         <i class="fas fa-key"></i>
@@ -646,7 +646,7 @@
                     </a>
                 </div>
 
-                <!-- Footer -->
+                <!-- Organiza sección -->
                 <div class="login-footer-premium">
                     <p class="footer-text-premium">
                         ¿Aún no formas parte de nuestra comunidad selecta?
@@ -660,17 +660,17 @@
         </div>
     </div>
 
-    <!-- Scripts -->
+    <!-- Organiza sección -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-loading-overlay/2.1.7/loadingoverlay.min.js"></script>
 
     <script>
         $(document).ready(function () {
-            // Crear partículas de lujo
+            // Organiza sección
             createLuxuryParticles();
 
-            // Configurar LoadingOverlay premium
+            // Organiza sección
             $.LoadingOverlaySetup({
                 background: "rgba(248, 245, 240, 0.97)",
                 custom: $("<div>", {
@@ -688,9 +688,9 @@
                 )
             });
 
-            // Manejar envío del formulario
+            // Organiza sección
             $("#loginForm").on("submit", function (e) {
-                // Validación básica
+                // Organiza sección
                 const email = $("input[name='correo']").val().trim();
                 const password = $("input[name='clave']").val().trim();
 
@@ -706,18 +706,18 @@
                     return;
                 }
 
-                // Mostrar loading overlay
+                // Organiza sección
                 $.LoadingOverlay("show");
             });
 
-            // Efecto en inputs al enfocar
+            // Organiza sección
             $(".form-control-premium").on("focus", function () {
                 $(this).parent().css("transform", "translateY(-2px)");
             }).on("blur", function () {
                 $(this).parent().css("transform", "translateY(0)");
             });
 
-            // Animación de entrada para elementos
+            // Organiza sección
             animateElements();
         });
 
@@ -753,7 +753,7 @@
         }
 
         function showError(message) {
-            // Crear o actualizar mensaje de error
+            // Organiza sección
             let errorDiv = $(".alert-error-premium");
             if (errorDiv.length === 0) {
                 errorDiv = $('<div class="alert-error-premium"></div>').insertBefore(".btn-login-premium");
@@ -764,7 +764,7 @@
                     <span>${message}</span>
                 `);
 
-            // Animar
+            // Organiza sección
             errorDiv.css('animation', 'none');
             setTimeout(() => {
                 errorDiv.css('animation', 'shake 0.5s ease');
@@ -772,7 +772,7 @@
         }
 
         function animateElements() {
-            // Animación escalonada para los inputs
+            // Organiza sección
             $(".form-group-premium").each(function (i) {
                 $(this).css({
                     'opacity': '0',
@@ -788,7 +788,7 @@
                 }, i * 200);
             });
 
-            // Animación para el botón
+            // Organiza sección
             setTimeout(() => {
                 $(".btn-login-premium").css({
                     'opacity': '0',
@@ -801,7 +801,7 @@
             }, 600);
         }
 
-        // Efecto de partículas al mover el mouse
+        // Organiza sección
         $(document).on("mousemove", function (e) {
             const particles = $('.luxury-particle');
             particles.each(function () {

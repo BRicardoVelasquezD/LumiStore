@@ -1,0 +1,24 @@
+@{
+    ViewBag.Title = "Compra confirmada";
+}
+
+<main class="container py-5">
+    <section class="card mx-auto p-4 shadow-sm" style="max-width: 640px;">
+        <div class="text-center">
+            <i class="fas fa-check-circle text-success display-4"></i>
+            <h1 class="mt-3">¡Gracias por tu compra!</h1>
+            <p>PayPal confirmó el pago y registramos tu pedido.</p>
+        </div>
+        <dl class="row mt-4 mb-0">
+            <dt class="col-sm-5">Transacción</dt>
+            <dd class="col-sm-7">@ViewBag.Numero</dd>
+            <dt class="col-sm-5">Total mostrado</dt>
+            <dd class="col-sm-7">@ViewBag.TotalCop COP</dd>
+            <dt class="col-sm-5">Cobro PayPal</dt>
+            <dd class="col-sm-7">@ViewBag.TotalUsd USD</dd>
+            <dt class="col-sm-5">Fecha</dt>
+            <dd class="col-sm-7">@ViewBag.Fecha</dd>
+        </dl>
+        <a class="btn btn-primary mt-4" href="@Url.Action("Index", "Tienda")">Seguir comprando</a>
+    </section>
+</main>

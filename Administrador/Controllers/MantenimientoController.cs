@@ -12,7 +12,7 @@ namespace Administrador.Controllers
     [Authorize]
     public class MantenimientoController : Controller
     {
-        // GET: Mantenimiento
+        // Organiza sección
         public ActionResult Categoria() => View();
         #region Categorias
         [HttpGet]

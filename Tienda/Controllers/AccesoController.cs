@@ -8,7 +8,7 @@ namespace Tienda
 {
     public class AccesoController : Controller
     {
-        // GET: Acceso
+        // Organiza sección
         public ActionResult Index() => View();
         public ActionResult Registrar() => View();
         public ActionResult Reestablecer() => View();
@@ -22,7 +22,7 @@ namespace Tienda
         [HttpPost]
         public ActionResult Index(string correo, string clave)
         {
-            // Se eliminó el parámetro 'Cliente oCliente' para evitar el error CS0136
+            // Organiza sección
             Cliente objCliente = new CN_Cliente().Listar().FirstOrDefault(c =>
                 c.Correo == correo &&
                 c.Clave == CN_Recursos.ConvertirSha256(clave)
@@ -56,7 +56,7 @@ namespace Tienda
             }
             else
             {
-                // Error CS0029 corregido: Aseguramos que 'mensaje' sea string
+                // Organiza sección
                 ViewBag.Error = mensaje;
                 return View(objeto);
             }
@@ -89,7 +89,7 @@ namespace Tienda
                 return View();
             }
 
-            // Se encripta la clave antes de enviarla a la capa de negocio
+            // Organiza sección
             string claveEncriptada = CN_Recursos.ConvertirSha256(nuevaClave);
             bool respuesta = new CN_Cliente().CambiarClave(idCliente, claveEncriptada, out string mensaje);
 

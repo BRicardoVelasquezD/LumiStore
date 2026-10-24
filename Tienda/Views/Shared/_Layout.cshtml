@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>@ViewBag.Title</title>
 
-    <!-- SEO BASE -->
+    <!-- Organiza sección -->
     <meta name="description" content="Lumi Store · Joyería & Perfumería de Alta Gama. Donde el lujo encuentra su esencia.">
     <meta name="author" content="Lumi Store">
     <meta name="keywords" content="joyería, perfumería, lujo, alta gama, colección premium, boutique digital">
 
-    <!-- OPEN GRAPH -->
+    <!-- Organiza sección -->
     <meta property="og:title" content="@ViewBag.Title">
     <meta property="og:description" content="Descubre joyería y perfumería de alta gama donde cada pieza es una obra de arte.">
     <meta property="og:image" content="https://lumistore.com/content/og-default.jpg">
@@ -18,69 +18,69 @@
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="Lumi Store">
 
-    <!-- TWITTER CARDS -->
+    <!-- Organiza sección -->
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="@ViewBag.Title">
     <meta name="twitter:description" content="Lumi Store · Joyería & Perfumería de Alta Gama">
     <meta name="twitter:image" content="https://lumistore.com/content/twitter-card.jpg">
 
-    <!-- FAVICON -->
+    <!-- Organiza sección -->
     <link rel="icon" type="image/x-icon" href="~/Content/favicon.ico">
     <link rel="apple-touch-icon" href="~/Content/apple-touch-icon.png">
 
-    <!-- BOOTSTRAP -->
+    <!-- Organiza sección -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- FONT AWESOME -->
+    <!-- Organiza sección -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" rel="stylesheet">
 
-    <!-- GOOGLE FONTS -->
+    <!-- Organiza sección -->
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
 
-    <!-- SWEETALERT2 -->
+    <!-- Organiza sección -->
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
 
-    <!-- LOADING OVERLAY -->
+    <!-- Organiza sección -->
     <link href="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.css" rel="stylesheet">
 
-    <!-- ANIMATE CSS -->
+    <!-- Organiza sección -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
 
     @RenderSection("styles", required: false)
 
-    <!-- SISTEMA DE DISEÑO LUMI -->
+    <!-- Organiza sección -->
     <style>
         :root {
-            /* Paleta Joya */
-            --zafiro: #0F52BA;      /* Acciones primarias, CTAs */
-            --amatista: #5E3A8C;    /* Hover, enlaces, acentos místicos */
-            --esmeralda: #007A5E;   /* Éxito, stock, badges positivos */
-            --rubi: #9B1C31;        /* Urgencia, escasez, alerts */
-            --obsidiana: #0C0C0F;   /* Texto oscuro premium */
-            --oro: #D1B280;         /* Lujo, bordes, acentos dorados */
+            /* Organiza sección */
+            --zafiro: #0F52BA;      /* Organiza sección */
+            --amatista: #5E3A8C;    /* Organiza sección */
+            --esmeralda: #007A5E;   /* Organiza sección */
+            --rubi: #9B1C31;        /* Organiza sección */
+            --obsidiana: #0C0C0F;   /* Organiza sección */
+            --oro: #D1B280;         /* Organiza sección */
 
-            /* Fondo y neutrales */
-            --bg-60: #FDFBFB;       /* Fondo principal 60% */
-            --bg-30: #F7F8FA;       /* Fondo secundario 30% */
+            /* Organiza sección */
+            --bg-60: #FDFBFB;       /* Organiza sección */
+            --bg-30: #F7F8FA;       /* Organiza sección */
             --glass: rgba(255,255,255,0.94);
 
-            /* Texto */
-            --text-main: #15181C;    /* Texto principal */
-            --text-muted: #72675A;   /* Texto secundario */
-            --text-light: #9A948C;   /* Texto deshabilitado */
+            /* Organiza sección */
+            --text-main: #15181C;    /* Organiza sección */
+            --text-muted: #72675A;   /* Organiza sección */
+            --text-light: #9A948C;   /* Organiza sección */
 
-            /* Bordes y efectos */
+            /* Organiza sección */
             --lux-border: rgba(209,178,128,0.18);
             --shadow-soft: 0 12px 30px rgba(12,12,12,0.06);
             --shadow-gold: 0 20px 40px rgba(209,178,128,0.15);
 
-            /* Gradientes */
+            /* Organiza sección */
             --gradient-lux: linear-gradient(135deg, var(--zafiro), var(--amatista));
             --gradient-gold: linear-gradient(135deg, #F7E7CE, var(--oro));
             --gradient-glass: linear-gradient(135deg, rgba(255,255,255,0.95), rgba(255,255,255,0.85));
         }
 
-        /* TIPOGRAFÍA */
+        /* Organiza sección */
         body {
             font-family: 'Montserrat', sans-serif;
             background: var(--bg-60);
@@ -98,7 +98,7 @@
             font-family: 'Playfair Display', serif;
         }
 
-        /* NAVBAR PREMIUM */
+        /* Organiza sección */
         .lumi-navbar {
             background: var(--glass);
             backdrop-filter: blur(20px);
@@ -145,7 +145,7 @@
             width: 100%;
         }
 
-        /* BOTÓN CARRITO */
+        /* Organiza sección */
         .btn-cart {
             background: transparent;
             border: 2px solid var(--zafiro);
@@ -177,7 +177,7 @@
             justify-content: center;
         }
 
-        /* LOADING GLOBAL */
+        /* Organiza sección */
         #globalLoadingOverlay {
             position: fixed;
             inset: 0;
@@ -200,7 +200,7 @@
             50% { transform: scale(1.1); opacity: 0.8; }
         }
 
-        /* FOOTER PREMIUM */
+        /* Organiza sección */
         footer {
             background: var(--bg-30);
             border-top: 1px solid var(--lux-border);
@@ -225,7 +225,7 @@
             color: var(--zafiro);
         }
 
-        /* UTILIDADES PERSONALIZADAS */
+        /* Organiza sección */
         .text-neon {
             background: var(--gradient-lux);
             -webkit-background-clip: text;
@@ -246,7 +246,7 @@
             box-shadow: var(--shadow-soft);
         }
 
-        /* ACCESSIBILITY */
+        /* Organiza sección */
         @@media (prefers-reduced-motion: reduce) {
             *,
             *::before,
@@ -257,7 +257,7 @@
             }
         }
 
-        /* RESPONSIVE */
+        /* Organiza sección */
         @@media (max-width: 768px) {
             .navbar-brand {
                 font-size: 1.6rem;
@@ -270,7 +270,7 @@
         }
     </style>
 
-    <!-- JSON-LD GLOBAL -->
+    <!-- Organiza sección -->
     <script type="application/ld+json">
     {
         "context": "https://schema.org",
@@ -295,7 +295,7 @@
 <body>
     @Html.AntiForgeryToken()
 
-    <!-- LOADING GLOBAL -->
+    <!-- Organiza sección -->
     <div id="globalLoadingOverlay">
         <div class="text-center">
             <div class="loading-gem mb-3">
@@ -306,7 +306,7 @@
         </div>
     </div>
 
-    <!-- NAVBAR PREMIUM -->
+    <!-- Organiza sección -->
     <nav class="navbar navbar-expand-lg fixed-top lumi-navbar">
         <div class="container">
             <a class="navbar-brand" href="@Url.Action("Index","Tienda")" aria-label="Lumi Store - Inicio">
@@ -373,16 +373,16 @@
         </div>
     </nav>
 
-    <!-- CONTENIDO PRINCIPAL -->
+    <!-- Organiza sección -->
     <main class="container-fluid px-0">
         @RenderBody()
     </main>
 
-    <!-- FOOTER PREMIUM -->
+    <!-- Organiza sección -->
     <footer class="mt-auto">
         <div class="container">
             <div class="row align-items-center py-4">
-                <!-- LOGO Y DESCRIPCIÓN -->
+                <!-- Organiza sección -->
                 <div class="col-lg-4 text-center text-lg-start mb-4 mb-lg-0">
                     <div class="footer-logo mb-3">
                         <i class="fas fa-gem me-2" style="color: var(--zafiro);"></i>
@@ -394,7 +394,7 @@
                     </p>
                 </div>
 
-                <!-- ENLACES -->
+                <!-- Organiza sección -->
                 <div class="col-lg-4 text-center mb-4 mb-lg-0">
                     <div class="footer-links d-flex justify-content-center gap-4 flex-wrap">
                         <a href="@Url.Action("Index","Tienda")"
@@ -432,7 +432,7 @@
                     </div>
                 </div>
 
-                <!-- GARANTÍAS Y REDES -->
+                <!-- Organiza sección -->
                 <div class="col-lg-4 text-center text-lg-end">
                     <div class="mb-3">
                         <p class="small mb-1" style="color: var(--text-muted);">
@@ -475,10 +475,10 @@
                 </div>
             </div>
 
-            <!-- SEPARADOR -->
+            <!-- Organiza sección -->
             <hr class="my-4" style="border-color: var(--lux-border); opacity: 0.3;">
 
-            <!-- COPYRIGHT -->
+            <!-- Organiza sección -->
             <div class="row">
                 <div class="col-12 text-center">
                     <p class="small mb-0" style="color: var(--text-muted);">
@@ -495,19 +495,19 @@
         </div>
     </footer>
 
-    <!-- SCRIPTS -->
+    <!-- Organiza sección -->
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gasparesganga-jquery-loading-overlay@2.1.7/dist/loadingoverlay.min.js"></script>
 
     <script>
-        // ================= GLOBAL FUNCTIONS =================
+        // Organiza sección
         $(window).on('load', function () {
             $('#globalLoadingOverlay').fadeOut(600);
         });
 
-        // Actualizar cantidad en carrito
+        // Organiza sección
         function actualizarCarrito() {
             $.get('@Url.Action("CantidadEnCarrito","Tienda")', function (data) {
                 if (data && data.cantidad !== undefined) {
@@ -518,7 +518,7 @@
             });
         }
 
-        // Notificación premium
+        // Organiza sección
         function mostrarNotificacionLumi(titulo, mensaje, tipo = 'success') {
             const iconos = {
                 success: 'fas fa-check-circle',
@@ -544,7 +544,7 @@
             });
         }
 
-        // Tracking eventos
+        // Organiza sección
         function trackEvent(evento, datos = {}) {
             if (window.dataLayer) {
                 dataLayer.push({
@@ -554,12 +554,12 @@
             }
         }
 
-        // ================= INICIALIZACIÓN =================
+        // Organiza sección
         $(function () {
-            // Actualizar carrito al cargar
+            // Organiza sección
             actualizarCarrito();
 
-            // Smooth scroll para enlaces internos
+            // Organiza sección
             $('a[href^="#"]').on('click', function (e) {
                 if (this.hash !== '') {
                     e.preventDefault();
@@ -570,7 +570,7 @@
                 }
             });
 
-            // Navbar scroll effect
+            // Organiza sección
             $(window).on('scroll', function () {
                 if ($(window).scrollTop() > 50) {
                     $('.lumi-navbar').addClass('navbar-scrolled');
@@ -579,13 +579,13 @@
                 }
             });
 
-            // Tooltips
+            // Organiza sección
             $('[aria-label]').each(function() {
                 const label = $(this).attr('aria-label');
                 $(this).attr('title', label);
             });
 
-            // Añadir año actual al footer (ya está en el HTML, pero por si acaso)
+            // Organiza sección
             $('#currentYear').text(new Date().getFullYear());
         });
     </script>

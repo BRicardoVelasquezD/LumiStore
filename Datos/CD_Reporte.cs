@@ -41,7 +41,7 @@ namespace Datos
             {
                 using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
                 {
-                    // Nota: Asegúrate de tener un SP llamado sp_ReporteVentas o usa esta Query
+                    // Organiza sección
                     SqlCommand cmd = new SqlCommand("sp_ReporteVentas", oconexion);
                     cmd.Parameters.AddWithValue("fechainicio", fechainicio);
                     cmd.Parameters.AddWithValue("fechafin", fechafin);

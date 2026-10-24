@@ -11,14 +11,14 @@
 
     <style>
         :root {
-            /* Paleta de Gemas Completa */
-            --gem-sapphire: #162e55; /* Zafiro */
-            --gem-emerald: #1d4d44; /* Esmeralda Dark */
-            --gem-ruby: #dc3545; /* Rubí */
-            --gem-diamond: #ffffff; /* Diamante */
-            --gem-sapphire-soft: #eef2ff; /* Zafiro Soft */
-            --gem-emerald-vivid: #10b981; /* Esmeralda Vivo */
-            --gem-pink-fancy: #ff85a2; /* Fancy Pink */
+            /* Organiza sección */
+            --gem-sapphire: #162e55; /* Organiza sección */
+            --gem-emerald: #1d4d44; /* Organiza sección */
+            --gem-ruby: #dc3545; /* Organiza sección */
+            --gem-diamond: #ffffff; /* Organiza sección */
+            --gem-sapphire-soft: #eef2ff; /* Organiza sección */
+            --gem-emerald-vivid: #10b981; /* Organiza sección */
+            --gem-pink-fancy: #ff85a2; /* Organiza sección */
         }
 
         body {
@@ -31,7 +31,7 @@
             position: relative;
         }
 
-            /* Luces de ambiente usando Esmeralda y Zafiro */
+            /* Organiza sección */
             body::before {
                 content: "";
                 position: absolute;
@@ -60,7 +60,7 @@
             position: relative;
         }
 
-            /* Detalle decorativo Fancy Pink */
+            /* Organiza sección */
             .login-header::after {
                 content: "";
                 position: absolute;
@@ -109,7 +109,7 @@
             padding: 45px !important;
         }
 
-        /* Inputs con enfoque Fancy Pink */
+        /* Organiza sección */
         .form-floating > .form-control {
             border: 2px solid var(--gem-sapphire-soft);
             border-radius: 15px;
@@ -128,7 +128,7 @@
             font-weight: 500;
         }
 
-        /* Botón de Ingreso - Gradiente Zafiro a Esmeralda */
+        /* Organiza sección */
         .btn-ingresar {
             background: linear-gradient(45deg, var(--gem-sapphire) 0%, var(--gem-emerald) 100%);
             border: none;
@@ -157,7 +157,7 @@
         }
 
             .forgot-password:hover {
-                color: var(--gem-ruby); /* Cambio a Rubí al pasar el mouse */
+                color: var(--gem-ruby); /* Organiza sección */
                 letter-spacing: 0.5px;
             }
     </style>
@@ -212,17 +212,17 @@
 
     <script>
         $(document).ready(function () {
-            // Loading con color Zafiro
+            // Organiza sección
             $("#loginForm").submit(function () {
                 $.LoadingOverlay("show", {
                     image: "",
                     fontawesome: "fas fa-gem fa-spin",
                     background: "rgba(22, 46, 85, 0.7)",
-                    fontawesomeColor: "#ff85a2" // Icono de carga en Fancy Pink
+                    fontawesomeColor: "#ff85a2" // Organiza sección
                 });
             });
 
-            // Errores en Rubí
+            // Organiza sección
             @if (ViewBag.Error != null)
             {
                 <text>
@@ -237,7 +237,7 @@
                 </text>
             }
 
-            // Éxito en Esmeralda
+            // Organiza sección
             @if (TempData["MensajeExito"] != null)
             {
                 <text>

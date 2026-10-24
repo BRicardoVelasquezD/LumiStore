@@ -15,7 +15,7 @@ namespace Negocio
         public int Registrar(Cliente obj, out string Mensaje)
         {
             Mensaje = string.Empty;
-            // Validaciones básicas
+            // Organiza sección
             if (string.IsNullOrWhiteSpace(obj.Nombres)) Mensaje = "El nombre es obligatorio";
             if (string.IsNullOrWhiteSpace(obj.Apellidos)) Mensaje = "El apellido es obligatorio";
             if (string.IsNullOrWhiteSpace(obj.Correo)) Mensaje = "El correo es obligatorio";
@@ -23,7 +23,7 @@ namespace Negocio
 
             if (string.IsNullOrEmpty(Mensaje))
             {
-                // Encriptamos la clave antes de guardar
+                // Organiza sección
                 obj.Clave = CN_Recursos.ConvertirSha256(obj.Clave);
                 return objDato.Registrar(obj, out Mensaje);
             }
@@ -53,34 +53,34 @@ namespace Negocio
             {
                 string asunto = "🔑 Restauración de Acceso - Lumi Store";
 
-                // Diseño de Correo Estilo Boutique
+                // Organiza sección
                 StringBuilder html = new StringBuilder();
                 html.Append("<div style='font-family: Arial, sans-serif; background-color: #f4f7f6; padding: 40px; text-align: center;'>");
                 html.Append("  <div style='max-width: 500px; margin: auto; background-color: #ffffff; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.1);'>");
 
-                // Header con Color Zafiro
+                // Organiza sección
                 html.Append("    <div style='background-color: #162e55; padding: 30px;'>");
                 html.Append("      <h1 style='color: #ffffff; margin: 0; font-family: Georgia, serif; letter-spacing: 3px;'>LUMI STORE</h1>");
                 html.Append("      <p style='color: #ff85a2; margin-top: 5px; font-size: 12px; letter-spacing: 2px;'>JOYERÍA & PERFUMERÍA EXCLUSIVA</p>");
                 html.Append("    </div>");
 
-                // Body
+                // Organiza sección
                 html.Append("    <div style='padding: 40px;'>");
                 html.Append("      <h2 style='color: #162e55; margin-bottom: 20px;'>Acceso Restablecido</h2>");
                 html.Append("      <p style='color: #555; line-height: 1.6;'>Estimado cliente, hemos procesado su solicitud de recuperación. Para volver a disfrutar de nuestra colección, utilice la siguiente clave temporal:</p>");
 
-                // Caja de la Clave (Fancy Pink Soft)
+                // Organiza sección
                 html.Append("      <div style='background-color: #fff0f3; border: 1px dashed #ff85a2; padding: 20px; margin: 30px 0; border-radius: 12px;'>");
                 html.Append($"        <span style='font-size: 24px; font-weight: bold; color: #162e55; letter-spacing: 4px;'>{nuevaclave}</span>");
                 html.Append("      </div>");
 
                 html.Append("      <p style='color: #888; font-size: 12px;'>Le recomendamos cambiar esta clave desde su perfil una vez que haya ingresado al salón.</p>");
 
-                // Botón Esmeralda
+                // Organiza sección
                 html.Append("      <a href='https://tudominio.com' style='display: inline-block; background-color: #10b981; color: #ffffff; padding: 15px 30px; text-decoration: none; border-radius: 10px; font-weight: bold; margin-top: 20px;'>Ingresar a mi Cuenta</a>");
                 html.Append("    </div>");
 
-                // Footer
+                // Organiza sección
                 html.Append("    <div style='background-color: #f9f9f9; padding: 20px; border-top: 1px solid #eee;'>");
                 html.Append("      <p style='color: #aaa; font-size: 11px;'>Este es un mensaje automático, por favor no responda a este correo.</p>");
                 html.Append("    </div>");

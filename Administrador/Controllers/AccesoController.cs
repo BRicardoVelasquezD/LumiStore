@@ -8,7 +8,7 @@ namespace Administrador.Controllers
 {
     public class AccesoController : Controller
     {
-        // GET: Acceso
+        // Organiza sección
         public ActionResult Index() => View();
         public ActionResult Reestablecer() => View();
         public ActionResult CambiarClave() => View();
@@ -16,7 +16,10 @@ namespace Administrador.Controllers
         [HttpPost]
         public ActionResult Index(string correo, string clave)
         {
-            Usuario oUsuario = new CN_Usuario().Listar().Where(u => u.Correo == correo && u.Clave == CN_Recursos.ConvertirSha256(clave)).FirstOrDefault();
+            Usuario oUsuario = new CN_Usuario().Listar().FirstOrDefault(u =>
+                u.Activo &&
+                u.Correo == correo &&
+                u.Clave == CN_Recursos.ConvertirSha256(clave));
 
             if (oUsuario == null)
             {

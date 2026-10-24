@@ -164,7 +164,7 @@
         var tabladata;
 
         $(document).ready(function () {
-            // 1. CARGAR COMBOS
+            // Organiza sección
             $("<option>").attr({ "value": "0", "disabled":"true", "selected":"true" }).text("Seleccionar").appendTo("#cbomarca");
             $.get('@Url.Action("ListarMarcas", "Mantenimiento")', function (response) {
                 $.each(response.data, function (i, item) {
@@ -179,7 +179,7 @@
                 });
             });
 
-            // 2. CARGAR DATATABLE
+            // Organiza sección
             tabladata = $("#tabla").DataTable({
                 responsive: true,
                 ordering: false,
@@ -275,7 +275,7 @@
                 $("#txtstock").val(json.Stock);
                 $("#cboactivo").val(json.Activo ? 1 : 0);
 
-                // Cargar imagen en el modal si existe
+                // Organiza sección
                 if (json.NombreImagen) {
                      $.post('@Url.Action("MostrarImagen", "Mantenimiento")', { id: json.IdProducto }, function (data) {
                         if (data.conversion) {

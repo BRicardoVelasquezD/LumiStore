@@ -5,7 +5,7 @@
 
 @section styles {
     <style>
-        /* ================= VARIABLES ESPECÍFICAS CARRITO ================= */
+        /* Organiza sección */
         :root {
             --cart-section-padding: 140px 0 100px;
             --cart-header-height: 80px;
@@ -14,7 +14,7 @@
             --checkout-button-height: 60px;
         }
 
-        /* ================= SECCIÓN PRINCIPAL ================= */
+        /* Organiza sección */
         .cart-section {
             padding: var(--cart-section-padding);
             background: linear-gradient(135deg, var(--bg-60), var(--bg-30));
@@ -45,7 +45,7 @@
             margin: 0 auto;
         }
 
-        /* ================= LAYOUT DE DOS COLUMNAS ================= */
+        /* Organiza sección */
         .cart-layout {
             display: grid;
             grid-template-columns: 1fr var(--cart-summary-width);
@@ -59,7 +59,7 @@
             }
         }
 
-        /* ================= COLUMNA IZQUIERDA - PRODUCTOS ================= */
+        /* Organiza sección */
         .cart-items-container {
             background: var(--glass);
             border: 1px solid var(--lux-border);
@@ -95,7 +95,7 @@
             font-size: 0.9rem;
         }
 
-        /* ================= ITEMS DEL CARRITO ================= */
+        /* Organiza sección */
         .cart-item {
             padding: 1.5rem 2rem;
             border-bottom: 1px solid var(--lux-border);
@@ -176,7 +176,7 @@
             white-space: nowrap;
         }
 
-        /* ================= CONTROLES DE CANTIDAD ================= */
+        /* Organiza sección */
         .item-quantity-controls {
             display: flex;
             align-items: center;
@@ -216,7 +216,7 @@
             font-size: 1.1rem;
         }
 
-        /* ================= BOTÓN ELIMINAR ================= */
+        /* Organiza sección */
         .btn-remove-item {
             background: rgba(155, 28, 49, 0.1);
             border: 1px solid var(--rubi);
@@ -238,7 +238,7 @@
             transform: scale(1.1);
         }
 
-        /* ================= ESTADO VACÍO ================= */
+        /* Organiza sección */
         .cart-empty-state {
             text-align: center;
             padding: 4rem 2rem;
@@ -286,7 +286,7 @@
             color: white;
         }
 
-        /* ================= SECCIÓN DE UBICACIÓN ================= */
+        /* Organiza sección */
         .location-section {
             background: var(--glass);
             border: 1px solid var(--lux-border);
@@ -350,7 +350,7 @@
             opacity: 0.7;
         }
 
-        /* ================= COLUMNA DERECHA - RESUMEN ================= */
+        /* Organiza sección */
         .cart-summary-container {
             position: sticky;
             top: var(--cart-section-padding);
@@ -410,7 +410,7 @@
             font-size: 2rem;
         }
 
-        /* ================= SECCIÓN DE PAGO ================= */
+        /* Organiza sección */
         .payment-section {
             margin-top: 2rem;
             padding-top: 2rem;
@@ -475,7 +475,7 @@
             color: #003087;
         }
 
-        /* ================= BOTÓN CHECKOUT ================= */
+        /* Organiza sección */
         .btn-checkout {
             width: 100%;
             margin-top: 2rem;
@@ -510,7 +510,7 @@
             color: white;
         }
 
-        /* ================= GARANTÍAS DEL CHECKOUT ================= */
+        /* Organiza sección */
         .checkout-guarantees {
             margin-top: 1.5rem;
             padding-top: 1.5rem;
@@ -530,7 +530,7 @@
             color: var(--esmeralda);
         }
 
-        /* ================= LOADING STATES ================= */
+        /* Organiza sección */
         .loading-state {
             text-align: center;
             padding: 3rem;
@@ -552,7 +552,7 @@
             to { transform: rotate(360deg); }
         }
 
-        /* ================= RESPONSIVE ================= */
+        /* Organiza sección */
         @@media (max-width: 1200px) {
             .cart-layout {
                 gap: 2rem;
@@ -639,7 +639,7 @@
             }
         }
 
-        /* ================= ANIMACIONES ================= */
+        /* Organiza sección */
         .animate-fade-in {
             animation: fadeIn 0.5s ease-out;
         }
@@ -666,7 +666,7 @@
     </style>
 }
 
-<!-- JSON-LD PARA CARRITO (SEO) -->
+<!-- Organiza sección -->
 <script type="application/ld+json">
 {
     "context": "https://schema.org",
@@ -679,7 +679,7 @@
 
 <section class="cart-section animate-fade-in">
     <div class="container">
-        <!-- ENCABEZADO -->
+        <!-- Organiza sección -->
         <div class="cart-header animate-slide-up">
             <h1 class="cart-title">Mi Colección Personal</h1>
             <p class="cart-subtitle">
@@ -687,11 +687,11 @@
             </p>
         </div>
 
-        <!-- CONTENIDO PRINCIPAL -->
+        <!-- Organiza sección -->
         <div class="cart-layout">
-            <!-- COLUMNA IZQUIERDA - PRODUCTOS Y UBICACIÓN -->
+            <!-- Organiza sección -->
             <div class="cart-column-left">
-                <!-- CONTENEDOR DE ITEMS -->
+                <!-- Organiza sección -->
                 <div class="cart-items-container">
                     <div class="cart-items-header">
                         <h2 class="cart-items-title">
@@ -702,14 +702,14 @@
                     </div>
 
                     <div id="cartItemsList">
-                        <!-- Los items se cargan dinámicamente aquí -->
+                        <!-- Organiza sección -->
                         <div class="loading-state">
                             <div class="loading-spinner"></div>
                             <p>Cargando tu colección personal...</p>
                         </div>
                     </div>
 
-                    <!-- ESTADO VACÍO (oculto por defecto) -->
+                    <!-- Organiza sección -->
                     <div id="cartEmptyState" class="cart-empty-state" style="display: none;">
                         <div class="empty-state-icon">
                             <i class="fas fa-gem"></i>
@@ -725,7 +725,7 @@
                     </div>
                 </div>
 
-                <!-- SECCIÓN DE UBICACIÓN -->
+                <!-- Organiza sección -->
                 <div class="location-section animate-slide-up" style="animation-delay: 0.2s">
                     <h3 class="location-title">
                         <i class="fas fa-map-marker-alt"></i>
@@ -740,7 +740,7 @@
                             <select id="departamento" name="departamento" class="form-select" required
                                     aria-label="Selecciona tu departamento" aria-required="true">
                                 <option value="">Seleccionar departamento</option>
-                                <!-- Opciones se cargan dinámicamente -->
+                                <!-- Organiza sección -->
                             </select>
                             <div class="invalid-feedback" style="display: none; color: var(--rubi); font-size: 0.875rem; margin-top: 0.25rem;">
                                 Por favor selecciona un departamento
@@ -794,7 +794,7 @@
                 </div>
             </div>
 
-            <!-- COLUMNA DERECHA - RESUMEN Y PAGO -->
+            <!-- Organiza sección -->
             <div class="cart-column-right">
                 <div class="cart-summary-container animate-slide-up" style="animation-delay: 0.3s">
                     <h3 class="summary-title">Resumen del Pedido</h3>
@@ -821,7 +821,7 @@
                         </div>
                     </div>
 
-                    <!-- SECCIÓN DE PAGO -->
+                    <!-- Organiza sección -->
                     <div class="payment-section">
                         <h4 class="payment-title">
                             <i class="fas fa-credit-card"></i>
@@ -842,7 +842,7 @@
                             </div>
                         </div>
 
-                        <!-- GARANTÍAS -->
+                        <!-- Organiza sección -->
                         <div class="checkout-guarantees">
                             <div class="guarantee-item">
                                 <i class="fas fa-shield-alt"></i>
@@ -859,7 +859,7 @@
                         </div>
                     </div>
 
-                    <!-- BOTÓN CHECKOUT -->
+                    <!-- Organiza sección -->
                     <button id="btnCheckout" class="btn-checkout" disabled
                             aria-label="Proceder al pago seguro con PayPal">
                         <i class="fas fa-lock"></i>
@@ -868,7 +868,7 @@
 
                     <p class="text-center text-muted small mt-3">
                         <i class="fas fa-info-circle"></i>
-                        Serás redirigido al portal seguro de PayPal para completar tu compra
+                        Precios en COP; PayPal cobrará el equivalente en USD
                     </p>
                 </div>
             </div>
@@ -883,10 +883,10 @@
             let cartItems = [];
             let subtotal = 0;
             let shipping = 0;
-            const shippingFreeThreshold = 500000; // Envío gratis a partir de este monto
-            const shippingFee = 15000; // Costo de envío estándar
+            const shippingFreeThreshold = 500000; // Organiza sección
+            const shippingFee = 15000; // Organiza sección
 
-            // ================= INICIALIZACIÓN =================
+            // Organiza sección
             function inicializar() {
                 cargarCarrito();
                 cargarDepartamentos();
@@ -894,7 +894,7 @@
                 configurarValidaciones();
             }
 
-            // ================= CARGAR CARRITO =================
+            // Organiza sección
             function cargarCarrito() {
                 $.LoadingOverlay && $.LoadingOverlay("show");
 
@@ -910,7 +910,7 @@
                         renderizarCarrito(cartItems);
                         calcularResumen();
 
-                        // Track event
+                        // Organiza sección
                         trackEvent('view_cart', {
                             items: cartItems.map(item => ({
                                 item_id: item.oProducto?.IdProducto,
@@ -933,7 +933,7 @@
                 });
             }
 
-            // ================= RENDERIZAR CARRITO =================
+            // Organiza sección
             function renderizarCarrito(items) {
                 if (!items || items.length === 0) {
                     mostrarCarritoVacio();
@@ -948,13 +948,13 @@
                     const producto = item.oProducto || item;
                     const cantidad = item.Cantidad || 1;
 
-                    // Obtener imagen
+                    // Organiza sección
                     let imgSrc = '/Content/img/default-experience.jpg';
                     if (producto.Base64 && producto.Extension) {
                         imgSrc = `data:image/${producto.Extension};base64,${producto.Base64}`;
                     }
 
-                    // Formatear precio
+                    // Organiza sección
                     const precioUnitario = new Intl.NumberFormat('es-CO', {
                         style: 'currency',
                         currency: 'COP',
@@ -1013,7 +1013,7 @@
                 $('#cartItemsList').html(html);
             }
 
-            // ================= MOSTRAR CARRITO VACÍO =================
+            // Organiza sección
             function mostrarCarritoVacio() {
                 $('#cartItemsList').empty();
                 $('#cartEmptyState').show();
@@ -1025,7 +1025,7 @@
                 $('#summaryTotal').text('$0');
             }
 
-            // ================= CALCULAR RESUMEN =================
+            // Organiza sección
             function calcularResumen() {
                 subtotal = 0;
 
@@ -1035,30 +1035,30 @@
                     subtotal += (producto.Precio || 0) * cantidad;
                 });
 
-                // Calcular envío
+                // Organiza sección
                 shipping = subtotal >= shippingFreeThreshold || subtotal === 0 ? 0 : shippingFee;
 
-                // Calcular IVA (19% solo sobre subtotal)
+                // Organiza sección
                 const tax = subtotal * 0.19;
                 const total = subtotal + shipping + tax;
 
-                // Actualizar UI
+                // Organiza sección
                 $('#summarySubtotal').text(formatearMoneda(subtotal));
                 $('#summaryShipping').text(shipping === 0 ? 'GRATIS' : formatearMoneda(shipping));
                 $('#summaryTax').text(formatearMoneda(tax));
                 $('#summaryTotal').text(formatearMoneda(total));
 
-                // Habilitar/deshabilitar checkout
+                // Organiza sección
                 const tieneItems = cartItems.length > 0;
                 $('#btnCheckout').prop('disabled', !tieneItems);
 
-                // Actualizar badge global
+                // Organiza sección
                 if (typeof actualizarCarrito === 'function') {
                     actualizarCarrito();
                 }
             }
 
-            // ================= FORMATO DE MONEDA =================
+            // Organiza sección
             function formatearMoneda(monto) {
                 return new Intl.NumberFormat('es-CO', {
                     style: 'currency',
@@ -1067,13 +1067,13 @@
                 }).format(monto);
             }
 
-            // ================= OPERACIONES DE CANTIDAD =================
+            // Organiza sección
             $(document).on('click', '.btn-quantity', function() {
                 const idProducto = $(this).data('id');
                 const esSumar = $(this).hasClass('mas');
                 const itemElement = $(this).closest('.cart-item');
 
-                // Feedback visual
+                // Organiza sección
                 itemElement.find('.btn-quantity').prop('disabled', true);
                 itemElement.css('opacity', '0.7');
 
@@ -1085,10 +1085,10 @@
                 })
                 .done(function(response) {
                     if (response && response.respuesta) {
-                        // Recargar carrito
+                        // Organiza sección
                         cargarCarrito();
 
-                        // Track event
+                        // Organiza sección
                         trackEvent(esSumar ? 'increase_quantity' : 'decrease_quantity', {
                             item_id: idProducto
                         });
@@ -1105,13 +1105,13 @@
                 });
             });
 
-            // ================= ELIMINAR ITEM =================
+            // Organiza sección
             $(document).on('click', '.btn-remove-item', function() {
                 const idProducto = $(this).data('id');
                 const itemElement = $(this).closest('.cart-item');
                 const nombreProducto = itemElement.find('.item-name').text();
 
-                // Confirmación elegante
+                // Organiza sección
                 Swal.fire({
                     title: '¿Remover de tu colección?',
                     text: `"${nombreProducto}" será eliminado de tu colección personal`,
@@ -1129,7 +1129,7 @@
                     }
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Animación de eliminación
+                        // Organiza sección
                         itemElement.addClass('cart-item-removing');
 
                         $.ajax({
@@ -1140,12 +1140,12 @@
                         })
                         .done(function(response) {
                             if (response && response.respuesta) {
-                                // Esperar a que termine la animación
+                                // Organiza sección
                                 setTimeout(() => {
                                     cargarCarrito();
                                     mostrarNotificacionLumi('Removido', 'Pieza eliminada de tu colección', 'success');
 
-                                    // Track event
+                                    // Organiza sección
                                     trackEvent('remove_from_cart', {
                                         item_id: idProducto,
                                         item_name: nombreProducto
@@ -1164,7 +1164,7 @@
                 });
             });
 
-            // ================= CARGAR DEPARTAMENTOS =================
+            // Organiza sección
             function cargarDepartamentos() {
                 $.ajax({
                     url: '@Url.Action("ObtenerDepartamento","Tienda")',
@@ -1187,7 +1187,7 @@
                 });
             }
 
-            // ================= CARGAR MUNICIPIOS =================
+            // Organiza sección
             function cargarMunicipios(idDepartamento) {
                 $('#municipio').prop('disabled', true).html('<option value="">Cargando municipios...</option>');
                 $('#ciudad').prop('disabled', true).html('<option value="">Selecciona municipio primero</option>');
@@ -1215,7 +1215,7 @@
                 });
             }
 
-            // ================= CARGAR CIUDADES =================
+            // Organiza sección
             function cargarCiudades(idMunicipio, idDepartamento) {
                 $('#ciudad').prop('disabled', true).html('<option value="">Cargando ciudades...</option>');
 
@@ -1245,9 +1245,9 @@
                 });
             }
 
-            // ================= CONFIGURAR EVENTOS =================
+            // Organiza sección
             function configurarEventos() {
-                // Cambio de departamento
+                // Organiza sección
                 $('#departamento').change(function() {
                     const idDepartamento = $(this).val();
                     if (idDepartamento) {
@@ -1259,7 +1259,7 @@
                     validarFormulario();
                 });
 
-                // Cambio de municipio
+                // Organiza sección
                 $('#municipio').change(function() {
                     const idMunicipio = $(this).val();
                     const idDepartamento = $('#departamento').val();
@@ -1272,33 +1272,33 @@
                     validarFormulario();
                 });
 
-                // Cambio de ciudad y otros campos
+                // Organiza sección
                 $('#ciudad, #direccion, #telefono').on('input change', function() {
                     validarFormulario();
                 });
 
-                // Selección de método de pago
+                // Organiza sección
                 $('#paypalMethod').click(function() {
                     $('.payment-method').removeClass('selected');
                     $(this).addClass('selected');
                     $('#paymentPayPal').prop('checked', true);
                 });
 
-                // Checkout
+                // Organiza sección
                 $('#btnCheckout').click(function() {
                     procesarCheckout();
                 });
             }
 
-            // ================= VALIDACIÓN DE FORMULARIO =================
+            // Organiza sección
             function configurarValidaciones() {
-                // Validación de teléfono
+                // Organiza sección
                 $('#telefono').on('input', function() {
                     const telefono = $(this).val().replace(/\D/g, '');
                     $(this).val(telefono);
                 });
 
-                // Validación en tiempo real
+                // Organiza sección
                 $('.form-select, #direccion, #telefono').on('blur', function() {
                     validarCampo($(this));
                 });
@@ -1314,7 +1314,7 @@
                     return false;
                 }
 
-                // Validación específica para teléfono
+                // Organiza sección
                 if ($campo.attr('id') === 'telefono' && valor) {
                     const regexTelefono = /^[+]?[0-9\s\-]{10,}$/;
                     if (!regexTelefono.test(valor)) {
@@ -1340,14 +1340,14 @@
                     }
                 });
 
-                // Habilitar/deshabilitar checkout según validación
+                // Organiza sección
                 const tieneItems = cartItems.length > 0;
                 $('#btnCheckout').prop('disabled', !(valido && tieneItems));
 
                 return valido;
             }
 
-            // ================= PROCESAR CHECKOUT =================
+            // Organiza sección
             function procesarCheckout() {
                 if (!validarFormulario() || cartItems.length === 0) {
                     mostrarNotificacionLumi('Información incompleta', 'Por favor completa todos los campos requeridos', 'warning');
@@ -1356,84 +1356,46 @@
 
                 const $btn = $('#btnCheckout');
                 const originalHTML = $btn.html();
+                $btn.html('<i class="fas fa-spinner fa-spin"></i> PROCESANDO...').addClass('processing').prop('disabled', true);
 
-                // Feedback visual
-                $btn.html('<i class="fas fa-spinner fa-spin"></i> PROCESANDO...');
-                $btn.addClass('processing');
-                $btn.prop('disabled', true);
-
-                // Obtener datos del formulario
                 const datosEnvio = {
-                    Departamento: $('#departamento option:selected').text(),
-                    Municipio: $('#municipio option:selected').text(),
-                    Ciudad: $('#ciudad option:selected').text(),
-                    Direccion: $('#direccion').val().trim(),
+                    IdCiudad: $('#ciudad option:selected').val(),
+                    Direccion: [$('#direccion').val().trim(), $('#municipio option:selected').text(), $('#departamento option:selected').text()].filter(Boolean).join(', '),
                     Telefono: $('#telefono').val().trim(),
-                    MetodoPago: 'paypal'
+                    MetodoPago: 'paypal',
+                    __RequestVerificationToken: token
                 };
 
-                // Simular procesamiento (en un caso real, aquí se integraría con PayPal)
-                setTimeout(function() {
-                    // Mostrar confirmación
-                    Swal.fire({
-                        title: '¡Redirigiendo a PayPal!',
-                        html: `
-                            <div class="text-start">
-                                <p><strong>Resumen de tu compra:</strong></p>
-                                <p>• ${cartItems.length} piezas</p>
-                                <p>• Total: ${$('#summaryTotal').text()}</p>
-                                <p>• Envío a: ${datosEnvio.Ciudad}, ${datosEnvio.Departamento}</p>
-                                <hr>
-                                <p class="text-muted small">Serás redirigido al portal seguro de PayPal para completar el pago.</p>
-                            </div>
-                        `,
-                        icon: 'info',
-                        showCancelButton: true,
-                        confirmButtonColor: 'var(--zafiro)',
-                        cancelButtonColor: 'var(--text-muted)',
-                        confirmButtonText: 'Continuar con PayPal',
-                        cancelButtonText: 'Seguir editando',
-                        background: 'var(--bg-60)',
-                        color: 'var(--text-main)',
-                        customClass: {
-                            confirmButton: 'btn-lumi-solid',
-                            cancelButton: 'btn-lumi-outline'
-                        }
-                    }).then((result) => {
-                        if (result.isConfirmed) {
-                            // Track begin_checkout event
-                            trackEvent('begin_checkout', {
-                                value: subtotal + shipping + (subtotal * 0.19),
-                                currency: 'COP',
-                                items: cartItems.map(item => ({
-                                    item_id: item.oProducto?.IdProducto,
-                                    item_name: item.oProducto?.Nombre,
-                                    price: item.oProducto?.Precio,
-                                    quantity: item.Cantidad
-                                }))
-                            });
-
-                            // Simular redirección a PayPal
-                            mostrarNotificacionLumi('Redirigiendo', 'Conectando con PayPal...', 'info');
-
-                            // En un caso real, aquí se haría window.location.href = 'URL_PAYPAL';
-                            // Por ahora, solo simulamos
-                            setTimeout(() => {
-                                mostrarNotificacionLumi('Compra simulada', 'Esta es una demostración. En producción se redirigiría a PayPal.', 'success');
-                                $btn.html(originalHTML);
-                                $btn.removeClass('processing');
-                                $btn.prop('disabled', false);
-                            }, 2000);
-                        } else {
-                            $btn.html(originalHTML);
-                            $btn.removeClass('processing');
-                            $btn.prop('disabled', false);
-                        }
-                    });
-                }, 1000);
+                $.ajax({
+                    url: '@Url.Action("ProcesarCompra", "Tienda")',
+                    type: 'POST',
+                    data: datosEnvio
+                }).done(function(respuesta) {
+                    if (respuesta && respuesta.approvalUrl) {
+                        const cop = new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP', maximumFractionDigits: 0 }).format(respuesta.totalCop);
+                        const usd = new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Number(respuesta.totalUsd));
+                        Swal.fire({
+                            title: 'Confirmar pago',
+                            html: `<p>Total de la tienda: <strong>${cop}</strong></p><p>PayPal cobrará: <strong>${usd}</strong></p><small>Tasa de referencia: 1 USD = ${Number(respuesta.copPerUsd).toLocaleString('es-CO')} COP</small>`,
+                            icon: 'info',
+                            showCancelButton: true,
+                            confirmButtonText: 'Continuar a PayPal',
+                            cancelButtonText: 'Volver al carrito'
+                        }).then(function(result) {
+                            if (result.isConfirmed) window.location.assign(respuesta.approvalUrl);
+                        });
+                        return;
+                    }
+                    mostrarNotificacionLumi('Pago no disponible', (respuesta && respuesta.mensaje) || 'No se inició el pago.', 'warning');
+                }).fail(function(xhr) {
+                    const mensaje = xhr.responseJSON && xhr.responseJSON.mensaje;
+                    mostrarNotificacionLumi('Pago no disponible', mensaje || 'No se inició el pago y no se realizó ningún cargo.', 'warning');
+                }).always(function() {
+                    $btn.html(originalHTML).removeClass('processing').prop('disabled', false);
+                });
             }
 
-            // ================= INICIALIZAR =================
+            // Organiza sección
             inicializar();
         });
     </script>
