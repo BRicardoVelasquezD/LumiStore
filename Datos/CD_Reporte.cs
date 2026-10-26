@@ -13,7 +13,7 @@ namespace Datos
             Dashboard objeto = new Dashboard();
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("sp_ReporteDashboard", oconexion);
                     cmd.CommandType = CommandType.StoredProcedure;
@@ -39,7 +39,7 @@ namespace Datos
             List<Reporte> lista = new List<Reporte>();
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     // Organiza sección
                     SqlCommand cmd = new SqlCommand("sp_ReporteVentas", oconexion);

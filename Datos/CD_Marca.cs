@@ -14,7 +14,7 @@ namespace Datos
             List<Marca> lista = new List<Marca>();
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     string query = "SELECT IdMarca, Descripcion, Activo FROM MARCA";
                     SqlCommand cmd = new SqlCommand(query, oconexion);
@@ -42,7 +42,7 @@ namespace Datos
             List<Marca> lista = new List<Marca>();
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     StringBuilder sb = new StringBuilder();
                     sb.AppendLine("select distinct m.IdMarca, m.Descripcion from PRODUCTO p");
@@ -77,7 +77,7 @@ namespace Datos
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("sp_RegistrarMarca", oconexion);
                     cmd.Parameters.AddWithValue("Descripcion", obj.Descripcion);
@@ -101,7 +101,7 @@ namespace Datos
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("sp_EditarMarca", oconexion);
                     cmd.Parameters.AddWithValue("IdMarca", obj.IdMarca);
@@ -126,7 +126,7 @@ namespace Datos
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("sp_EliminarMarca", oconexion);
                     cmd.Parameters.AddWithValue("IdMarca", id);

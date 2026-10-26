@@ -15,7 +15,7 @@ namespace CapaDatos
 
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     oconexion.Open();
                     using (SqlTransaction transaccion = oconexion.BeginTransaction(IsolationLevel.Serializable))
@@ -140,7 +140,7 @@ SELECT CAST(SCOPE_IDENTITY() AS int);", oconexion, transaccion))
 
             try
             {
-                using (SqlConnection cn = new SqlConnection(Conexion.cn))
+                using (SqlConnection cn = Conexion.CrearConexion())
                 // Organiza sección
                 using (SqlCommand cmd = new SqlCommand("SELECT IdVenta, IdCliente, TotalProducto, MontoTotal, Contacto, IdCiudad, Telefono, Direccion, FechaVenta AS FechaRegistro, IdTransaccion FROM VENTA WHERE IdCliente = @IdCliente ORDER BY FechaVenta DESC", cn))
                 {
@@ -182,7 +182,7 @@ SELECT CAST(SCOPE_IDENTITY() AS int);", oconexion, transaccion))
 
             try
             {
-                using (SqlConnection cn = new SqlConnection(Conexion.cn))
+                using (SqlConnection cn = Conexion.CrearConexion())
                 using (SqlCommand cmd = new SqlCommand(@"
                     SELECT dv.IdDetalleVenta, dv.IdVenta, dv.IdProducto, dv.Cantidad, dv.Total,
                            p.Nombre, p.Precio, p.RutaImagen, p.NombreImagen

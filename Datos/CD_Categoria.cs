@@ -13,7 +13,7 @@ namespace Datos
             List<Categoria> lista = new List<Categoria>();
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     string query = "SELECT IdCategoria, Descripcion, Activo FROM CATEGORIA";
                     SqlCommand cmd = new SqlCommand(query, oconexion);
@@ -43,7 +43,7 @@ namespace Datos
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("sp_RegistrarCategoria", oconexion);
                     cmd.Parameters.AddWithValue("Descripcion", obj.Descripcion);
@@ -69,7 +69,7 @@ namespace Datos
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("sp_EditarCategoria", oconexion);
                     cmd.Parameters.AddWithValue("IdCategoria", obj.IdCategoria);
@@ -96,7 +96,7 @@ namespace Datos
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("sp_EliminarCategoria", oconexion);
                     cmd.Parameters.AddWithValue("IdCategoria", id);

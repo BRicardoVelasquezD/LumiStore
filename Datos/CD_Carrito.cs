@@ -13,7 +13,7 @@ namespace Datos
             List<Carrito> lista = new List<Carrito>();
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("select * from fn_obtenerCarritoCliente(@idcliente)", oconexion);
                     cmd.Parameters.AddWithValue("@idcliente", idcliente);
@@ -56,7 +56,7 @@ namespace Datos
             bool resultado = false;
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("sp_ExisteCarrito", oconexion);
                     cmd.Parameters.AddWithValue("IdCliente", idcliente);
@@ -84,7 +84,7 @@ namespace Datos
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("sp_OperacionCarrito", oconexion);
                     cmd.Parameters.AddWithValue("IdCliente", idcliente);
@@ -115,7 +115,7 @@ namespace Datos
             int resultado = 0;
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     string query = "select isnull(sum(cantidad),0) from carrito where idcliente = @idcliente";
                     SqlCommand cmd = new SqlCommand(query, oconexion);
@@ -139,7 +139,7 @@ namespace Datos
             bool resultado = false;
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("sp_EliminarCarrito", oconexion);
                     cmd.Parameters.AddWithValue("IdCliente", idcliente);

@@ -14,7 +14,7 @@ namespace Datos
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("sp_RegistrarCliente", oconexion);
                     cmd.Parameters.AddWithValue("Nombres", obj.Nombres);
@@ -45,7 +45,7 @@ namespace Datos
             List<Cliente> lista = new List<Cliente>();
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     string query = "SELECT IdCliente, Nombres, Apellidos, Correo, Clave, Reestablecer FROM CLIENTE";
                     SqlCommand cmd = new SqlCommand(query, oconexion);
@@ -78,7 +78,7 @@ namespace Datos
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     string query = "UPDATE CLIENTE SET Clave = @clave, Reestablecer = 0 WHERE IdCliente = @id";
                     SqlCommand cmd = new SqlCommand(query, oconexion);
@@ -99,7 +99,7 @@ namespace Datos
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     string query = "UPDATE CLIENTE SET Clave = @clave, Reestablecer = 1 WHERE IdCliente = @id";
                     SqlCommand cmd = new SqlCommand(query, oconexion);

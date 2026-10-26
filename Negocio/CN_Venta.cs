@@ -3,7 +3,7 @@ using Entidad;
 using System.Collections.Generic;
 using System.Data;
 
-namespace CapaNegocio
+namespace Negocio
 {
     public class CN_Venta
     {

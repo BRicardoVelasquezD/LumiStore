@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Diagnostics;
 
 namespace Datos
 {
@@ -13,7 +14,7 @@ namespace Datos
             List<Usuario> lista = new List<Usuario>();
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     string query = "SELECT IdUsuario, Nombres, Apellidos, Correo, Clave, Reestablecer, Activo FROM USUARIO";
                     SqlCommand cmd = new SqlCommand(query, oconexion);
@@ -37,7 +38,11 @@ namespace Datos
                     }
                 }
             }
-            catch { lista = new List<Usuario>(); }
+            catch (Exception ex)
+            {
+                Trace.TraceError("No se pudo cargar la lista de usuarios administrativos: {0}", ex);
+                lista = new List<Usuario>();
+            }
             return lista;
         }
 
@@ -47,7 +52,7 @@ namespace Datos
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("sp_RegistrarUsuario", oconexion);
                     cmd.Parameters.AddWithValue("Nombres", obj.Nombres);
@@ -74,7 +79,7 @@ namespace Datos
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("sp_EditarUsuario", oconexion);
                     cmd.Parameters.AddWithValue("IdUsuario", obj.IdUsuario);
@@ -101,7 +106,7 @@ namespace Datos
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("sp_EliminarUsuario", oconexion);
                     cmd.Parameters.AddWithValue("IdUsuario", id);
@@ -124,7 +129,7 @@ namespace Datos
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     string query = "UPDATE USUARIO SET Clave = @clave, Reestablecer = 0 WHERE IdUsuario = @id";
                     SqlCommand cmd = new SqlCommand(query, oconexion);
@@ -145,7 +150,7 @@ namespace Datos
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     string query = "UPDATE USUARIO SET Clave = @clave, Reestablecer = 1 WHERE IdUsuario = @id";
                     SqlCommand cmd = new SqlCommand(query, oconexion);

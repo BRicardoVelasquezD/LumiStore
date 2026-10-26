@@ -14,7 +14,7 @@ namespace Datos
             List<Producto> lista = new List<Producto>();
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     StringBuilder sb = new StringBuilder();
                     sb.AppendLine("select p.IdProducto, p.Nombre, p.Descripcion,");
@@ -59,7 +59,7 @@ namespace Datos
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("sp_RegistrarProducto", oconexion);
                     cmd.Parameters.AddWithValue("Nombre", obj.Nombre);
@@ -88,7 +88,7 @@ namespace Datos
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("sp_EditarProducto", oconexion);
                     cmd.Parameters.AddWithValue("IdProducto", obj.IdProducto);
@@ -117,7 +117,7 @@ namespace Datos
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     string query = "update PRODUCTO set RutaImagen = @ruta, NombreImagen = @nombre where IdProducto = @id";
                     SqlCommand cmd = new SqlCommand(query, oconexion);
@@ -138,7 +138,7 @@ namespace Datos
             Mensaje = string.Empty;
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("DELETE FROM PRODUCTO WHERE IdProducto = @id", oconexion);
                     cmd.Parameters.AddWithValue("@id", id);

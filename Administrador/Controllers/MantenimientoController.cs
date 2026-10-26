@@ -136,9 +136,17 @@ namespace Administrador.Controllers
         [HttpPost]
         public JsonResult MostrarImagen(int id)
         {
-            bool conversion;
             Producto oProducto = new CN_Producto().Listar().FirstOrDefault(p => p.IdProducto == id);
-            string textoBase64 = new CN_Producto().ConvertirBase64(Path.Combine(oProducto.RutaImagen, oProducto.NombreImagen), out conversion);
+            if (oProducto == null)
+                return Json(new { conversion = false, textoBase64 = string.Empty, extension = string.Empty });
+
+            string nombre = Path.GetFileName(oProducto.NombreImagen ?? string.Empty);
+            string ruta = Server.MapPath("~/Imagenes/Productos/" + nombre);
+            if (!System.IO.File.Exists(ruta) && !string.IsNullOrWhiteSpace(oProducto.RutaImagen))
+                ruta = Path.Combine(oProducto.RutaImagen, nombre);
+
+            bool conversion;
+            string textoBase64 = new CN_Producto().ConvertirBase64(ruta, out conversion);
 
             return Json(new
             {

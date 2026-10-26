@@ -13,7 +13,7 @@ namespace Datos
             List<Departamento> lista = new List<Departamento>();
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("SELECT IdDepartamento, Descripcion FROM DEPARTAMENTO ORDER BY Descripcion", oconexion);
                     oconexion.Open();
@@ -43,7 +43,7 @@ namespace Datos
             List<Municipio> lista = new List<Municipio>();
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("SELECT IdMunicipio, Descripcion FROM MUNICIPIO WHERE IdDepartamento = @iddep ORDER BY Descripcion", oconexion);
                     cmd.Parameters.AddWithValue("@iddep", iddepartamento);
@@ -75,7 +75,7 @@ namespace Datos
             List<Ciudad> lista = new List<Ciudad>();
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("SELECT IdCiudad, Descripcion FROM CIUDAD WHERE IdMunicipio = @idm AND IdDepartamento = @idd ORDER BY Descripcion", oconexion);
                     cmd.Parameters.AddWithValue("@idm", idmunicipio);

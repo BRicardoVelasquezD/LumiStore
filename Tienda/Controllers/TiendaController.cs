@@ -207,7 +207,7 @@ namespace Tienda.Controllers
 
             try
             {
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("SELECT IdDepartamento, Descripcion FROM DEPARTAMENTO ORDER BY Descripcion", oconexion);
                     cmd.CommandType = CommandType.Text;
@@ -248,7 +248,7 @@ namespace Tienda.Controllers
                     return Json(new { lista = new List<Municipio>() }, JsonRequestBehavior.AllowGet);
                 }
 
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("SELECT IdMunicipio, Descripcion FROM MUNICIPIO WHERE IdDepartamento = @iddepartamento ORDER BY Descripcion", oconexion);
                     cmd.Parameters.AddWithValue("@iddepartamento", iddepartamento);
@@ -289,7 +289,7 @@ namespace Tienda.Controllers
                     return Json(new { lista = new List<Ciudad>() }, JsonRequestBehavior.AllowGet);
                 }
 
-                using (SqlConnection oconexion = new SqlConnection(Conexion.cn))
+                using (SqlConnection oconexion = Conexion.CrearConexion())
                 {
                     SqlCommand cmd = new SqlCommand("SELECT IdCiudad, Descripcion FROM CIUDAD WHERE IdMunicipio = @idmunicipio AND IdDepartamento = @iddepartamento ORDER BY Descripcion", oconexion);
                     cmd.Parameters.AddWithValue("@idmunicipio", idmunicipio);
